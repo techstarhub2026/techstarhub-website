@@ -26,6 +26,26 @@
   --nav-dropdown-hover-color: #f7921e; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
+/* Mobile Safari/Chrome paint a solid grey-black overlay on any tapped link
+   or button by default while the finger is down, unless this is set — most
+   visible on rounded nav pills like the dropdown items here, where it reads
+   as a jarring black flash with no relation to the site's own palette. A
+   transparent highlight lets each element's own :active/:hover styling (set
+   throughout this stylesheet) be the only visible feedback on tap. */
+a,
+button,
+.navmenu a,
+.navmenu button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Replaces that removed default with the site's own feedback: a soft tint
+   in the same orange used for hover/active states everywhere else, rather
+   than no visible response to a tap at all. */
+.navmenu .dropdown ul li > a:active {
+  background-color: color-mix(in srgb, var(--nav-dropdown-hover-color), transparent 88%);
+}
+
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
 .light-background {
