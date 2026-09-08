@@ -1,0 +1,931 @@
+/*--------------------------------------------------------------
+# UX polish layer
+#
+# Kept in its own file so the mirrored main.css stays faithful to
+# techstarhub.or.tz. Everything here is additive: remove this one
+# stylesheet and the site renders exactly as it did before.
+--------------------------------------------------------------*/
+
+:root {
+  --ux-ease: cubic-bezier(0.22, 0.61, 0.36, 1);   /* decelerating, for entrances */
+  --ux-ease-inout: cubic-bezier(0.4, 0, 0.2, 1);  /* symmetric, for state flips */
+  --ux-dur-1: 140ms;
+  --ux-dur-2: 240ms;
+  --ux-dur-3: 380ms;
+  --ux-navy: #0b1b54;
+  --ux-orange: #f7921e;
+}
+
+/*--------------------------------------------------------------
+# Reading-progress bar
+# A thin line is enough to signal article length; a thick one
+# competes with the page.
+--------------------------------------------------------------*/
+.ux-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 2000;
+  background: transparent;
+  pointer-events: none;
+}
+
+.ux-progress__bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ux-orange), #ffc06b);
+  transform-origin: left;
+  transition: width 90ms linear;
+}
+
+/*--------------------------------------------------------------
+# Docked header
+#
+# The page header is absolutely positioned and scrolls away with
+# the hero, which leaves no navigation on a long page. Rather than
+# fight that rule, a separate condensed bar docks in once the hero
+# is behind you — and hides again while you scroll down, so it
+# never eats reading space you are actively using.
+--------------------------------------------------------------*/
+.ux-dock {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1900;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 26px;
+  /* Frosted glass, not a navy fill — matches the reference's own "stuck"
+     header treatment: a translucent white pane with a blur behind it,
+     rather than a solid colour bar. The navy is gone entirely; orange stays
+     as the one accent, on the CTA only. */
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(11, 27, 84, 0.08);
+  box-shadow: 0 10px 30px rgba(7, 18, 54, 0.08);
+  transform: translateY(-100%);
+  /* The reference's own nav transition is a plain ease-out — fast off the
+     start, settling slowly — rather than the symmetric in-out curve this
+     used before, which felt closer to a mechanical snap than a settle. */
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.ux-dock.is-open {
+  transform: translateY(0);
+}
+
+.ux-dock__brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+/* The torn-paper strip existed only to keep the navy wordmark visible
+   against the dock's old navy fill. Now that the dock is a light frosted
+   pane, the navy logo reads perfectly well on its own, so the tape is
+   switched off rather than removed from the markup — ux.js still creates it
+   unconditionally, and hiding it here is the least invasive way to retire
+   it without touching that script. */
+.ux-dock__tape {
+  display: none;
+}
+
+.ux-dock__logo {
+  position: relative;
+  z-index: 1;
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.ux-dock__nav {
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (min-width: 992px) {
+  .ux-dock__nav { display: flex; }
+}
+
+/*
+   .ux-dock__link covers both plain `<a>` items and the Programs dropdown's
+   `<button>` trigger — a shared class rather than a tag selector, since a
+   button and a link need identical styling here but can't share a selector
+   built on element type.
+*/
+.ux-dock__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  /* Dark, neutral ink rather than the site's own navy — the navy is exactly
+     the blue this component is being redesigned away from, so a merely
+     "less saturated" blue wouldn't satisfy that; this is genuinely neutral. */
+  color: #1a1a1a;
+  background: none;
+  border: 0;
+  font-family: var(--nav-font, inherit);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color var(--ux-dur-1) ease-out, background-color var(--ux-dur-1) ease-out;
+}
+
+.ux-dock__link:hover {
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* The current page's link, matched to the reference: a solid dark pill
+   rather than a tint — the one link that should read as unmistakably
+   "selected" against the others' plain text. */
+.ux-dock__link.is-current {
+  color: #ffffff;
+  background: #1a1a1a;
+}
+
+.ux-dock__link--dropdown i {
+  font-size: 11px;
+  transition: transform var(--ux-dur-1) ease-out;
+}
+
+.ux-dock__item.is-open .ux-dock__link--dropdown {
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.ux-dock__item.is-open .ux-dock__link--dropdown i {
+  transform: rotate(180deg);
+}
+
+/*
+   Programs' panel — a frosted card matching the dock's own material, dropped
+   from directly under its trigger. Kept in the DOM at all times (rather than
+   built on open) and shown via opacity + a short rise, so it can be
+   transitioned instead of just appearing.
+*/
+.ux-dock__item {
+  position: relative;
+}
+
+.ux-dock__panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, -6px);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 240px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 16px;
+  box-shadow: 0 20px 44px rgba(7, 18, 54, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--ux-dur-2) ease-out, transform var(--ux-dur-2) ease-out, visibility var(--ux-dur-2);
+}
+
+.ux-dock__item.is-open .ux-dock__panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.ux-dock__panel a {
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #1a1a1a;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.ux-dock__panel a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.ux-dock__cta {
+  background: var(--ux-orange);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-family: var(--nav-font, inherit);
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color var(--ux-dur-1) ease-out, transform var(--ux-dur-2) var(--ux-ease);
+}
+
+.ux-dock__cta:hover {
+  background: #e07d0a;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 575px) {
+  .ux-dock { padding: 8px 16px; gap: 12px; }
+  .ux-dock__logo { height: 26px; }
+  .ux-dock__tape { height: 44px; }
+  .ux-dock__cta { padding: 8px 16px; font-size: 12.5px; }
+}
+
+/*--------------------------------------------------------------
+# Image settle
+# Photographs fade out of a very slight over-scale instead of
+# snapping in, which hides the decode moment.
+--------------------------------------------------------------*/
+img[data-ux-settle] {
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity var(--ux-dur-3) var(--ux-ease),
+              transform 620ms var(--ux-ease);
+}
+
+img[data-ux-settle].is-settled {
+  opacity: 1;
+  transform: none;
+}
+
+/*--------------------------------------------------------------
+# Micro-interactions
+--------------------------------------------------------------*/
+
+/* Cards lift a little and deepen their shadow, rather than growing. */
+body .hx-card,
+body .hx-service,
+body .hx-member,
+body .course-item {
+  transition: transform var(--ux-dur-2) var(--ux-ease),
+              box-shadow var(--ux-dur-2) var(--ux-ease);
+}
+
+/* Images inside cards ease up slightly on hover — the card frame stays put,
+   so neighbouring cards are never pushed around. */
+body .hx-card-media img,
+body .hx-member img {
+  transition: transform 620ms var(--ux-ease);
+}
+
+body .hx-card:hover .hx-card-media img,
+body .hx-member:hover img {
+  transform: scale(1.05);
+}
+
+/* A visible keyboard focus ring. The template relies on the browser default,
+   which disappears against dark sections. */
+body a:focus-visible,
+body button:focus-visible,
+body input:focus-visible,
+body textarea:focus-visible,
+body select:focus-visible {
+  outline: 3px solid var(--ux-orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/*--------------------------------------------------------------
+# Respect the reduced-motion preference
+--------------------------------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
+  .ux-dock,
+  .ux-progress__bar,
+  img[data-ux-settle],
+  body .hx-card,
+  body .hx-card-media img,
+  body .hx-member img,
+  body .course-item {
+    transition: none !important;
+  }
+
+  img[data-ux-settle] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*==============================================================
+# PREMIUM LAYER
+# Typography, depth and detail. These are the levers that make a
+# page feel considered — heavier display type set tighter, shadows
+# built from several stops rather than one flat blur, and the small
+# details (selection, scrollbar, hairlines) that signal care.
+==============================================================*/
+
+/*--------------------------------------------------------------
+# Type rendering
+--------------------------------------------------------------*/
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/*--------------------------------------------------------------
+# Display type
+# Large text needs *less* tracking, not the same as body copy —
+# leaving headings at default spacing is the single most common
+# reason a page reads as untouched. Raleway 800 is self-hosted,
+# so this is a real weight, never a synthesised one.
+--------------------------------------------------------------*/
+body.home-2026 .hx-hero h2,
+body.inner-page .hx-page-hero h1 {
+  font-weight: 800;
+  font-size: clamp(2.3rem, 4.6vw, 4.1rem);
+  line-height: 1.05;
+  letter-spacing: -0.033em;
+}
+
+/* Section headings carried no negative tracking at all. */
+body.home-2026 .hx-section-head h2,
+body.inner-page .hx-section-head h2,
+body.inner-page .hx-catalogue-title h2 {
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.14;
+  /* Stops a lone trailing word on its own line. */
+  text-wrap: balance;
+}
+
+body.home-2026 .hx-section-head h2 {
+  font-size: clamp(2rem, 3.5vw, 3.1rem);
+}
+
+/* Card and article titles get the same treatment, one step down. */
+body .hx-card h3,
+body .hx-service h3,
+body .course-item h3,
+body .hx-cta-band h2 {
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+/* Lead paragraphs: a comfortable measure and no orphaned last word. */
+body.home-2026 .hx-section-head p,
+body.inner-page .hx-section-head p,
+body.inner-page .hx-page-hero p {
+  text-wrap: pretty;
+  line-height: 1.75;
+}
+
+/* The eyebrow pills read better slightly tighter and bolder. */
+body .hx-pill {
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+/*--------------------------------------------------------------
+# Depth
+# A single large blur reads flat and cheap. Real depth comes from
+# stacking a tight contact shadow under a wider ambient one.
+--------------------------------------------------------------*/
+:root {
+  --ux-shadow-1:
+    0 1px 2px rgba(7, 18, 54, 0.06),
+    0 2px 6px rgba(7, 18, 54, 0.05);
+  --ux-shadow-2:
+    0 2px 4px rgba(7, 18, 54, 0.06),
+    0 8px 18px rgba(7, 18, 54, 0.08),
+    0 16px 34px rgba(7, 18, 54, 0.06);
+  --ux-shadow-3:
+    0 2px 6px rgba(7, 18, 54, 0.08),
+    0 14px 30px rgba(7, 18, 54, 0.12),
+    0 28px 60px rgba(7, 18, 54, 0.10);
+}
+
+body .course-item,
+body .hx-service,
+body .hx-member {
+  box-shadow: var(--ux-shadow-1);
+}
+
+body .course-item:hover,
+body .hx-service:hover,
+body .hx-member:hover {
+  box-shadow: var(--ux-shadow-3);
+}
+
+/* A hairline highlight along the top edge catches the light and stops
+   pale cards dissolving into a pale section behind them. */
+body .course-item,
+body .hx-shop-card {
+  border: 1px solid rgba(11, 27, 84, 0.07);
+}
+
+/*--------------------------------------------------------------
+# Signature accent
+# A short gradient rule under section headings — one repeated
+# detail does more for coherence than several unrelated flourishes.
+--------------------------------------------------------------*/
+body.home-2026 .hx-section-head h2::after,
+body.inner-page .hx-section-head h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin: 20px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--ux-orange), #ffc06b);
+}
+
+/* The catalogue head is left-aligned, so its rule should be too. */
+body.inner-page .hx-catalogue-title h2::after {
+  content: "";
+  display: block;
+  width: 52px;
+  height: 4px;
+  margin: 14px 0 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--ux-orange), #ffc06b);
+}
+
+/*--------------------------------------------------------------
+# Details
+--------------------------------------------------------------*/
+::selection {
+  background: var(--ux-orange);
+  color: #ffffff;
+}
+
+/* A slim scrollbar in the brand colours, rather than the OS default. */
+@supports selector(::-webkit-scrollbar) {
+  html::-webkit-scrollbar { width: 11px; }
+  html::-webkit-scrollbar-track { background: #f1f2f6; }
+  html::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--ux-navy), transparent 55%);
+    border-radius: 999px;
+    border: 3px solid #f1f2f6;
+  }
+  html::-webkit-scrollbar-thumb:hover {
+    background: var(--ux-navy);
+  }
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ux-navy), transparent 55%) #f1f2f6;
+}
+
+/* Anything clickable should say so. */
+body .hx-card,
+body .course-item,
+body .hx-shop-card,
+body .stats-item {
+  cursor: default;
+}
+body a, body button, body [role="button"] { cursor: pointer; }
+
+/*--------------------------------------------------------------
+# Hero depth
+# A soft vignette pushes the corners back so the headline sits
+# forward, without darkening the photograph overall.
+--------------------------------------------------------------*/
+body.home-2026 .hx-hero::after,
+body.inner-page .hx-page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Neutral ink, matching the hero's other scrims in home.css — a navy
+     vignette tinted the photo's corners cold on top of everything the main
+     scrim was already doing. */
+  background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgba(12, 12, 13, 0.34) 100%);
+}
+
+/* The copy must stay above the vignette. */
+body.home-2026 .hx-hero .hx-hero-body,
+body.inner-page .hx-page-hero .hx-page-hero-body {
+  position: relative;
+  z-index: 2;
+}
+
+/*--------------------------------------------------------------
+# UjuziPlus course card
+#
+# The same card UjuziPlus renders for its own catalogue, brought
+# across so a course looks identical on both properties. Values
+# are taken from that project's shared MediaCard: a 16:9 media
+# block with corner badges, then title, instructor, a meta row,
+# and the price pinned to the foot.
+#
+# Unscoped by page so it works in both the home-page teaser and
+# the courses catalogue.
+--------------------------------------------------------------*/
+:root {
+  --uj-brand: #f39223;
+  --uj-brand-dark: #d97f12;
+  --uj-brand-light: #ffb347;
+}
+
+.uj-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: inherit;
+  background: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  overflow: hidden;
+  /* A tight contact shadow under a wider, warm-tinted ambient one. */
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04),
+              0 8px 24px -4px rgb(243 146 35 / 0.08);
+  transition: box-shadow 300ms ease-out,
+              border-color 300ms ease-out,
+              transform 300ms ease-out;
+}
+
+.uj-card:hover {
+  color: inherit;
+  border-color: rgb(243 146 35 / 0.2);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.05),
+              0 16px 40px -8px rgb(243 146 35 / 0.18);
+  transform: translateY(-4px);
+}
+
+/* ── media ── */
+.uj-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #f3f4f6, #f9fafb);
+}
+
+.uj-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.uj-card:hover .uj-card__media img {
+  transform: scale(1.05);
+}
+
+.uj-card__badges {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── badges ── */
+.uj-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.uj-badge--success {
+  background: #dcfce7;
+  color: #15803d;
+  box-shadow: inset 0 0 0 1px #bbf7d0;
+}
+
+.uj-badge--sale {
+  background: rgb(255 255 255 / 0.95);
+  color: #b45309;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 0 1px rgb(180 83 9 / 0.2);
+}
+
+.uj-badge--outline {
+  background: transparent;
+  color: #6b7280;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+/* ── body ── */
+.uj-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 14px;
+}
+
+.uj-card__title {
+  font-family: var(--heading-font, inherit);
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.375;
+  letter-spacing: -0.012em;
+  color: #111827;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 200ms ease-out;
+}
+
+.uj-card:hover .uj-card__title {
+  color: var(--uj-brand);
+}
+
+.uj-card__subtitle {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #6b7280;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.uj-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.uj-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.uj-meta-item i {
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* ── footer ── */
+.uj-card__footer {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* The warm gradient UjuziPlus uses on its price figures. */
+.uj-price {
+  font-family: var(--heading-font, inherit);
+  font-size: 18px;
+  font-weight: 700;
+  background-image: linear-gradient(135deg, #f39223 0%, #ffb347 50%, #d97f12 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.uj-price-was {
+  font-size: 12px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.uj-price-free {
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  box-shadow: inset 0 0 0 1px #bbf7d0;
+  padding: 2px 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uj-card,
+  .uj-card__media img,
+  .uj-card__title { transition: none; }
+  .uj-card:hover { transform: none; }
+  .uj-card:hover .uj-card__media img { transform: none; }
+}
+
+/*--------------------------------------------------------------
+# "Go to UjuziPlus" button
+#
+# Carries the UjuziPlus mark and its warm gradient, so a link that
+# leaves for the learning platform is visibly distinct from the
+# site's own orange buttons. Used on the home-page teaser and at
+# both ends of the courses catalogue.
+--------------------------------------------------------------*/
+.uj-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: 0;
+  color: #ffffff;
+  font-family: var(--nav-font, inherit);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  background-image: linear-gradient(135deg, #ffb347 0%, #f39223 50%, #d97f12 100%);
+  box-shadow: 0 6px 18px -4px rgb(243 146 35 / 0.45);
+  transition: transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 240ms ease-out,
+              filter 240ms ease-out;
+}
+
+.uj-btn:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+  filter: saturate(1.08);
+  box-shadow: 0 12px 26px -6px rgb(243 146 35 / 0.55);
+}
+
+.uj-btn:active {
+  transform: translateY(0);
+}
+
+/* The mark sits on a white disc so its navy half stays legible on
+   the orange fill. */
+.uj-btn img {
+  height: 24px;
+  width: auto;
+  flex-shrink: 0;
+  padding: 3px 5px;
+  background: #ffffff;
+  border-radius: 999px;
+}
+
+.uj-btn i {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.uj-btn--sm {
+  padding: 8px 16px;
+  font-size: 13px;
+  gap: 8px;
+}
+
+.uj-btn--sm img { height: 20px; }
+
+.uj-btn--lg {
+  padding: 14px 30px;
+  font-size: 15.5px;
+}
+
+.uj-btn--lg img { height: 28px; }
+
+/* The head button sits under the count on the catalogue page. */
+.hx-catalogue-title .uj-btn { margin-top: 14px; }
+
+/* Home-page teaser: the internal link and the platform link share a row. */
+.hx-shop-cta--pair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* Closing prompt beneath the catalogue. */
+.uj-cta-foot {
+  margin-top: 44px;
+  padding: 34px 26px;
+  border-radius: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #fff7ed 0%, #fffaf3 55%, #ffffff 100%);
+  box-shadow: inset 0 0 0 1px rgb(243 146 35 / 0.18);
+}
+
+.uj-cta-foot p {
+  max-width: 560px;
+  margin: 0 auto 20px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: color-mix(in srgb, #0b1b54, transparent 32%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uj-btn { transition: none; }
+  .uj-btn:hover { transform: none; }
+}
+
+/*--------------------------------------------------------------
+# Testimonial quotes
+#
+# These live here rather than in inner-pages.css because the home
+# page does not load that stylesheet, and the testimonials section
+# now appears on both. ux.css is loaded by every page, so this is
+# the one place the rules work everywhere.
+--------------------------------------------------------------*/
+body .hx-quote-slider {
+  overflow: hidden;
+  padding-bottom: 8px;
+}
+
+body .hx-quote-slider .swiper-wrapper {
+  height: auto;
+  align-items: stretch;
+}
+
+body .hx-quote-slider .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+body .hx-quote {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  padding: 36px 34px 30px 34px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+body .hx-quote-mark {
+  color: var(--nv-orange);
+  font-size: 34px;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+body .hx-quote > p {
+  color: var(--nv-navy);
+  font-size: 15.5px;
+  line-height: 1.9;
+  margin: 0 0 26px 0;
+  flex: 1;
+}
+
+body .hx-quote-by {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 22px;
+  border-top: 1px solid color-mix(in srgb, var(--nv-navy), transparent 90%);
+}
+
+body .hx-quote-by img {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+body .hx-quote-who {
+  margin-right: auto;
+}
+
+body .hx-quote-who h4 {
+  color: var(--nv-navy);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+}
+
+body .hx-quote-who span {
+  color: color-mix(in srgb, var(--nv-navy), transparent 45%);
+  font-size: 13px;
+}
+
+body .hx-quote-slider .swiper-pagination {
+  position: relative;
+  margin-top: 34px;
+}
+
+body .hx-quote-slider .swiper-pagination-bullet {
+  width: 9px;
+  height: 9px;
+  background: color-mix(in srgb, var(--nv-navy), transparent 75%);
+  opacity: 1;
+  transition: width 0.35s var(--nv-ease), background-color 0.35s var(--nv-ease);
+}
+
+body .hx-quote-slider .swiper-pagination-bullet-active {
+  width: 26px;
+  border-radius: 999px;
+  background: var(--nv-orange);
+}
+

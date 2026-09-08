@@ -1,0 +1,2440 @@
+/*--------------------------------------------------------------
+# TechStar Innovation Hub — Home page design system
+# Scoped to body.home-2026 so the rest of the site is untouched.
+--------------------------------------------------------------*/
+body.home-2026 {
+  /* One rhythm for the whole page: every full-bleed block leaves this much
+     air above it. Spacing then stays even regardless of which sections are
+     present, and opening the page up is a single edit rather than a dozen. */
+  --nv-section-gap: 132px;
+
+  --nv-navy: #0b1b54;
+  --nv-navy-deep: #071236;
+  --nv-navy-soft: #12266d;
+  --nv-orange: #f7921e;
+  --nv-orange-deep: #e07d0a;
+  --nv-cream: #f2f1ee;
+  --nv-line: rgba(255, 255, 255, 0.16);
+  --nv-radius-lg: 26px;
+  --nv-radius: 20px;
+  --nv-gutter: 12px;
+
+  /* Height of the fixed header the hero starts below. Named rather than
+     repeated as a bare 76px, because the hero's own height has to subtract
+     exactly the same figure to land on the fold. */
+  --nv-header-h: 76px;
+
+  /* The space actually left on screen below the fixed header, once the
+     shell's gutters are taken off both ends. */
+  --nv-hero-fit: calc(100vh - var(--nv-header-h) - (var(--nv-gutter) * 2));
+
+  /* The hero's full-bleed height: exactly the space left on screen. The hero
+     used to ask for a whole `100vh - gutter*2` and then get pushed down a
+     further 76px by its own top margin, which put the bottom of the hero —
+     and with it the tab row anchored near that bottom — about 52px past the
+     fold on every screen. Subtracting the header is what makes "full height"
+     actually mean "as tall as what is left on screen".
+
+     Deliberately no `max(…, 560px)` floor here. A floor taller than the
+     viewport is exactly what pushes the tab row back off a short laptop or a
+     landscape phone, and the hero cannot be both "never shorter than 560px"
+     and "never taller than the screen" when the screen is 390px. Fitting the
+     screen wins, because a tab row nobody can see is a worse outcome than a
+     short hero. */
+  --nv-hero-h: var(--nv-hero-fit);
+
+  /* Vertical breathing room inside the hero, and the space its bottom edge
+     reserves for the tab row. The tabs are positioned absolutely, so they
+     take no space in flow and the body has to leave them room explicitly or
+     the copy runs underneath them. Both scale with the viewport: at 130px
+     fixed, the padding alone plus the copy block was taller than a short
+     window, which grew the hero past its own min-height — the real reason
+     the tabs still fell off the bottom after the height was corrected. */
+  --nv-hero-pad-y: clamp(28px, 9vh, 130px);
+  --nv-hero-tabs-room: clamp(86px, 17vh, 170px);
+
+  background-color: #ffffff;
+}
+
+body.home-2026 .main {
+  padding: 0 var(--nv-gutter);
+}
+
+body.home-2026 .hx-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+body.home-2026 .hx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  padding: 6px 16px;
+  font-family: var(--nav-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+body.home-2026 .hx-round-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: var(--nv-navy);
+  font-size: 18px;
+  border: 0;
+  transition: background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+body.home-2026 .hx-round-btn:hover {
+  background: var(--nv-orange);
+  color: #ffffff;
+  transform: rotate(45deg) scale(1.1);
+}
+
+body.home-2026 .hx-round-btn:active {
+  transform: rotate(45deg) scale(0.96);
+}
+
+body.home-2026 .hx-section-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 60px auto;
+}
+
+body.home-2026 .hx-section-head .hx-pill {
+  color: var(--nv-orange);
+  margin-bottom: 20px;
+}
+
+body.home-2026 .hx-section-head h2 {
+  color: var(--nv-navy);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 3.2vw, 2.85rem);
+  line-height: 1.2;
+  margin: 0;
+}
+
+body.home-2026 .hx-section-head p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  margin: 16px 0 0 0;
+  line-height: 1.8;
+}
+
+/*--------------------------------------------------------------
+# Header + hero shell
+--------------------------------------------------------------*/
+body.home-2026 .hx-shell {
+  margin: var(--nv-gutter);
+  background: transparent;
+  border-radius: var(--nv-radius-lg);
+  position: relative;
+}
+
+/*
+   One nav design for the whole site, always on screen — not a transparent
+   bar that overlays the hero and hands off to a separately-styled docked
+   header once scrolled. The docked mirror (`.ux-dock` in ux.js/ux.css) is
+   retired; this is the only header there is now, so it has to look right
+   both over the hero photo and over a plain page background, which is
+   exactly what a frosted glass panel is for — it works over anything behind
+   it, because it blurs and lightens whatever that is rather than depending
+   on it. See ux.css's own former ".ux-dock" rules for the matching numbers.
+*/
+body.home-2026 .header.hx-header {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(11, 27, 84, 0.08);
+  box-shadow: 0 10px 30px rgba(7, 18, 54, 0.08);
+  color: #1a1a1a;
+  padding: 14px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+body.home-2026 .hx-header .hx-brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+/* The torn-paper backing existed to keep the navy wordmark visible against
+   the hero photo the header used to overlay transparently. On this bar's
+   own opaque light surface the navy logo is plenty legible without it. */
+body.home-2026 .hx-header .hx-brand-tape {
+  display: none;
+}
+
+body.home-2026 .hx-header .hx-brand-logo {
+  position: relative;
+  z-index: 1;
+  max-height: 46px;
+  width: auto;
+}
+
+body.home-2026 .hx-header .hx-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Was a solid white circle, invisible on this bar's own now-white surface.
+   A dark tint matching the nav links' own hover state keeps it visible and
+   consistent with the rest of the bar's neutral-ink treatment. */
+body.home-2026 .hx-header .hx-search {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: #1a1a1a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 0;
+}
+
+body.home-2026 .hx-header .hx-search:hover {
+  background: var(--nv-orange);
+  color: #ffffff;
+}
+
+body.home-2026 .hx-header .hx-contact {
+  background: var(--nv-orange);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-family: var(--nav-font);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+body.home-2026 .hx-header .hx-contact:hover {
+  background: var(--nv-orange-deep);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 1200px) {
+  /*
+     Pill-shaped hover and active states, exactly matching the reference and
+     the (now retired) docked header — a translucent dark tint on hover, a
+     solid dark pill for whichever page is current. This bar is opaque and
+     fixed now rather than a transparent overlay, so the reference's own
+     dark-text-on-a-light-surface approach applies directly instead of
+     needing to be inverted for a dark background.
+  */
+  body.home-2026 .hx-header .navmenu a,
+  body.home-2026 .hx-header .navmenu a:focus {
+    color: #1a1a1a;
+    font-size: 15px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    transition: color 0.25s ease, background-color 0.25s ease;
+  }
+
+  body.home-2026 .hx-header .navmenu li:hover > a {
+    color: #1a1a1a;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  /* After the hover rule, so a hovered active link stays solid rather than
+     being overridden by the lighter hover tint. */
+  body.home-2026 .hx-header .navmenu .active,
+  body.home-2026 .hx-header .navmenu .active:focus {
+    color: #ffffff;
+    background: #1a1a1a;
+  }
+
+  body.home-2026 .hx-header .navmenu > ul > li > a::after {
+    display: none;
+  }
+
+  /* Events used to be a stray special pill — orange at rest, or navy before
+     that — that nothing else on this bar matched, including its own mirror
+     in the docked header, where it was always a plain link. Reduced to the
+     same plain link every other item uses, so "one nav design" holds even
+     down at the level of which individual items get special treatment. */
+  body.home-2026 .hx-header .navmenu .nav-pill > a {
+    background: none;
+    border-radius: 999px;
+    padding: 10px 16px;
+    color: #1a1a1a;
+  }
+
+  body.home-2026 .hx-header .navmenu .nav-pill > a::after {
+    display: none;
+  }
+
+  body.home-2026 .hx-header .navmenu .nav-pill > a:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  body.home-2026 .hx-header .navmenu .nav-pill--shop > a {
+    background: var(--nv-orange);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+
+  body.home-2026 .hx-header .navmenu .nav-pill--shop > a:hover {
+    background: var(--nv-orange-deep);
+  }
+
+  body.home-2026 .hx-header .navmenu .dropdown ul {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(7, 18, 54, 0.18);
+    padding: 10px 0;
+  }
+
+  /* The dropdown panel is a solid white surface, not the transparent
+     dark header behind it -- its links need the header's own dark
+     nav-dropdown colours, not the white text meant for the hero. */
+  body.home-2026 .hx-header .navmenu .dropdown ul a,
+  body.home-2026 .hx-header .navmenu .dropdown ul a:focus {
+    color: var(--nav-dropdown-color, #272828);
+  }
+
+  body.home-2026 .hx-header .navmenu .dropdown ul a:hover,
+  body.home-2026 .hx-header .navmenu .dropdown ul li:hover > a {
+    color: var(--nv-orange);
+  }
+}
+
+/* Was white for a transparent header over a dark hero photo; the header
+   itself is opaque and light now, so the closed toggle needs to be dark to
+   stay visible on it. The open state is untouched — main.css already makes
+   it white there, because the open mobile panel behind it has a dark
+   overlay of its own, unrelated to the header's own background. */
+body.home-2026 .mobile-nav-toggle {
+  color: #1a1a1a;
+}
+
+body.home-2026.mobile-nav-active .mobile-nav-toggle {
+  color: #ffffff;
+}
+
+/* Hero
+------------------------------*/
+body.home-2026 .hx-hero {
+  position: relative;
+  margin: 0;
+  /* Hard ceiling, not just a floor. Each slide carries a different amount of
+     copy — the "Crafting Concepts into Living Innovations" slide runs to two
+     lines of heading and three of paragraph, about 150px more than the first
+     slide — and because the hero is sized by its content, whichever slide is
+     showing decides how tall it gets. That let the tallest slide grow the
+     hero past the fold and carry the tab row off the bottom with it, on a
+     page that looked correct for as long as the first slide was up.
+     Capping here makes the hero one fixed height for every slide. */
+  max-height: var(--nv-hero-h);
+  /* The header used to overlay this transparently; now that it's opaque and
+     fixed, the hero has to start below it instead of underneath it. The same
+     token is subtracted from --nv-hero-h above, so the two always agree. */
+  margin-top: var(--nv-header-h);
+  border-radius: var(--nv-radius-lg);
+  overflow: hidden;
+  min-height: var(--nv-hero-h);
+}
+
+/* Neutral, not navy. Every scrim over the hero photograph is a plain dark
+   grey rather than the brand navy it used to be: at these alphas the navy
+   was strong enough to actually recolour the photo underneath, turning warm
+   skin tones and daylight cold and blue down the left-hand side where the
+   scrim is heaviest. A neutral ink darkens the image for legibility without
+   tinting it, so the photography keeps its own colour. */
+body.home-2026 .hx-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 150px;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(12, 12, 13, 0.72) 0%, rgba(12, 12, 13, 0) 100%);
+}
+
+body.home-2026 .hx-hero .carousel,
+body.home-2026 .hx-hero .carousel-inner,
+body.home-2026 .hx-hero .carousel-item {
+  height: 100%;
+  min-height: var(--nv-hero-h);
+}
+
+body.home-2026 .hx-hero .carousel-item {
+  position: relative;
+}
+
+/* The photo lives on its own layer, separate from the text. Only this
+   layer is scaled for the Ken Burns zoom -- scaling .carousel-item itself
+   used to drag .hx-hero-body (the heading/copy/buttons) along with it,
+   pushing the text past the hero's clipped edge as the zoom progressed. */
+body.home-2026 .hx-hero .hx-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: scale(1);
+  transform-origin: center center;
+}
+
+/* Plain navy — the orange glow that used to sit behind this slide fought with
+   the store mark now shown in the foreground, so the background stays neutral
+   and the logo carries the brand colour on its own. */
+body.home-2026 .hx-hero .hx-hero-bg--store {
+  background-image:
+    linear-gradient(135deg, var(--nv-navy-deep) 0%, var(--nv-navy) 55%, var(--nv-navy-soft) 100%);
+}
+
+body.home-2026 .hx-hero .carousel-item.active .hx-hero-bg {
+  /* Promote to its own GPU layer for the duration of the zoom only --
+     scoped to .active so idle slides don't hold a composited layer they
+     don't need. */
+  will-change: transform;
+  animation: hx-kenburns 9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes hx-kenburns {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-hero .carousel-item.active .hx-hero-bg {
+    animation: none;
+    transform: scale(1.04);
+  }
+}
+
+body.home-2026 .hx-hero .carousel-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(100deg, rgba(12, 12, 13, 0.92) 0%, rgba(12, 12, 13, 0.78) 30%, rgba(12, 12, 13, 0.42) 58%, rgba(12, 12, 13, 0.16) 100%);
+}
+
+body.home-2026 .hx-hero .hx-hero-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-height: var(--nv-hero-h);
+  /* Paired with the hero's max-height: the body fills the hero exactly and
+     never pushes past it, so a long slide's copy is contained rather than
+     growing the whole section. */
+  max-height: var(--nv-hero-h);
+  overflow: hidden;
+  padding: var(--nv-hero-pad-y) 56px var(--nv-hero-tabs-room) 56px;
+}
+
+body.home-2026 .hx-hero .hx-hero-copy {
+  max-width: 620px;
+}
+
+body.home-2026 .hx-hero h2 {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+body.home-2026 .hx-hero h2 .hx-rule {
+  display: inline-block;
+  width: 90px;
+  height: 2px;
+  background: var(--nv-orange);
+}
+
+body.home-2026 .hx-hero p {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0 0 28px 0;
+}
+
+body.home-2026 .hx-hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+body.home-2026 .hx-cta-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+body.home-2026 .hx-btn-primary {
+  /* A soft diagonal highlight sits off to the right at rest and sweeps
+     across on hover -- a second background layer riding on top of the
+     solid fill, so no extra markup or pseudo-element is needed. */
+  background-color: var(--nv-orange);
+  background-image: linear-gradient(115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.5) 46%,
+    rgba(255, 255, 255, 0.5) 54%,
+    transparent 70%);
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+  background-position: -50% 0;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-family: var(--nav-font);
+  font-size: 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    background-position 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-btn-primary:hover {
+  background-color: var(--nv-orange-deep);
+  background-position: 120% 0;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+body.home-2026 .hx-btn-primary:active {
+  transform: translateY(0);
+}
+
+body.home-2026 .hx-cta-group .hx-round-btn {
+  background: var(--nv-orange);
+  color: #ffffff;
+}
+
+body.home-2026 .hx-cta-group .hx-round-btn:hover {
+  background: #ffffff;
+  color: var(--nv-navy);
+}
+
+/* Hero entrance animation
+------------------------------*/
+body.home-2026 .hx-hero .carousel-item.active .hx-hero-copy h2 {
+  animation: hx-rise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s both;
+}
+
+body.home-2026 .hx-hero .carousel-item.active .hx-hero-copy p {
+  animation: hx-rise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.3s both;
+}
+
+body.home-2026 .hx-hero .carousel-item.active .hx-hero-buttons {
+  animation: hx-rise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.45s both;
+}
+
+@keyframes hx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-hero .carousel-item.active .hx-hero-copy h2,
+  body.home-2026 .hx-hero .carousel-item.active .hx-hero-copy p,
+  body.home-2026 .hx-hero .carousel-item.active .hx-hero-buttons {
+    animation: none;
+  }
+}
+
+/* Hero tabs */
+/* Anchored to the bottom of the hero (not the normal document flow), so
+   the tab row always sits inside the photo, on screen, whatever height
+   the hero grows to -- rather than trailing behind a full-viewport hero
+   and landing below the fold. */
+body.home-2026 .hx-hero-tabs {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 26px;
+  z-index: 4;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+body.home-2026 .hx-hero-tabs button {
+  border: 0;
+  text-align: left;
+  background: #ffffff;
+  color: var(--nv-navy);
+  border-radius: 14px;
+  padding: 20px 26px;
+  font-family: var(--nav-font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px rgba(7, 18, 54, 0.12);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-hero-tabs button.active {
+  background: var(--nv-navy);
+  color: #ffffff;
+}
+
+body.home-2026 .hx-hero-tabs button:hover {
+  transform: translateY(-3px);
+}
+
+/* A one-shot spring pop, triggered from JS the moment a tab becomes
+   active (auto-advance or click alike) -- confirms the selection landed. */
+body.home-2026 .hx-hero-tabs button.hx-tab-pop {
+  animation: hx-tab-activate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+
+
+
+@keyframes hx-tab-activate {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(0.94);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*--------------------------------------------------------------
+# Highlight cards
+--------------------------------------------------------------*/
+body.home-2026 .hx-highlights {
+  padding: var(--nv-section-gap) 0 28px 0;
+}
+
+body.home-2026 .hx-highlights .hx-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+body.home-2026 .hx-card {
+  border-radius: var(--nv-radius);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  position: relative;
+  overflow: hidden;
+}
+
+body.home-2026 .hx-card--navy {
+  background: var(--nv-navy);
+  color: #ffffff;
+}
+
+body.home-2026 .hx-card--orange {
+  background: var(--nv-orange);
+  color: #ffffff;
+  justify-content: flex-end;
+}
+
+body.home-2026 .hx-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+body.home-2026 .hx-card--navy .hx-pill {
+  color: #ffffff;
+}
+
+body.home-2026 .hx-card--orange .hx-pill {
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+body.home-2026 .hx-card h3 {
+  color: inherit;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 20px 0;
+}
+
+body.home-2026 .hx-card--navy .hx-card-media {
+  margin-top: auto;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16 / 10;
+}
+
+body.home-2026 .hx-card--navy .hx-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.home-2026 .hx-card--navy .hx-card-media .hx-play-dot {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--nv-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+body.home-2026 .hx-card--orange .hx-card-blob {
+  position: absolute;
+  inset: 0 0 auto 0;
+  /* The photograph carries this card — it is the only one of the three that
+     leads with an image rather than a heading — so it takes the larger share
+     of the card and the wave trough falls just above the pill, rather than
+     leaving a band of flat orange between the two. */
+  height: 74%;
+}
+
+body.home-2026 .hx-card--orange .hx-card-blob img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H100 V62 C86,74 78,58 62,66 C46,74 40,92 26,86 C12,80 14,62 0,58 Z' fill='%23000'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H100 V62 C86,74 78,58 62,66 C46,74 40,92 26,86 C12,80 14,62 0,58 Z' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+body.home-2026 .hx-card--orange .hx-card-foot {
+  position: relative;
+  z-index: 2;
+}
+
+body.home-2026 .hx-card--orange .hx-card-foot .hx-card-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+body.home-2026 .hx-card--orange h3 {
+  margin: 16px 0 0 0;
+  max-width: 320px;
+}
+
+body.home-2026 .hx-card:hover {
+  box-shadow: 0 26px 52px rgba(7, 18, 54, 0.2);
+}
+
+/*--------------------------------------------------------------
+# Services
+--------------------------------------------------------------*/
+body.home-2026 .hx-services {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius-lg);
+  padding: var(--nv-section-gap) 0 var(--nv-section-gap) 0;
+  margin-top: var(--nv-section-gap);
+}
+
+body.home-2026 .hx-services .hx-service-grid {
+  display: grid;
+  /* Three columns divide the six services into two even rows; four left two
+     cards stranded on a half-empty line. */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+body.home-2026 .hx-service {
+  position: relative;
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  align-items: flex-end;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+body.home-2026 .hx-service img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.home-2026 .hx-service::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(7, 18, 54, 0.05) 0%,
+    rgba(7, 18, 54, 0.30) 42%,
+    rgba(7, 18, 54, 0.88) 100%);
+  transition: background 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Deepens only while the description is open, so the copy stays readable
+   without dulling the photograph the rest of the time. */
+body.home-2026 .hx-service:hover::after {
+  background: linear-gradient(180deg,
+    rgba(7, 18, 54, 0.35) 0%,
+    rgba(7, 18, 54, 0.68) 45%,
+    rgba(11, 27, 84, 0.96) 100%);
+}
+
+body.home-2026 .hx-service .hx-service-icon {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--nv-orange);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+body.home-2026 .hx-service:hover .hx-service-icon {
+  transform: scale(1.12) rotate(-8deg);
+}
+
+body.home-2026 .hx-service .hx-service-body {
+  position: relative;
+  z-index: 2;
+  padding: 24px 22px 26px 22px;
+}
+
+body.home-2026 .hx-service h3 {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+}
+
+body.home-2026 .hx-service h3 a {
+  color: inherit;
+}
+
+body.home-2026 .hx-service h3 a:hover {
+  color: var(--nv-orange);
+}
+
+body.home-2026 .hx-service p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13.5px;
+  line-height: 1.7;
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease, opacity 0.35s ease;
+}
+
+body.home-2026 .hx-service:hover p {
+  max-height: 200px;
+  opacity: 1;
+}
+
+body.home-2026 .hx-service .hx-underline {
+  display: block;
+  width: 46px;
+  height: 2px;
+  background: var(--nv-orange);
+  margin-top: 12px;
+}
+
+body.home-2026 .hx-service:hover img {
+  transform: scale(1.06);
+}
+
+body.home-2026 .hx-service img {
+  transition: transform 0.7s ease;
+}
+
+/*--------------------------------------------------------------
+# Stats band
+--------------------------------------------------------------*/
+body.home-2026 .hx-stats {
+  background: var(--nv-orange);
+  border-radius: var(--nv-radius-lg);
+  margin-top: 26px;
+  padding: 34px 0;
+}
+
+body.home-2026 .hx-stats .hx-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+body.home-2026 .hx-stat {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 26px;
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+body.home-2026 .hx-stat:last-child {
+  border-right: 0;
+}
+
+body.home-2026 .hx-stat .hx-stat-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 14px;
+  background: var(--nv-navy);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+body.home-2026 .hx-stat .purecounter,
+body.home-2026 .hx-stat .hx-stat-value {
+  display: block;
+  color: var(--nv-navy);
+  font-family: var(--heading-font);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+body.home-2026 .hx-stat p {
+  margin: 4px 0 0 0;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+/*--------------------------------------------------------------
+# Why us
+--------------------------------------------------------------*/
+body.home-2026 .hx-why {
+  padding: var(--nv-section-gap) 0 28px 0;
+}
+
+body.home-2026 .hx-why .hx-why-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 2fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+body.home-2026 .hx-why-lead {
+  background: var(--nv-navy);
+  color: #ffffff;
+  border-radius: var(--nv-radius);
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body.home-2026 .hx-why-lead h3 {
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 14px 0 14px 0;
+}
+
+body.home-2026 .hx-why-lead p {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.8;
+  font-size: 15px;
+  margin-bottom: 22px;
+}
+
+body.home-2026 .hx-why-lead .hx-pill {
+  color: var(--nv-orange);
+  align-self: flex-start;
+}
+
+body.home-2026 .hx-why-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+body.home-2026 .hx-why-card {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+}
+
+body.home-2026 .hx-why-card i {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--nv-orange);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-why-card:hover i {
+  transform: scale(1.12) rotate(-8deg);
+  background: #ffffff;
+  color: var(--nv-navy);
+}
+
+body.home-2026 .hx-why-card h4 {
+  color: var(--nv-navy);
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+body.home-2026 .hx-why-card p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  font-size: 14.5px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+body.home-2026 .hx-why-card:hover {
+  background: var(--nv-navy);
+}
+
+body.home-2026 .hx-why-card:hover h4 {
+  color: #ffffff;
+}
+
+body.home-2026 .hx-why-card:hover p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/*--------------------------------------------------------------
+# Partners
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Team
+--------------------------------------------------------------*/
+body.home-2026 .hx-team {
+  padding: var(--nv-section-gap) 0 0 0;
+}
+
+body.home-2026 .hx-team .hx-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+body.home-2026 .hx-member {
+  position: relative;
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: flex-end;
+}
+
+body.home-2026 .hx-member img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.7s ease;
+}
+
+body.home-2026 .hx-member::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 18, 54, 0) 40%, rgba(7, 18, 54, 0.92) 100%);
+}
+
+body.home-2026 .hx-member:hover img {
+  transform: scale(1.05);
+}
+
+body.home-2026 .hx-member-info {
+  position: relative;
+  z-index: 2;
+  padding: 26px 24px;
+  width: 100%;
+}
+
+body.home-2026 .hx-member-info h4 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+body.home-2026 .hx-member-info span {
+  display: block;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13.5px;
+  margin-bottom: 14px;
+}
+
+body.home-2026 .hx-member-info .hx-socials {
+  display: flex;
+  gap: 10px;
+}
+
+/* Social icons rise in one after another on hover, echoing the same
+   treatment the team page uses -- one shared motion vocabulary across
+   the whole site. */
+body.home-2026 .hx-member-info .hx-socials a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-member:hover .hx-member-info .hx-socials a,
+body.home-2026 .hx-member:focus-within .hx-member-info .hx-socials a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.home-2026 .hx-member:hover .hx-member-info .hx-socials a:nth-child(1) { transition-delay: 0.02s; }
+body.home-2026 .hx-member:hover .hx-member-info .hx-socials a:nth-child(2) { transition-delay: 0.07s; }
+body.home-2026 .hx-member:hover .hx-member-info .hx-socials a:nth-child(3) { transition-delay: 0.12s; }
+body.home-2026 .hx-member:hover .hx-member-info .hx-socials a:nth-child(4) { transition-delay: 0.17s; }
+
+body.home-2026 .hx-member-info .hx-socials a:hover {
+  background: var(--nv-orange);
+  color: #ffffff;
+  transform: translateY(-3px) scale(1.1);
+  transition-delay: 0s;
+}
+
+@media (hover: none) {
+  body.home-2026 .hx-member-info .hx-socials a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*--------------------------------------------------------------
+# Closing CTA
+--------------------------------------------------------------*/
+body.home-2026 .hx-cta {
+  margin: var(--nv-section-gap) 0 112px 0;
+}
+
+body.home-2026 .hx-cta-band {
+  background: var(--nv-navy);
+  border-radius: var(--nv-radius-lg);
+  padding: 52px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+body.home-2026 .hx-cta-band .hx-cta-lines {
+  position: absolute;
+  right: 220px;
+  top: 50%;
+  width: 320px;
+  height: 190px;
+  opacity: 0.5;
+  pointer-events: none;
+  animation: hx-lines-drift 10s ease-in-out infinite alternate;
+}
+
+@keyframes hx-lines-drift {
+  from {
+    transform: translateY(-50%) translateX(0) scale(1);
+  }
+
+  to {
+    transform: translateY(-50%) translateX(-16px) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-cta-band .hx-cta-lines {
+    animation: none;
+    transform: translateY(-50%);
+  }
+}
+
+body.home-2026 .hx-cta-band h2 {
+  color: #ffffff;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+body.home-2026 .hx-cta-band p {
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  line-height: 1.8;
+  max-width: 460px;
+}
+
+body.home-2026 .hx-cta-band .hx-cta-copy {
+  position: relative;
+  z-index: 2;
+}
+
+body.home-2026 .hx-cta-band .hx-cta-group {
+  position: relative;
+  z-index: 2;
+}
+
+/*--------------------------------------------------------------
+# Responsive
+--------------------------------------------------------------*/
+@media (max-width: 1199px) {
+  body.home-2026 .hx-highlights .hx-grid,
+  body.home-2026 .hx-services .hx-service-grid,
+  body.home-2026 .hx-team .hx-team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  body.home-2026 .hx-why .hx-why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.home-2026 .hx-why-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+body.home-2026 .hx-hero .hx-hero-body {
+    padding: 120px 34px 120px 34px;
+  }
+
+}
+
+@media (max-width: 991px) {
+  body.home-2026 .hx-stats .hx-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 0;
+  }
+
+  body.home-2026 .hx-stat:nth-child(2) {
+    border-right: 0;
+  }
+
+  /*
+     Three columns, not one. Stacked, this row stood 192px tall and ate a
+     third of a phone hero, which is what kept forcing the copy and the tabs
+     into each other however much bottom padding was reserved. The labels are
+     two or three short words, so they fit across at a reduced size, and the
+     row costs ~50px instead — leaving the hero to the photograph and the
+     headline, which is what a visitor is actually there to see.
+  */
+  body.home-2026 .hx-hero-tabs {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  body.home-2026 .hx-hero-tabs button {
+    padding: 11px 8px;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  body.home-2026 .hx-why-cards {
+    grid-template-columns: 1fr;
+  }
+
+  body.home-2026 .hx-cta-band {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 30px;
+  }
+
+  body.home-2026 .hx-cta-band .hx-cta-lines {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  body.home-2026 .hx-inner {
+    padding: 0 16px;
+  }
+
+  body.home-2026 .hx-highlights .hx-grid,
+  body.home-2026 .hx-services .hx-service-grid,
+  body.home-2026 .hx-team .hx-team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Same clamp as --nv-hero-h with a lower floor: the tab row stacks to
+     three full-width rows at this width, so it needs more of the hero's
+     bottom edge than the side-by-side row does. */
+  body.home-2026 .hx-hero,
+  body.home-2026 .hx-hero .carousel,
+  body.home-2026 .hx-hero .carousel-inner,
+  body.home-2026 .hx-hero .carousel-item,
+  body.home-2026 .hx-hero .hx-hero-body {
+    min-height: var(--nv-hero-fit);
+  }
+
+  /* Top-aligned with a generous floor reserved at the bottom, so the
+     copy block can never collide with the stacked tab bar anchored to
+     the hero's bottom edge on short/narrow phones. */
+  body.home-2026 .hx-hero .hx-hero-body {
+    align-items: flex-start;
+    /* Much deeper bottom reserve than the desktop rule: the tab row stacks
+       to three full-width rows at this width — about 192px plus its 16px
+       inset — so it occupies far more of the hero's bottom edge than the
+       side-by-side row does. The reserve has to clear the tallest slide's
+       copy, not the first slide's, hence the raised ceiling. */
+    padding: clamp(24px, 6vh, 90px) 22px clamp(90px, 16vh, 130px) 22px;
+  }
+
+  body.home-2026 .hx-stats .hx-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.home-2026 .hx-stat {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 16px;
+  }
+
+  body.home-2026 .hx-stat:last-child {
+    border-bottom: 0;
+  }
+}
+
+/*--------------------------------------------------------------
+# Header search panel + small-screen header layout
+--------------------------------------------------------------*/
+body.home-2026 .hx-search-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 12px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 6px 6px 6px 18px;
+  box-shadow: 0 18px 40px rgba(7, 18, 54, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-10px) scale(0.96);
+  transform-origin: top right;
+  transition: opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.3s;
+}
+
+body.home-2026 .hx-search-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-search-panel {
+    transform: none;
+  }
+
+  body.home-2026 .hx-search-panel.is-open {
+    transform: none;
+  }
+}
+
+body.home-2026 .hx-search-input {
+  border: 0;
+  outline: none;
+  min-width: 240px;
+  font-size: 14px;
+  color: var(--nv-navy);
+  background: transparent;
+}
+
+body.home-2026 .hx-search-submit {
+  border: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--nv-orange);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.home-2026 .hx-search-submit:hover {
+  background: var(--nv-navy);
+}
+
+@media (max-width: 1199px) {
+  body.home-2026 .hx-header .hx-brand {
+    order: 1;
+  }
+
+  body.home-2026 .hx-header .hx-actions {
+    order: 2;
+    margin-left: auto;
+    margin-right: 12px;
+  }
+
+  body.home-2026 .hx-header .navmenu {
+    order: 3;
+  }
+
+  body.home-2026 .hx-header .hx-contact {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  body.home-2026 .hx-search-panel {
+    right: 16px;
+    left: 16px;
+  }
+
+  body.home-2026 .hx-search-input {
+    min-width: 0;
+    flex: 1;
+  }
+}
+
+
+@media (max-width: 575px) {
+  body.home-2026 .hx-header .hx-brand-logo {
+    max-height: 36px;
+  }
+
+  body.home-2026 .hx-header .hx-brand-tape {
+    height: 58px;
+  }
+
+  body.home-2026 .hx-header .hx-contact {
+    display: none;
+  }
+}
+
+/*--------------------------------------------------------------
+# Section rhythm: breathing room between the full-bleed blocks,
+# and the counts band placed under the highlight cards
+--------------------------------------------------------------*/
+body.home-2026 .about.section {
+  /* Sits directly under the counts band, so a full gap on top of that
+     band's own trailing space would read as a hole. */
+  margin: calc(var(--nv-section-gap) * 0.62) 0 0 0;
+  /* Light grey panel, matching the `.light-background` token main.css uses
+     for the counts band — reusing that value keeps the page to one light
+     surface instead of introducing a second, near-identical grey. The section
+     background, the text column and the SVG wave all read from this single
+     variable, so they can never drift apart. */
+  --offer-panel-color: #f9f9f9;
+}
+
+/* The counts band is kept byte-for-byte as techstarhub.or.tz renders it:
+   main.css already carries the live rules (25px band padding, 30px item
+   padding, 48px accent numerals), so the home-2026 layer only needs to stop
+   overriding them. */
+body.home-2026 #counts.counts {
+  /* Interior padding is left exactly as techstarhub.or.tz renders it — the
+     breathing room is added outside the band, so the live design of the
+     tiles themselves is untouched. */
+  padding: 25px 0;
+  margin: var(--nv-section-gap) 0 0 0;
+  border-radius: 0;
+}
+
+body.home-2026 #counts .stats-item {
+  padding: 30px;
+}
+
+@media (max-width: 991px) {
+  /* Stepping the one token rescales every section at once; only the trailing
+     values that genuinely differ on smaller screens are restated below. */
+  body.home-2026 {
+    --nv-section-gap: 88px;
+  }
+
+body.home-2026 .hx-cta {
+    margin-bottom: 76px;
+  }
+}
+
+@media (max-width: 767px) {
+  body.home-2026 {
+    --nv-section-gap: 68px;
+  }
+
+  body.home-2026 .hx-cta {
+    margin-bottom: 60px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Section-to-section motion
+--------------------------------------------------------------*/
+body.home-2026 [data-aos]:not(.aos-animate) {
+  will-change: transform, opacity;
+}
+
+body.home-2026 .hx-card,
+body.home-2026 .hx-service,
+body.home-2026 .hx-member,
+body.home-2026 .hx-why-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-card:hover,
+body.home-2026 .hx-service:hover,
+body.home-2026 .hx-member:hover,
+body.home-2026 .hx-why-card:hover {
+  transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-8px);
+}
+
+/* The live site has no hover motion on these tiles. A `.counts .stats-item`
+   transition/lift was added to this mirror's main.css alongside other
+   sections, so it is cancelled here rather than edited out of that shared
+   rule, which also drives contact, testimonials and why-us. */
+body.home-2026 #counts .stats-item,
+body.home-2026 #counts .stats-item:hover {
+  transition: none;
+  transform: none;
+  box-shadow: none;
+}
+
+body.home-2026 #counts .stats-item span.purecounter {
+  display: block;
+  transition: none;
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  /* Same neutral ink as the desktop scrim above — the narrow viewport turns
+     the gradient top-to-bottom rather than left-to-right, but it is the same
+     photograph underneath and it must not go blue on a phone only. */
+  body.home-2026 .hx-hero .carousel-item::before {
+    background: linear-gradient(180deg, rgba(12, 12, 13, 0.82) 0%, rgba(12, 12, 13, 0.72) 45%, rgba(12, 12, 13, 0.55) 100%);
+  }
+}
+
+/*--------------------------------------------------------------
+# Shop teaser section (TechStar Store integration)
+--------------------------------------------------------------*/
+body.home-2026 .hx-shop {
+  padding: var(--nv-section-gap) 0;
+}
+
+@media (min-width: 576px) {
+}
+
+body.home-2026 .hx-shop-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: var(--nv-radius);
+  border: 1px solid rgba(11, 27, 84, 0.08);
+  box-shadow: 0 10px 26px rgba(7, 18, 54, 0.08);
+  overflow: hidden;
+  color: inherit;
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-shop-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 44px rgba(7, 18, 54, 0.18);
+}
+
+body.home-2026 .hx-shop-card-media {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--nv-cream);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  overflow: hidden;
+}
+
+body.home-2026 .hx-shop-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-shop-card:hover .hx-shop-card-media img {
+  transform: scale(1.08);
+}
+
+body.home-2026 .hx-shop-card-media::after {
+  content: "View product";
+  position: absolute;
+  inset: auto 0 0 0;
+  background: var(--nv-orange);
+  color: #ffffff;
+  font-family: var(--nav-font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 0;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-shop-card:hover .hx-shop-card-media::after {
+  transform: translateY(0);
+}
+
+body.home-2026 .hx-shop-card-body {
+  padding: 14px 16px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+body.home-2026 .hx-shop-card-cat {
+  font-family: var(--nav-font);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nv-orange);
+}
+
+body.home-2026 .hx-shop-card-body h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--nv-navy);
+  margin: 6px 0 8px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+body.home-2026 .hx-shop-card-price {
+  margin-top: auto;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--nv-navy);
+}
+
+body.home-2026 .hx-shop-card--skeleton {
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(90deg, #eef0f6 25%, #f7f8fb 37%, #eef0f6 63%);
+  background-size: 400% 100%;
+  animation: hx-shop-shimmer 1.4s linear infinite;
+  box-shadow: none;
+  border: 1px solid rgba(11, 27, 84, 0.06);
+}
+
+@keyframes hx-shop-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+body.home-2026 .hx-shop-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-shop-card,
+  body.home-2026 .hx-shop-card-media img,
+  body.home-2026 .hx-shop-card-media::after {
+    transition: none;
+  }
+  body.home-2026 .hx-shop-card--skeleton {
+    animation: none;
+    background: #eef0f6;
+  }
+}
+
+/* Store brand mark above the shop teaser heading. */
+body.home-2026 .hx-shop-logo {
+  display: block;
+  height: 62px;
+  width: auto;
+  margin: 0 auto 18px;
+}
+
+@media (max-width: 575px) {
+  body.home-2026 .hx-shop-logo { height: 46px; }
+}
+
+/*--------------------------------------------------------------
+# Hero foreground artwork
+# Fills the empty half of the banner opposite the copy. Hidden on
+# narrow screens, where the text already uses the full width.
+--------------------------------------------------------------*/
+body.home-2026 .hx-hero .hx-hero-art {
+  display: none;
+  margin-left: auto;
+  padding-left: 40px;
+  flex: 0 1 46%;
+  align-items: center;
+  justify-content: center;
+  animation: hx-art-in 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (min-width: 992px) {
+  body.home-2026 .hx-hero .hx-hero-art { display: flex; }
+}
+
+body.home-2026 .hx-hero .hx-hero-art img {
+  width: 100%;
+  max-width: 560px;
+  max-height: 60vh;
+  height: auto;
+  object-fit: contain;
+  /* Lifts the mark off the dark banner without a hard edge. */
+  filter: drop-shadow(0 18px 42px rgba(0, 0, 0, 0.45));
+}
+
+@keyframes hx-art-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-hero .hx-hero-art { animation: none; }
+}
+
+/*--------------------------------------------------------------
+# Courses teaser (live from UjuziPlus)
+# The .course-item styles in inner-pages.css are scoped to
+# body.inner-page, so the home page needs its own copy.
+--------------------------------------------------------------*/
+body.home-2026 .hx-courses-teaser {
+  padding: var(--nv-section-gap) 0 20px;
+}
+
+body.home-2026 .hx-courses-teaser .hx-section-head .hx-pill {
+  color: var(--nv-orange);
+}
+
+body.home-2026 .course-item {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .course-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 44px rgba(7, 18, 54, 0.16);
+}
+
+body.home-2026 .course-item img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+body.home-2026 .course-item .course-content {
+  padding: 22px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+body.home-2026 .course-item .category {
+  display: inline-flex;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--nv-navy);
+  padding: 6px 14px;
+  font-family: var(--nav-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+body.home-2026 .course-item .price {
+  color: var(--nv-orange);
+  font-weight: 700;
+  margin: 0;
+}
+
+body.home-2026 .course-item h3 {
+  color: var(--nv-navy);
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0 0 10px;
+}
+
+body.home-2026 .course-item .description {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  font-size: 14.5px;
+  line-height: 1.75;
+  margin: 0 0 12px;
+}
+
+body.home-2026 .course-item .ujuzi-course-meta {
+  font-family: var(--nav-font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--nv-navy), transparent 45%);
+  margin: 0 0 14px;
+}
+
+body.home-2026 .course-item .course-footer {
+  margin-top: auto;
+}
+
+body.home-2026 .course-item .course-enroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--nv-orange);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+body.home-2026 .course-item .course-enroll:hover i {
+  transform: translateX(4px);
+}
+
+body.home-2026 .course-item .course-enroll i {
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .course-item,
+  body.home-2026 .course-item .course-enroll i { transition: none; }
+  body.home-2026 .course-item:hover { transform: none; }
+}
+
+/* The UjuziPlus lockup above the courses teaser. It is a stacked mark plus
+   wordmark, so it needs more height than the single-line store logo beside
+   it to read at a comparable size. The wordmark is part of the artwork, so
+   no separate label is set next to it. */
+body.home-2026 .hx-ujuzi-logo {
+  display: block;
+  height: 92px;
+  width: auto;
+  margin: 0 auto 20px;
+}
+
+@media (max-width: 575px) {
+  body.home-2026 .hx-ujuzi-logo { height: 70px; }
+}
+
+/*--------------------------------------------------------------
+# Store carousel — "most popular right now"
+# Swiper drives the track; everything below is presentation.
+--------------------------------------------------------------*/
+body.home-2026 .hx-shop-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 16px;
+  font-family: var(--nav-font);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--nv-navy), transparent 40%);
+}
+
+/* A slow pulse signals the list is live without shouting. */
+body.home-2026 .hx-shop-live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+  animation: hx-shop-pulse 2.4s ease-out infinite;
+}
+
+@keyframes hx-shop-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+  70%  { box-shadow: 0 0 0 9px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+body.home-2026 .hx-shop-carousel {
+  position: relative;
+}
+
+/* Slides are clipped to the track, but cards lift on hover — this padding
+   gives that lift somewhere to go instead of being cut off. */
+body.home-2026 .hx-shop-swiper {
+  padding: 10px 4px 14px;
+}
+
+body.home-2026 .hx-shop-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+/* ── card ── */
+body.home-2026 .hx-shop-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: inherit;
+  background: #ffffff;
+  border: 1px solid rgba(11, 27, 84, 0.07);
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  box-shadow: var(--ux-shadow-1, 0 1px 3px rgba(7, 18, 54, 0.07));
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+body.home-2026 .hx-shop-card:hover {
+  transform: translateY(-8px);
+  border-color: color-mix(in srgb, var(--nv-orange), transparent 55%);
+  box-shadow: var(--ux-shadow-3, 0 22px 44px rgba(7, 18, 54, 0.16));
+}
+
+body.home-2026 .hx-shop-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--nv-cream);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  overflow: hidden;
+}
+
+body.home-2026 .hx-shop-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-shop-card:hover .hx-shop-card-media img {
+  transform: scale(1.07);
+}
+
+/* ── badges ── */
+body.home-2026 .hx-shop-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-family: var(--nav-font);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+body.home-2026 .hx-shop-badge--rank { background: var(--nv-navy); }
+body.home-2026 .hx-shop-badge--sale { background: #d33a2c; }
+body.home-2026 .hx-shop-badge--new  { background: #1e8e4a; }
+
+/* Slides up over the image on hover. Pointer devices only — without hover it
+   would simply sit on top of the photograph permanently. */
+body.home-2026 .hx-shop-view {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 0;
+  background: var(--nv-orange);
+  color: #ffffff;
+  font-family: var(--nav-font);
+  font-size: 12.5px;
+  font-weight: 600;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (hover: hover) and (min-width: 768px) {
+  body.home-2026 .hx-shop-view { display: flex; }
+  body.home-2026 .hx-shop-card:hover .hx-shop-view { transform: translateY(0); }
+}
+
+/* ── body ── */
+body.home-2026 .hx-shop-card-body {
+  padding: 15px 17px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+body.home-2026 .hx-shop-card-cat {
+  font-family: var(--nav-font);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--nv-orange);
+}
+
+body.home-2026 .hx-shop-card-body h3 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--nv-navy);
+  line-height: 1.4;
+  margin: 7px 0 0;
+  letter-spacing: -0.012em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.8em;
+}
+
+/* Height is reserved so cards with and without reviews stay aligned. */
+body.home-2026 .hx-shop-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 20px;
+  margin: 6px 0 2px;
+}
+
+body.home-2026 .hx-shop-stars {
+  display: inline-flex;
+  gap: 1px;
+  color: #f2a007;
+  font-size: 11px;
+}
+
+body.home-2026 .hx-shop-rating small {
+  font-size: 11px;
+  color: color-mix(in srgb, var(--nv-navy), transparent 50%);
+}
+
+body.home-2026 .hx-shop-card-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 16.5px;
+  font-weight: 800;
+  color: var(--nv-navy);
+  letter-spacing: -0.015em;
+}
+
+body.home-2026 .hx-shop-card-price s {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--nv-navy), transparent 55%);
+}
+
+body.home-2026 .hx-shop-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 7px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #1e8e4a;
+}
+
+body.home-2026 .hx-shop-stock::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+body.home-2026 .hx-shop-stock--low { color: #d98200; }
+body.home-2026 .hx-shop-stock--out { color: #c0392b; }
+
+/* ── navigation ── */
+body.home-2026 .hx-shop-nav {
+  position: absolute;
+  top: calc(50% - 34px);
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--nv-navy);
+  font-size: 19px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(7, 18, 54, 0.16);
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+@media (min-width: 992px) {
+  body.home-2026 .hx-shop-nav { display: inline-flex; }
+}
+
+body.home-2026 .hx-shop-nav:hover {
+  background: var(--nv-orange);
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+body.home-2026 .hx-shop-nav--prev { left: -14px; }
+body.home-2026 .hx-shop-nav--next { right: -14px; }
+
+body.home-2026 .hx-shop-nav.swiper-button-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ── pagination ── */
+body.home-2026 .hx-shop-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 22px;
+}
+
+body.home-2026 .hx-shop-dots .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  margin: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--nv-navy), transparent 72%);
+  opacity: 1;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+body.home-2026 .hx-shop-dots .swiper-pagination-bullet-active {
+  width: 26px;
+  background: var(--nv-orange);
+}
+
+/* ── loading skeletons ── */
+body.home-2026 .hx-shop-card--skeleton {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid rgba(11, 27, 84, 0.06);
+  box-shadow: none;
+  background: linear-gradient(90deg, #eef0f4 25%, #f7f8fa 37%, #eef0f4 63%);
+  background-size: 400% 100%;
+  animation: hx-shop-shimmer 1.4s linear infinite;
+}
+
+@keyframes hx-shop-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-shop-card,
+  body.home-2026 .hx-shop-card-media img,
+  body.home-2026 .hx-shop-view,
+  body.home-2026 .hx-shop-nav { transition: none; }
+  body.home-2026 .hx-shop-card:hover { transform: none; }
+  body.home-2026 .hx-shop-live { animation: none; }
+  body.home-2026 .hx-shop-card--skeleton { animation: none; background: #eef0f4; }
+}
+
+/*--------------------------------------------------------------
+# Services cards — interaction polish
+--------------------------------------------------------------*/
+
+/* The heading link is stretched across the whole tile, so the entire card is
+   the target rather than just the few words of the title. Everything else in
+   the card sits below this layer, so the photo and copy stay unclickable
+   surfaces rather than competing hit areas. */
+body.home-2026 .hx-service h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+/* The rule under the title extends as the card opens — a small confirmation
+   that the tile responded, without moving any text. */
+body.home-2026 .hx-service .hx-underline {
+  transition: width 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+              background-color 0.45s ease;
+}
+
+body.home-2026 .hx-service:hover .hx-underline {
+  width: 92px;
+}
+
+/* A corner arrow that slides in on hover, echoing the round buttons used
+   elsewhere on the page so the language stays consistent. */
+body.home-2026 .hx-service-body {
+  position: relative;
+}
+
+body.home-2026 .hx-service .hx-service-go {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--nv-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.85);
+  transition: opacity 0.35s ease,
+              transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.3s ease, color 0.3s ease;
+}
+
+body.home-2026 .hx-service:hover .hx-service-go {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+body.home-2026 .hx-service:hover .hx-service-go {
+  background: var(--nv-orange);
+  color: #ffffff;
+}
+
+/* Title lifts slightly as the description opens beneath it, so the block of
+   copy appears to push up into place rather than simply materialising. */
+body.home-2026 .hx-service h3 {
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+body.home-2026 .hx-service:hover h3 {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 991px) {
+  /* Touch screens have no hover, so the description and arrow would never be
+     reachable — they are shown at rest instead. */
+  body.home-2026 .hx-service p {
+    max-height: 200px;
+    opacity: 1;
+  }
+
+  body.home-2026 .hx-service::after {
+    background: linear-gradient(180deg,
+      rgba(7, 18, 54, 0.25) 0%,
+      rgba(7, 18, 54, 0.6) 45%,
+      rgba(11, 27, 84, 0.95) 100%);
+  }
+
+  body.home-2026 .hx-service .hx-service-go {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-2026 .hx-service::after,
+  body.home-2026 .hx-service .hx-underline,
+  body.home-2026 .hx-service .hx-service-go,
+  body.home-2026 .hx-service h3 {
+    transition: none;
+  }
+
+  body.home-2026 .hx-service:hover h3 {
+    transform: none;
+  }
+}
+
+/*--------------------------------------------------------------
+# Testimonials (home page)
+# The section reuses the About page markup, but .hx-block spacing
+# is scoped to inner pages, so the rhythm token is applied here.
+--------------------------------------------------------------*/
+body.home-2026 .hx-testimonials {
+  padding: var(--nv-section-gap) 0 0 0;
+}
+
+/*--------------------------------------------------------------
+# Short viewports
+#
+# These rules are keyed off viewport HEIGHT, and they live at the end of the
+# file on purpose: the width-based breakpoints above set the same properties,
+# and at equal specificity the last rule wins. Placed any earlier, every one
+# of these would be silently overridden by the `max-width: 767px` block — a
+# landscape phone matches both.
+#
+# What they protect is the hero tab row. It is positioned against the bottom
+# of the hero, and the hero is sized by its own content, so when the copy and
+# its padding need more room than the screen has, the hero grows and carries
+# the tab row off the bottom of the fold with it.
+--------------------------------------------------------------*/
+/*
+   The tab row stacks to one column on a narrow screen, which makes it ~192px
+   tall — half the viewport on a phone held sideways. The stack is keyed off
+   width, but the thing that actually runs out there is height, so this rule
+   keys off height instead and puts the tabs back into a single row whenever
+   the screen is too short to afford the stack, whatever its width. Type and
+   padding shrink with it so three labels still fit across.
+*/
+@media (max-height: 700px) {
+  /* On a short screen the hero is sized by its own content — copy plus
+     padding — not by any min-height, so that is what has to give. The
+     padding drops to a thin margin, the display type steps down, and the
+     paragraph is hidden outright below 560px: the headline and the buttons
+     are what a visitor needs in order to act, and a three-line paragraph is
+     what stands between them and a tab row that would otherwise not fit on
+     screen at all. */
+  body.home-2026 .hx-hero .hx-hero-body {
+    padding-top: 16px;
+    padding-bottom: var(--nv-hero-tabs-room);
+    align-items: center;
+  }
+
+  /* ux.css sets this heading at `clamp(2.3rem, 4.6vw, 4.1rem)` and loads
+     after this file, so a plain `.hx-hero h2` here loses to it. Width-based
+     sizing is exactly wrong on a landscape phone — 4.6vw of an 844px-wide
+     screen is a 60px headline in a 390px-tall viewport — so this re-sizes it
+     against the height instead, and carries the extra `.hx-hero-copy` to win
+     on specificity. */
+  body.home-2026 .hx-hero .hx-hero-copy h2 {
+    font-size: clamp(1.4rem, 3.4vh, 2.1rem);
+  }
+
+  body.home-2026 .hx-hero .hx-rule {
+    margin-block: 10px;
+  }
+
+  body.home-2026 .hx-hero-copy p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  body.home-2026 .hx-hero-buttons {
+    margin-top: 14px;
+  }
+
+  body.home-2026 .hx-hero-tabs {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  body.home-2026 .hx-hero-tabs button {
+    padding: 10px 12px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    border-radius: 10px;
+  }
+}
+
+@media (max-height: 560px) {
+  body.home-2026 .hx-hero-copy p {
+    display: none;
+  }
+}

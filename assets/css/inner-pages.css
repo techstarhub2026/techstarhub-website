@@ -1,0 +1,1677 @@
+/*--------------------------------------------------------------
+# Inner pages — the home-2026 design system, applied site-wide
+--------------------------------------------------------------
+  This sheet carries the homepage's design language onto every
+  other page: the same navy/orange/cream palette, the same 12px
+  gutter with rounded full-bleed slabs, the same pill eyebrows,
+  section heads, card fills, button pair and motion curves.
+
+  It is loaded ONLY by the inner pages and every rule is scoped
+  to `body.inner-page`, so index.html is untouched. Where a rule
+  here fights an older `main.css` rule, this sheet wins because
+  it is linked after it.
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Tokens — identical to body.home-2026
+--------------------------------------------------------------*/
+body.inner-page {
+  --nv-navy: #0b1b54;
+  --nv-navy-deep: #071236;
+  --nv-navy-soft: #12266d;
+  --nv-orange: #f7921e;
+  --nv-orange-deep: #e07d0a;
+  --nv-cream: #f2f1ee;
+  --nv-line: rgba(255, 255, 255, 0.16);
+  --nv-radius-lg: 26px;
+  --nv-radius: 20px;
+  --nv-radius-sm: 14px;
+  --nv-gutter: 12px;
+
+  --nv-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --nv-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  background-color: #ffffff;
+}
+
+body.inner-page .main {
+  padding: 0 var(--nv-gutter);
+}
+
+body.inner-page .hx-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Sections are plain wrappers here; the old global padding is retired. */
+body.inner-page section,
+body.inner-page .section {
+  padding: 0;
+  background-color: transparent;
+  overflow: visible;
+  scroll-margin-top: 24px;
+}
+
+body.inner-page .hx-block {
+  padding: 120px 0 0 0;
+}
+
+body.inner-page .hx-block:first-child {
+  padding-top: 108px;
+}
+
+/*--------------------------------------------------------------
+# Shared atoms
+--------------------------------------------------------------*/
+body.inner-page .hx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  padding: 6px 16px;
+  font-family: var(--nav-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.6;
+  color: var(--nv-orange);
+}
+
+body.inner-page .hx-rule {
+  display: inline-block;
+  width: 90px;
+  height: 2px;
+  background: var(--nv-orange);
+}
+
+body.inner-page .hx-section-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 60px auto;
+}
+
+body.inner-page .hx-section-head .hx-pill {
+  margin-bottom: 20px;
+}
+
+body.inner-page .hx-section-head h2 {
+  color: var(--nv-navy);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 3.2vw, 2.85rem);
+  line-height: 1.2;
+  margin: 0;
+}
+
+body.inner-page .hx-section-head p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  margin: 16px 0 0 0;
+  line-height: 1.8;
+}
+
+/* Buttons — the orange pill plus its round companion */
+body.inner-page .hx-btn-primary {
+  background: var(--nv-orange);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-family: var(--nav-font);
+  font-size: 15px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: background-color 0.3s var(--nv-ease), transform 0.3s var(--nv-ease);
+}
+
+body.inner-page .hx-btn-primary:hover {
+  background: var(--nv-orange-deep);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+body.inner-page .hx-round-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--nv-orange);
+  color: #ffffff;
+  font-size: 18px;
+  border: 0;
+  transition: background-color 0.3s var(--nv-ease), color 0.3s var(--nv-ease),
+    transform 0.4s var(--nv-ease-out);
+}
+
+body.inner-page .hx-round-btn:hover {
+  background: #ffffff;
+  color: var(--nv-navy);
+  transform: rotate(45deg);
+}
+
+body.inner-page .hx-cta-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/*--------------------------------------------------------------
+# Header — transparent over the hero, exactly like the homepage
+--------------------------------------------------------------*/
+body.inner-page .hx-shell {
+  margin: var(--nv-gutter) var(--nv-gutter) 0 var(--nv-gutter);
+  background: transparent;
+  border-radius: var(--nv-radius-lg);
+  position: relative;
+}
+
+/* One nav design for the whole site — matches home.css exactly. See that
+   file's own comment for the full reasoning. */
+body.inner-page .header.hx-header {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(11, 27, 84, 0.08);
+  color: #1a1a1a;
+  padding: 14px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(7, 18, 54, 0.08);
+}
+
+body.inner-page .hx-header .hx-brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  line-height: 1;
+}
+
+/* The header itself is opaque and light now (matching home.css), so the
+   torn-paper backing behind the wordmark — there to keep it visible against
+   whatever used to show through a transparent header — is redundant. */
+body.inner-page .hx-header .hx-brand-tape {
+  display: none;
+}
+
+/* Matches home.css: a dark tint rather than a solid white circle, which
+   would be invisible on this bar's own white surface. Inner pages had no
+   dedicated rule for this at all before — it's added here to match. */
+body.inner-page .hx-header .hx-search {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: #1a1a1a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 0;
+}
+
+body.inner-page .hx-header .hx-search:hover {
+  background: var(--nv-orange);
+  color: #ffffff;
+}
+
+body.inner-page .hx-header .hx-brand-logo {
+  position: relative;
+  z-index: 1;
+  max-height: 46px;
+  width: auto;
+  transition: opacity 0.3s var(--nv-ease);
+}
+
+body.inner-page .hx-header .hx-brand:hover .hx-brand-logo {
+  opacity: 0.82;
+}
+
+body.inner-page .hx-header .hx-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.inner-page .hx-header .hx-contact {
+  background: var(--nv-orange);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-family: var(--nav-font);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.3s var(--nv-ease), transform 0.3s var(--nv-ease);
+}
+
+body.inner-page .hx-header .hx-contact:hover {
+  background: var(--nv-orange-deep);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+body.inner-page .navmenu .nav-contact {
+  display: block;
+}
+
+@media (min-width: 1200px) {
+  /* On desktop the orange pill already covers Contact. */
+  body.inner-page .navmenu .nav-contact {
+    display: none;
+  }
+
+  /* Pill-shaped hover/active, matching the home-page header exactly — see
+     home.css for the full reasoning. Dark text now that this bar is opaque
+     and light in every state, not white left over from when it was a
+     transparent overlay on the hero photo. */
+  body.inner-page .hx-header .navmenu a,
+  body.inner-page .hx-header .navmenu a:focus {
+    color: #1a1a1a;
+    font-size: 15px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    transition: color 0.25s ease, background-color 0.25s ease;
+  }
+
+  body.inner-page .hx-header .navmenu li:hover > a {
+    color: #1a1a1a;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  body.inner-page .hx-header .navmenu .active,
+  body.inner-page .hx-header .navmenu .active:focus {
+    color: #ffffff;
+    background: #1a1a1a;
+  }
+
+  body.inner-page .hx-header .navmenu > ul > li > a::after {
+    display: none;
+  }
+
+  /* Events reduced to a plain link, matching home.css and its own mirror in
+     the (now retired) docked header — no reason for it alone to keep a
+     special pill treatment nothing else on this bar has. */
+  body.inner-page .hx-header .navmenu .nav-pill > a {
+    background: none;
+    border-radius: 999px;
+    padding: 10px 16px;
+    color: #1a1a1a;
+  }
+
+  body.inner-page .hx-header .navmenu .nav-pill > a:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  body.inner-page .hx-header .navmenu .nav-pill > a::after {
+    display: none;
+  }
+
+  body.inner-page .hx-header .navmenu .nav-pill--shop > a {
+    background: var(--nv-orange);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+
+  body.inner-page .hx-header .navmenu .nav-pill--shop > a:hover {
+    background: var(--nv-orange-deep);
+  }
+
+  body.inner-page .hx-header .navmenu .dropdown ul {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(7, 18, 54, 0.18);
+    padding: 10px 0;
+  }
+
+  /* The dropdown panel is a solid white surface, not the transparent
+     dark header behind it -- its links need dark, readable text, not
+     the white color meant for the hero. */
+  body.inner-page .hx-header .navmenu .dropdown ul a,
+  body.inner-page .hx-header .navmenu .dropdown ul a:focus {
+    color: var(--nav-dropdown-color, #272828);
+  }
+
+  body.inner-page .hx-header .navmenu .dropdown ul a:hover,
+  body.inner-page .hx-header .navmenu .dropdown ul li:hover > a {
+    color: var(--nv-orange);
+  }
+}
+
+/* Matches home.css: dark for the (now permanently light) closed header;
+   main.css's own white applies once the dark-overlaid mobile panel opens. */
+body.inner-page .mobile-nav-toggle {
+  color: #1a1a1a;
+}
+
+body.inner-page.mobile-nav-active .mobile-nav-toggle {
+  color: #ffffff;
+}
+
+@media (max-width: 1199px) {
+  body.inner-page .hx-header .hx-brand {
+    order: 1;
+  }
+
+  body.inner-page .hx-header .hx-actions {
+    order: 2;
+    margin-left: auto;
+    margin-right: 12px;
+  }
+
+  body.inner-page .hx-header .navmenu {
+    order: 3;
+  }
+
+  body.inner-page .hx-header .hx-contact {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 575px) {
+  body.inner-page .hx-header .hx-brand-logo {
+    max-height: 34px;
+  }
+
+  body.inner-page .hx-header .hx-brand-tape {
+    height: 58px;
+  }
+
+  body.inner-page .hx-header .hx-contact {
+    display: none;
+  }
+}
+
+/*--------------------------------------------------------------
+# Page hero — the inner-page counterpart of the homepage hero
+--------------------------------------------------------------*/
+body.inner-page .hx-page-hero {
+  position: relative;
+  /* The header used to overlay this transparently; now that it's opaque and
+     fixed, the page hero has to start below it instead of underneath it. */
+  margin-top: 76px;
+  border-radius: var(--nv-radius-lg);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  min-height: 460px;
+  display: flex;
+  align-items: flex-end;
+}
+
+body.inner-page .hx-page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg,
+    rgba(4, 10, 30, 0.94) 0%,
+    rgba(4, 10, 30, 0.84) 32%,
+    rgba(4, 10, 30, 0.52) 64%,
+    rgba(4, 10, 30, 0.26) 100%);
+}
+
+body.inner-page .hx-page-hero-body {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 150px 0 64px 0;
+}
+
+body.inner-page .hx-page-hero .hx-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 0 18px 0;
+  padding: 0;
+  font-family: var(--nav-font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+body.inner-page .hx-page-hero .hx-crumbs a {
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.3s var(--nv-ease);
+}
+
+body.inner-page .hx-page-hero .hx-crumbs a:hover {
+  color: var(--nv-orange);
+}
+
+body.inner-page .hx-page-hero .hx-crumbs li + li::before {
+  content: "/";
+  padding: 0 10px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+body.inner-page .hx-page-hero .hx-crumbs .current {
+  color: var(--nv-orange);
+}
+
+body.inner-page .hx-page-hero h1 {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px 0;
+  max-width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+body.inner-page .hx-page-hero p {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 620px;
+  margin: 0;
+}
+
+/* Hero copy rises in on load, matching the homepage's cadence. */
+body.inner-page .hx-page-hero .hx-crumbs {
+  animation: hx-rise 0.8s var(--nv-ease) 0.05s both;
+}
+
+body.inner-page .hx-page-hero h1 {
+  animation: hx-rise 0.8s var(--nv-ease) 0.18s both;
+}
+
+body.inner-page .hx-page-hero p {
+  animation: hx-rise 0.8s var(--nv-ease) 0.32s both;
+}
+
+@keyframes hx-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*--------------------------------------------------------------
+# Feature cards — cream, flipping to navy (the why-card pattern)
+--------------------------------------------------------------*/
+body.inner-page .hx-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+body.inner-page .hx-feature {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  padding: 34px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+body.inner-page .hx-feature i {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: var(--nv-radius-sm);
+  background: var(--nv-orange);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+body.inner-page .hx-feature h4 {
+  color: var(--nv-navy);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  transition: color 0.4s var(--nv-ease);
+}
+
+body.inner-page .hx-feature p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  font-size: 14.5px;
+  line-height: 1.8;
+  margin: 0;
+  transition: color 0.4s var(--nv-ease);
+}
+
+body.inner-page .hx-feature:hover {
+  background: var(--nv-navy);
+}
+
+body.inner-page .hx-feature:hover h4 {
+  color: #ffffff;
+}
+
+body.inner-page .hx-feature:hover p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/*--------------------------------------------------------------
+# Split — copy beside a rounded media panel
+--------------------------------------------------------------*/
+body.inner-page .hx-split {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 70px;
+}
+
+body.inner-page .hx-split-copy h2 {
+  color: var(--nv-navy);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  margin: 20px 0 16px 0;
+}
+
+body.inner-page .hx-split-copy p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  line-height: 1.85;
+  margin: 0;
+}
+
+body.inner-page .hx-split-media {
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  aspect-ratio: 16 / 11;
+}
+
+body.inner-page .hx-split-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--nv-ease);
+}
+
+body.inner-page .hx-split-media:hover img {
+  transform: scale(1.05);
+}
+
+/*--------------------------------------------------------------
+# Stats band — the orange slab
+--------------------------------------------------------------*/
+body.inner-page .hx-stats {
+  background: var(--nv-orange);
+  border-radius: var(--nv-radius-lg);
+  margin-top: 120px;
+  padding: 34px 0;
+}
+
+body.inner-page .hx-stats .hx-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+body.inner-page .hx-stat {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 26px;
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+body.inner-page .hx-stat:last-child {
+  border-right: 0;
+}
+
+body.inner-page .hx-stat .hx-stat-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: var(--nv-radius-sm);
+  background: var(--nv-navy);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: transform 0.45s var(--nv-ease-out);
+}
+
+body.inner-page .hx-stat:hover .hx-stat-icon {
+  transform: translateY(-4px);
+}
+
+body.inner-page .hx-stat .purecounter {
+  display: block;
+  color: var(--nv-navy);
+  font-family: var(--heading-font);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+body.inner-page .hx-stat p {
+  margin: 4px 0 0 0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/*--------------------------------------------------------------
+# Event cards
+--------------------------------------------------------------*/
+body.inner-page .hx-event-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+body.inner-page .hx-event {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body.inner-page .hx-event-media {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+body.inner-page .hx-event-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--nv-ease);
+}
+
+body.inner-page .hx-event:hover .hx-event-media img {
+  transform: scale(1.06);
+}
+
+body.inner-page .hx-event-body {
+  padding: 28px 30px 34px 30px;
+}
+
+body.inner-page .hx-event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+body.inner-page .hx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--nv-navy);
+  padding: 7px 15px;
+  font-family: var(--nav-font);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: background-color 0.35s var(--nv-ease), color 0.35s var(--nv-ease);
+}
+
+body.inner-page .hx-chip i {
+  color: var(--nv-orange);
+  font-size: 13px;
+  transition: color 0.35s var(--nv-ease);
+}
+
+body.inner-page .hx-event:hover .hx-chip {
+  background: var(--nv-orange);
+  color: #ffffff;
+}
+
+body.inner-page .hx-event:hover .hx-chip i {
+  color: #ffffff;
+}
+
+body.inner-page .hx-event h3 {
+  color: var(--nv-navy);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 14px 0;
+}
+
+body.inner-page .hx-event p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  font-size: 14.5px;
+  line-height: 1.85;
+  margin: 0;
+}
+
+/*--------------------------------------------------------------
+# Team — the homepage's hx-member, unchanged
+--------------------------------------------------------------*/
+body.inner-page .hx-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+body.inner-page .hx-member {
+  position: relative;
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: flex-end;
+}
+
+body.inner-page .hx-member img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.7s var(--nv-ease);
+}
+
+body.inner-page .hx-member::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(7, 18, 54, 0) 26%,
+    rgba(7, 18, 54, 0.38) 52%,
+    rgba(7, 18, 54, 0.88) 78%,
+    rgba(7, 18, 54, 0.97) 100%);
+}
+
+body.inner-page .hx-member:hover img {
+  transform: scale(1.05);
+}
+
+body.inner-page .hx-member-info {
+  position: relative;
+  z-index: 2;
+  padding: 26px 24px;
+  width: 100%;
+}
+
+body.inner-page .hx-member-info h4 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+body.inner-page .hx-member-info span {
+  display: block;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13.5px;
+  margin-bottom: 14px;
+}
+
+body.inner-page .hx-member-info .hx-socials {
+  display: flex;
+  gap: 10px;
+}
+
+body.inner-page .hx-member-info .hx-socials a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background-color 0.3s var(--nv-ease), transform 0.35s var(--nv-ease-out);
+}
+
+body.inner-page .hx-member-info .hx-socials a:hover {
+  background: var(--nv-orange);
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+
+/*--------------------------------------------------------------
+# Quotes
+--------------------------------------------------------------*/
+body.inner-page .hx-stars i {
+  color: var(--nv-orange);
+  font-size: 12px;
+  margin-left: 1px;
+}
+
+/*--------------------------------------------------------------
+# Pricing
+--------------------------------------------------------------*/
+body.inner-page .hx-price-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+body.inner-page .hx-price {
+  position: relative;
+  overflow: hidden;
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  padding: 34px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+body.inner-page .hx-price-value {
+  color: var(--nv-navy);
+  font-family: var(--heading-font);
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 20px 0 22px 0;
+}
+
+body.inner-page .hx-price-value sup {
+  font-size: 20px;
+  top: -0.7em;
+  margin-right: 2px;
+}
+
+body.inner-page .hx-price-value span {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: var(--default-font);
+  color: color-mix(in srgb, var(--nv-navy), transparent 50%);
+  margin-left: 4px;
+}
+
+body.inner-page .hx-price ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px 0;
+  width: 100%;
+  flex: 1;
+}
+
+body.inner-page .hx-price ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  font-size: 14.5px;
+  color: color-mix(in srgb, var(--nv-navy), transparent 25%);
+}
+
+body.inner-page .hx-price ul li i {
+  color: var(--nv-orange);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+body.inner-page .hx-price ul li.na {
+  color: color-mix(in srgb, var(--nv-navy), transparent 62%);
+  text-decoration: line-through;
+}
+
+body.inner-page .hx-price ul li.na i {
+  color: color-mix(in srgb, var(--nv-navy), transparent 62%);
+  text-decoration: none;
+}
+
+body.inner-page .hx-price-badge {
+  position: absolute;
+  top: 20px;
+  right: -34px;
+  width: 140px;
+  transform: rotate(45deg);
+  background: var(--nv-orange);
+  color: #ffffff;
+  text-align: center;
+  font-family: var(--nav-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 0;
+  z-index: 2;
+}
+
+/* The featured tier is a navy card — the same inversion the
+   feature cards use on hover, held permanently. */
+body.inner-page .hx-price--featured {
+  background: var(--nv-navy);
+}
+
+body.inner-page .hx-price--featured .hx-pill {
+  color: #ffffff;
+}
+
+body.inner-page .hx-price--featured .hx-price-value {
+  color: #ffffff;
+}
+
+body.inner-page .hx-price--featured .hx-price-value span,
+body.inner-page .hx-price--featured ul li {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+body.inner-page .hx-price--featured ul li.na,
+body.inner-page .hx-price--featured ul li.na i {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+/* The map holds the right-hand column; the info cards and the form
+   sit together on the left and set the row height. */
+body.inner-page .hx-contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+body.inner-page .hx-map {
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  background: var(--nv-cream);
+  display: flex;
+  min-height: 100%;
+}
+
+body.inner-page .hx-map-frame {
+  border: 0;
+  width: 100%;
+  flex: 1;
+  min-height: 420px;
+  display: block;
+}
+
+body.inner-page .hx-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  align-content: start;
+}
+
+body.inner-page .hx-info-col {
+  display: grid;
+  gap: 22px;
+}
+
+body.inner-page .hx-info {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  padding: 26px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+body.inner-page .hx-info-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: var(--nv-radius-sm);
+  background: var(--nv-orange);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  transition: transform 0.45s var(--nv-ease-out);
+}
+
+body.inner-page .hx-info h3 {
+  color: var(--nv-navy);
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  padding: 0;
+  transition: color 0.4s var(--nv-ease);
+}
+
+body.inner-page .hx-info p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  transition: color 0.4s var(--nv-ease);
+}
+
+body.inner-page .hx-info p span {
+  display: block;
+  white-space: nowrap;
+}
+
+body.inner-page .hx-info:hover {
+  background: var(--nv-navy);
+}
+
+body.inner-page .hx-info:hover h3 {
+  color: #ffffff;
+}
+
+body.inner-page .hx-info:hover p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+body.inner-page .hx-info:hover .hx-info-icon {
+  transform: translateY(-3px);
+}
+
+body.inner-page .hx-form-card {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  padding: 34px;
+}
+
+body.inner-page .hx-form input[type=text],
+body.inner-page .hx-form input[type=email],
+body.inner-page .hx-form textarea {
+  width: 100%;
+  font-size: 14.5px;
+  padding: 14px 18px;
+  border-radius: var(--nv-radius-sm);
+  color: var(--nv-navy);
+  background: #ffffff;
+  border: 1px solid transparent;
+  box-shadow: none;
+  transition: border-color 0.3s var(--nv-ease), box-shadow 0.3s var(--nv-ease);
+}
+
+body.inner-page .hx-form input::placeholder,
+body.inner-page .hx-form textarea::placeholder {
+  color: color-mix(in srgb, var(--nv-navy), transparent 55%);
+}
+
+body.inner-page .hx-form input:focus,
+body.inner-page .hx-form textarea:focus {
+  outline: none;
+  border-color: var(--nv-orange);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nv-orange), transparent 80%);
+}
+
+body.inner-page .hx-form button[type=submit] {
+  background: var(--nv-orange);
+  color: #ffffff;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 34px;
+  font-family: var(--nav-font);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.3s var(--nv-ease), transform 0.3s var(--nv-ease);
+}
+
+body.inner-page .hx-form button[type=submit]:hover {
+  background: var(--nv-orange-deep);
+  transform: translateY(-2px);
+}
+
+/*--------------------------------------------------------------
+# Programme detail article
+--------------------------------------------------------------*/
+body.inner-page .hx-article {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+body.inner-page .hx-article-media {
+  overflow: hidden;
+  aspect-ratio: 21 / 9;
+}
+
+body.inner-page .hx-article-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--nv-ease);
+}
+
+body.inner-page .hx-article:hover .hx-article-media img {
+  transform: scale(1.04);
+}
+
+body.inner-page .hx-article-body {
+  padding: 44px clamp(28px, 5vw, 64px) 52px clamp(28px, 5vw, 64px);
+  max-width: 900px;
+}
+
+body.inner-page .hx-article-body h2 {
+  color: var(--nv-navy);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+  line-height: 1.24;
+  letter-spacing: -0.01em;
+  margin: 20px 0 18px 0;
+}
+
+body.inner-page .hx-article-body p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 32%);
+  font-size: 15.5px;
+  line-height: 1.9;
+  margin: 0 0 30px 0;
+}
+
+/*--------------------------------------------------------------
+# Live course cards (injected by the courses API)
+--------------------------------------------------------------*/
+body.inner-page .hx-api-grid {
+  margin-top: 22px;
+}
+
+body.inner-page .hx-api-grid:empty {
+  margin-top: 0;
+}
+
+body.inner-page .course-item {
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+  overflow: hidden;
+  width: 100%;
+}
+
+body.inner-page .course-item img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+body.inner-page .course-item .course-content {
+  padding: 26px 26px 30px 26px;
+}
+
+body.inner-page .course-item .category {
+  display: inline-flex;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--nv-navy);
+  padding: 6px 14px;
+  font-family: var(--nav-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+body.inner-page .course-item .price {
+  color: var(--nv-orange);
+  font-weight: 700;
+  margin: 0;
+}
+
+body.inner-page .course-item .description {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+
+body.inner-page .course-item .course-enroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--nv-orange);
+  font-weight: 600;
+  font-size: 14.5px;
+}
+
+body.inner-page .course-item .course-enroll i {
+  transition: transform 0.35s var(--nv-ease);
+}
+
+body.inner-page .course-item .course-enroll:hover i {
+  transform: translateX(4px);
+}
+
+/*--------------------------------------------------------------
+# Closing CTA band
+--------------------------------------------------------------*/
+body.inner-page .hx-cta {
+  margin: 132px 0 112px 0;
+}
+
+body.inner-page .hx-cta-band {
+  background: var(--nv-navy);
+  border-radius: var(--nv-radius-lg);
+  padding: 52px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+body.inner-page .hx-cta-band .hx-cta-lines {
+  position: absolute;
+  right: 220px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 320px;
+  height: 190px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+body.inner-page .hx-cta-band h2 {
+  color: #ffffff;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+body.inner-page .hx-cta-band p {
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  line-height: 1.8;
+  max-width: 460px;
+}
+
+body.inner-page .hx-cta-band .hx-cta-copy,
+body.inner-page .hx-cta-band .hx-cta-group {
+  position: relative;
+  z-index: 2;
+}
+
+/*--------------------------------------------------------------
+# Motion — the homepage's lift-and-tilt, shared verbatim
+--------------------------------------------------------------*/
+body.inner-page [data-aos] {
+  will-change: transform, opacity;
+}
+
+body.inner-page .hx-feature,
+body.inner-page .hx-event,
+body.inner-page .hx-member,
+body.inner-page .hx-price,
+body.inner-page .hx-info,
+body.inner-page .hx-quote,
+body.inner-page .hx-article,
+body.inner-page .course-item {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(0);
+  transition: transform 0.5s var(--nv-ease-out),
+    box-shadow 0.5s var(--nv-ease-out),
+    background-color 0.4s var(--nv-ease),
+    color 0.4s var(--nv-ease);
+}
+
+body.inner-page .hx-feature:hover,
+body.inner-page .hx-event:hover,
+body.inner-page .hx-member:hover,
+body.inner-page .hx-price:hover,
+body.inner-page .hx-info:hover,
+body.inner-page .hx-quote:hover,
+body.inner-page .hx-article:hover,
+body.inner-page .course-item:hover {
+  transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-8px);
+  box-shadow: 0 26px 52px rgba(7, 18, 54, 0.16);
+}
+
+body.inner-page a:focus-visible,
+body.inner-page button:focus-visible {
+  outline: 2px solid var(--nv-orange);
+  outline-offset: 3px;
+}
+
+/*--------------------------------------------------------------
+# Responsive
+--------------------------------------------------------------*/
+@media (max-width: 1199px) {
+  body.inner-page .hx-feature-grid,
+  body.inner-page .hx-team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  body.inner-page .hx-price-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  body.inner-page .hx-split {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  body.inner-page .hx-page-hero-body {
+    padding: 140px 0 54px 0;
+  }
+}
+
+@media (max-width: 991px) {
+  body.inner-page .hx-block {
+    padding-top: 84px;
+  }
+
+  body.inner-page .hx-block:first-child {
+    padding-top: 84px;
+  }
+
+  body.inner-page .hx-stats {
+    margin-top: 84px;
+  }
+
+  body.inner-page .hx-stats .hx-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 0;
+  }
+
+  body.inner-page .hx-stat:nth-child(2) {
+    border-right: 0;
+  }
+
+  body.inner-page .hx-contact-layout,
+  body.inner-page .hx-contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.inner-page .hx-map {
+    min-height: 0;
+  }
+
+  body.inner-page .hx-map-frame {
+    min-height: 340px;
+  }
+
+  body.inner-page .hx-cta {
+    margin: 88px 0 76px 0;
+  }
+
+  body.inner-page .hx-cta-band {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 30px;
+  }
+
+  body.inner-page .hx-cta-band .hx-cta-lines {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  body.inner-page .hx-inner {
+    padding: 0 16px;
+  }
+
+  body.inner-page .hx-feature-grid,
+  body.inner-page .hx-team-grid,
+  body.inner-page .hx-event-grid,
+  body.inner-page .hx-price-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.inner-page .hx-page-hero {
+    min-height: 400px;
+  }
+
+  body.inner-page .hx-page-hero-body {
+    padding: 128px 0 46px 0;
+  }
+
+  body.inner-page .hx-page-hero h1 {
+    gap: 12px;
+  }
+
+  body.inner-page .hx-page-hero .hx-rule {
+    width: 56px;
+  }
+
+  body.inner-page .hx-stats .hx-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.inner-page .hx-stat {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 16px;
+  }
+
+  body.inner-page .hx-stat:last-child {
+    border-bottom: 0;
+  }
+
+  body.inner-page .hx-form-card,
+  body.inner-page .hx-feature,
+  body.inner-page .hx-price {
+    padding: 26px 22px;
+  }
+
+  body.inner-page .hx-event-body {
+    padding: 24px 22px 28px 22px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Reduced motion
+--------------------------------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
+  body.inner-page .hx-page-hero .hx-crumbs,
+  body.inner-page .hx-page-hero h1,
+  body.inner-page .hx-page-hero p {
+    animation: none;
+  }
+
+  body.inner-page .hx-feature:hover,
+  body.inner-page .hx-event:hover,
+  body.inner-page .hx-member:hover,
+  body.inner-page .hx-price:hover,
+  body.inner-page .hx-info:hover,
+  body.inner-page .hx-quote:hover,
+  body.inner-page .hx-article:hover,
+  body.inner-page .course-item:hover {
+    transform: none;
+  }
+
+  body.inner-page .hx-round-btn:hover {
+    transform: none;
+  }
+}
+
+/*--------------------------------------------------------------
+# UjuziPlus course catalogue — filter chips and card meta line
+--------------------------------------------------------------*/
+body.inner-page .ujuzi-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+body.inner-page .ujuzi-filters:empty {
+  display: none;
+}
+
+body.inner-page .ujuzi-filter {
+  border: 1px solid color-mix(in srgb, var(--nv-navy), transparent 80%);
+  background: #ffffff;
+  color: var(--nv-navy);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: var(--nav-font);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+body.inner-page .ujuzi-filter:hover {
+  border-color: var(--nv-orange);
+  color: var(--nv-orange);
+}
+
+body.inner-page .ujuzi-filter.is-on {
+  background: var(--nv-orange);
+  border-color: var(--nv-orange);
+  color: #ffffff;
+}
+
+body.inner-page .course-item .ujuzi-course-meta {
+  font-family: var(--nav-font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--nv-navy), transparent 45%);
+  margin: 0 0 14px 0;
+}
+
+/*--------------------------------------------------------------
+# Course catalogue — the first block on courses.html
+# Deliberately opens tighter than a normal .hx-block so real
+# courses sit as close to the top of the page as the layout
+# allows, instead of behind a screen of introductory copy.
+--------------------------------------------------------------*/
+body.inner-page .hx-catalogue {
+  padding: 56px 0 0 0;
+}
+
+body.inner-page .hx-catalogue-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+body.inner-page .hx-catalogue-title h2 {
+  color: var(--nv-navy);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  line-height: 1.2;
+  margin: 0;
+}
+
+body.inner-page .hx-catalogue-count {
+  font-family: var(--nav-font);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--nv-navy), transparent 45%);
+  margin: 8px 0 0 0;
+}
+
+/* Inside the catalogue head the chips sit beside the title rather than
+   centred under it, so they never push the cards further down. */
+body.inner-page .hx-catalogue-head .ujuzi-filters {
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
+/* Loading placeholders: the grid holds its shape while the catalogue is
+   fetched, so the top of the page is never momentarily empty. */
+body.inner-page .ujuzi-skeleton {
+  width: 100%;
+  aspect-ratio: 16 / 13;
+  border-radius: var(--nv-radius);
+  background: linear-gradient(90deg, #eef0f4 25%, #f7f8fa 37%, #eef0f4 63%);
+  background-size: 400% 100%;
+  animation: ujuzi-shimmer 1.4s linear infinite;
+}
+
+@keyframes ujuzi-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.inner-page .ujuzi-skeleton { animation: none; background: #eef0f4; }
+}
+
+body.inner-page .ujuzi-empty {
+  text-align: center;
+  padding: 60px 24px;
+  background: var(--nv-cream);
+  border-radius: var(--nv-radius);
+}
+
+body.inner-page .ujuzi-empty i {
+  font-size: 34px;
+  color: color-mix(in srgb, var(--nv-navy), transparent 55%);
+}
+
+body.inner-page .ujuzi-empty h3 {
+  color: var(--nv-navy);
+  font-size: 20px;
+  margin: 14px 0 8px;
+}
+
+body.inner-page .ujuzi-empty p {
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  max-width: 480px;
+  margin: 0 auto 22px;
+  line-height: 1.8;
+}
+
+@media (max-width: 767px) {
+  body.inner-page .hx-catalogue { padding-top: 40px; }
+  body.inner-page .hx-catalogue-head .ujuzi-filters { justify-content: flex-start; }
+}
+
+/*--------------------------------------------------------------
+# Courses page: the intro banner sits below the opening row of
+# courses, so .hx-catalogue, not .hx-page-hero, is the first thing
+# under the header here.
+#
+# The header itself no longer needs a page-specific override — back
+# when it was position:static and painted its own navy fill (this
+# was the one page whose header didn't float over a hero image), that
+# made sense. Now that the header is a single fixed, frosted bar
+# everywhere on the site, this page inheriting the standard
+# body.inner-page treatment is exactly the point: leaving the old
+# override in place pinned this one page to position:static with a
+# solid navy fill, so the (still-dark) inherited link text landed on
+# a background it was never designed for — the bug this comment
+# replaces the cause of.
+--------------------------------------------------------------*/
+
+/* Without an overlapping hero the shell needs its own bottom gap. */
+body.courses-page .hx-shell {
+  margin-bottom: var(--nv-gutter);
+}
+
+/* The catalogue is the first content block, and the header is now a
+   fixed bar rather than something that used to sit in normal flow
+   here — this needs to clear it (matching .hx-page-hero's own 76px
+   elsewhere) on top of the breathing room the section already had. */
+body.courses-page .hx-catalogue {
+  padding-top: 110px;
+}
+
+/* The relocated intro banner is a mid-page block now, not a page cap. */
+body.courses-page .hx-page-hero {
+  min-height: 380px;
+  margin: 18px 0 0 0;
+}
+
+body.courses-page .hx-catalogue-rest {
+  padding-top: 44px;
+}
+
+@media (max-width: 767px) {
+  body.courses-page .hx-catalogue { padding-top: 24px; }
+  body.courses-page .hx-page-hero { min-height: 320px; }
+}

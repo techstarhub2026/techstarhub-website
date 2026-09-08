@@ -1,0 +1,14 @@
+# Reference/scratch material — not part of the shipped site
+/Taifa_Technovation_Hub___Iringa_s_First_Maker_space clone/
+/assets/img-originals-backup/
+__debug_*.html
+CLONE-NOTES.md
+
+# Agent/editor local config
+.claude/
+CLAUDE.md
+.mcp.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
