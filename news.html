@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Starter Page - techstar innovation hub  </title>
+  <title>News - techstar innovation hub  </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -35,10 +35,9 @@
   <link href="assets/css/editorial.css" rel="stylesheet">
   <!-- Premium feel layer (loads last) -->
   <link href="assets/css/premium.css" rel="stylesheet">
-  
 </head>
 
-<body class="starter-page-page inner-page">
+<body class="news-page inner-page">
 
   <div class="hx-shell">
 
@@ -56,7 +55,7 @@
             <li><a href="courses.html">Courses</a></li>
             <li class="dropdown"><a href="#"><span>Projects</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="projects.html">Ongoing Projects</a></li>
+                <li><a href="projects.html" class="active">Ongoing Projects</a></li>
                 <li><a href="projects.html#completed">Completed Projects</a></li>
               </ul>
             </li>
@@ -71,7 +70,7 @@
               <ul>
                 <li><a href="events.html">Upcoming Events</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="news.html">News</a></li>
+                <li><a href="news.html" class="active">News</a></li>
               </ul>
             </li>
             <li class="dropdown"><a href="#"><span>Programs</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -96,40 +95,54 @@
       </div>
     </header>
 
-    <!-- Page Hero -->
-    <div class="hx-page-hero" style="background-image: url('assets/img/slide/slide-4.jpg');">
+  </div>
+  <!-- /Hero Shell -->
+
+  <main class="main">
+    <!-- Live news feed, pulled from the same admin console (and the same
+         blog engine) as the TechStar Store. Full articles are read on the
+         store, where comments and the rest of the blog live; this page is
+         the feed. -->
+    <section id="news" class="hx-block hx-catalogue">
+      <div class="hx-inner">
+
+        <div class="hx-catalogue-head">
+          <div class="hx-catalogue-title">
+            <h2>Latest News</h2>
+            <p class="hx-catalogue-count" id="hx-news-count" aria-live="polite">Loading news&hellip;</p>
+          </div>
+        </div>
+
+        <div class="row gy-4 hx-api-grid" id="hx-news-grid">
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="hx-page-hero" style="background-image: url('assets/img/Projects/bootcamp1.JPG');">
       <div class="hx-page-hero-body">
         <div class="hx-inner">
           <nav class="hx-crumbs" aria-label="Breadcrumb">
             <ol>
               <li><a href="index.html">Home</a></li>
-              <li class="current">Starter Page</li>
+              <li class="current">News</li>
             </ol>
           </nav>
-          <h1>Starter Page <span class="hx-rule"></span></h1>
-          <p>Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
+          <h1>News <span class="hx-rule"></span></h1>
+          <p>Updates, announcements and stories from TechStar Innovation Hub.</p>
         </div>
       </div>
     </div>
-    <!-- /Page Hero -->
 
-  </div>
-  <!-- /Hero Shell -->
-
-  <main class="main">
-    <!-- Starter Section Section -->
-        <section id="starter-section" class="hx-block">
+    <section class="hx-block hx-catalogue-rest">
       <div class="hx-inner">
-
-        <div class="hx-section-head" data-aos="fade-up">
-          <span class="hx-pill">Starter</span>
-          <h2>Starter Section</h2>
-          <p>Use this page as a starter for your own custom pages.</p>
-        </div>
-
+        <div class="row gy-4 hx-api-grid" id="hx-news-grid-rest"></div>
       </div>
-    </section><!-- /Starter Section Section -->
-    <!-- CTA Section -->
+    </section>
+
     <section class="hx-cta">
       <div class="hx-inner">
         <div class="hx-cta-band" data-aos="fade-up">
@@ -147,20 +160,18 @@
           </svg>
 
           <div class="hx-cta-copy">
-            <h2>Need something custom?</h2>
-            <p>Tell us what you're building and we'll help you get started.</p>
+            <h2>Never miss an update</h2>
+            <p>Follow our newsletter or social channels for the latest from TechStar Innovation Hub.</p>
           </div>
 
           <span class="hx-cta-group">
-            <a href="contact.html" class="hx-btn-primary">Contact Us</a>
-            <a href="contact.html" class="hx-round-btn" aria-label="Contact Us"><i class="bi bi-arrow-up-right"></i></a>
+            <a href="contact.html" class="hx-btn-primary">Get in Touch</a>
+            <a href="contact.html" class="hx-round-btn" aria-label="Get in Touch"><i class="bi bi-arrow-up-right"></i></a>
           </span>
 
         </div>
       </div>
     </section>
-    <!-- /CTA Section -->
-
 </main>
 
   <footer id="footer" class="footer hx-footer">
@@ -249,9 +260,11 @@
   <!-- Preloader -->
   <div id="preloader"></div>
 
+
+
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
@@ -261,7 +274,10 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/ux.js"></script>
   <script src="assets/js/inner-pages.js"></script>
+  <script src="assets/js/news-integration.js"></script>
   <script src="assets/js/premium.js"></script>
+  
+  
 
 </body>
 

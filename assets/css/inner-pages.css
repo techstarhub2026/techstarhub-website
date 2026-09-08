@@ -1696,3 +1696,22 @@ body.projects-page .hx-catalogue-rest {
   body.projects-page .hx-catalogue { padding-top: 24px; }
   body.projects-page .hx-page-hero { min-height: 320px; }
 }
+
+/* news.html follows the same layout as courses.html/projects.html. */
+body.news-page .hx-catalogue {
+  padding-top: 110px;
+}
+
+body.news-page .hx-page-hero {
+  min-height: 380px;
+  margin: 18px 0 0 0;
+}
+
+body.news-page .hx-catalogue-rest {
+  padding-top: 44px;
+}
+
+@media (max-width: 767px) {
+  body.news-page .hx-catalogue { padding-top: 24px; }
+  body.news-page .hx-page-hero { min-height: 320px; }
+}
