@@ -369,16 +369,23 @@ h6 {
     visibility: visible;
   }
 
+  /* A nested submenu (Programs, Projects inside Services) used to fly out
+     to the left starting at the same height as its own trigger — inside a
+     plain vertical panel that put it directly on top of the sibling items
+     below (Projects, Services Overview), fighting the very hover it needed
+     to stay open. It now opens to the right of the panel instead, so it
+     never overlaps anything in the parent list regardless of how many
+     siblings sit below the trigger. */
   .navmenu .dropdown .dropdown ul {
     top: 0;
-    left: -90%;
+    left: 100%;
     visibility: hidden;
   }
 
   .navmenu .dropdown .dropdown:hover>ul {
     opacity: 1;
     top: 0;
-    left: -100%;
+    left: 100%;
     visibility: visible;
   }
 }
