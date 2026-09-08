@@ -1675,3 +1675,24 @@ body.courses-page .hx-catalogue-rest {
   body.courses-page .hx-catalogue { padding-top: 24px; }
   body.courses-page .hx-page-hero { min-height: 320px; }
 }
+
+/* projects.html follows the exact same layout as courses.html — a live grid
+   as the first content block, the intro banner relocated mid-page — so it
+   needs the same header-clearance treatment. */
+body.projects-page .hx-catalogue {
+  padding-top: 110px;
+}
+
+body.projects-page .hx-page-hero {
+  min-height: 380px;
+  margin: 18px 0 0 0;
+}
+
+body.projects-page .hx-catalogue-rest {
+  padding-top: 44px;
+}
+
+@media (max-width: 767px) {
+  body.projects-page .hx-catalogue { padding-top: 24px; }
+  body.projects-page .hx-page-hero { min-height: 320px; }
+}

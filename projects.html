@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Gallery - techstar innovation hub  </title>
+  <title>Projects - techstar innovation hub  </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -35,10 +35,9 @@
   <link href="assets/css/editorial.css" rel="stylesheet">
   <!-- Premium feel layer (loads last) -->
   <link href="assets/css/premium.css" rel="stylesheet">
-
 </head>
 
-<body class="gallery-page inner-page">
+<body class="projects-page inner-page">
 
   <div class="hx-shell">
 
@@ -56,7 +55,7 @@
             <li><a href="courses.html">Courses</a></li>
             <li class="dropdown"><a href="#"><span>Projects</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="projects.html">Ongoing Projects</a></li>
+                <li><a href="projects.html" class="active">Ongoing Projects</a></li>
                 <li><a href="projects.html#completed">Completed Projects</a></li>
               </ul>
             </li>
@@ -67,7 +66,7 @@
                 <li><a href="staff.html">Staff</a></li>
               </ul>
             </li>
-            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
             <li class="dropdown"><a href="#"><span>Programs</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="project1-details.html">STEM and IoT - Robotics Bootcamps</a></li>
@@ -91,119 +90,67 @@
       </div>
     </header>
 
-    <!-- Page Hero -->
+  </div>
+  <!-- /Hero Shell -->
+
+  <main class="main">
+    <!-- Live project list, pulled from the same admin console as the rest of
+         the site. Split into Ongoing and Completed so a visitor (or a
+         partner deciding whether to fund something) can tell at a glance
+         what TechStar is doing right now versus what it has already shipped. -->
+    <section id="ongoing-projects" class="hx-block hx-catalogue">
+      <div class="hx-inner">
+
+        <div class="hx-catalogue-head">
+          <div class="hx-catalogue-title">
+            <h2>Ongoing Projects</h2>
+            <p class="hx-catalogue-count" id="hx-project-count-ongoing" aria-live="polite">Loading projects&hellip;</p>
+          </div>
+        </div>
+
+        <div class="row gy-4 hx-api-grid" id="hx-projects-ongoing">
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+        </div>
+
+      </div>
+    </section>
+
     <div class="hx-page-hero" style="background-image: url('assets/img/Projects/bootcamp1.JPG');">
       <div class="hx-page-hero-body">
         <div class="hx-inner">
           <nav class="hx-crumbs" aria-label="Breadcrumb">
             <ol>
               <li><a href="index.html">Home</a></li>
-              <li class="current">Gallery</li>
+              <li class="current">Projects</li>
             </ol>
           </nav>
-          <h1>Gallery <span class="hx-rule"></span></h1>
-          <p>Moments from our bootcamps, workshops and events across Tanzania.</p>
+          <h1>Our Projects <span class="hx-rule"></span></h1>
+          <p>What TechStar Innovation Hub is building right now, and what we&rsquo;ve already delivered &mdash; from community STEM labs to client engineering work.</p>
         </div>
       </div>
     </div>
-    <!-- /Page Hero -->
 
-  </div>
-  <!-- /Hero Shell -->
-
-  <main class="main">
-
-    <section class="hx-block" id="gallery">
+    <section id="completed" class="hx-block hx-catalogue-rest">
       <div class="hx-inner">
 
-        <!--
-          Static fallback grid. gallery-integration.js replaces this whole
-          block once the admin API answers — see that file's header for the
-          data shape an admin-managed photo needs (image + a short caption).
-          If the API is unreachable, slow, or empty, these twelve stay
-          exactly as shipped, same as every other admin-fed section on the
-          site.
-        -->
-        <div class="hx-gallery" id="gallery-grid" data-aos="fade-up">
+        <div class="hx-catalogue-head">
+          <div class="hx-catalogue-title">
+            <h2>Completed Projects</h2>
+            <p class="hx-catalogue-count" id="hx-project-count-completed" aria-live="polite">Loading projects&hellip;</p>
+          </div>
+        </div>
 
-          <a class="hx-gallery-item glightbox" href="assets/img/IWD_hackathon.jpeg" data-glightbox="title: International Women's Day & TeensInAI Hackathon">
-            <img src="assets/img/IWD_hackathon.jpeg" alt="International Women's Day & TeensInAI Hackathon" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">International Women's Day &amp; TeensInAI Hackathon</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/arduino_day.JPG" data-glightbox="title: Arduino Day 2025">
-            <img src="assets/img/arduino_day-web.jpg" alt="Arduino Day 2025" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Arduino Day 2025</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/Projects/bootcamp.JPG" data-glightbox="title: STEM and IoT Robotics Bootcamp">
-            <img src="assets/img/Projects/bootcamp.JPG" alt="STEM and IoT Robotics Bootcamp" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">STEM and IoT Robotics Bootcamp</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/Projects/bootcamp1.JPG" data-glightbox="title: Robotics Bootcamp">
-            <img src="assets/img/Projects/bootcamp1-web.jpg" alt="Robotics Bootcamp" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Robotics Bootcamp</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/Projects/girls-stem.jpeg" data-glightbox="title: Girls In STEM and IoT Robotics Bootcamp">
-            <img src="assets/img/Projects/girls-stem.jpeg" alt="Girls In STEM and IoT Robotics Bootcamp" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Girls In STEM and IoT Robotics Bootcamp</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/Projects/kida-stem.jpeg" data-glightbox="title: Kids STEM and IoT Robotics Bootcamp">
-            <img src="assets/img/Projects/kida-stem.jpeg" alt="Kids STEM and IoT Robotics Bootcamp" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Kids STEM and IoT Robotics Bootcamp</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/Projects/train-trainer.jpeg" data-glightbox="title: Train The Trainer Bootcamp">
-            <img src="assets/img/Projects/train-trainer.jpeg" alt="Train The Trainer Bootcamp" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Train The Trainer Bootcamp</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/Projects/youtha-stem.jpeg" data-glightbox="title: Youth STEM and IoT Robotics Bootcamp">
-            <img src="assets/img/Projects/youtha-stem.jpeg" alt="Youth STEM and IoT Robotics Bootcamp" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Youth STEM and IoT Robotics Bootcamp</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/new_slider/child-making-robot.jpg" data-glightbox="title: Building Robots">
-            <img src="assets/img/new_slider/child-making-robot.jpg" alt="A student building a robot" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Building Robots</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/new_slider/father-son-making-robot.jpg" data-glightbox="title: Family Learning Together">
-            <img src="assets/img/new_slider/father-son-making-robot.jpg" alt="A parent and child building a robot together" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Family Learning Together</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/new_slider/robot-style-car-with-joystick.jpg" data-glightbox="title: Robotics in Action">
-            <img src="assets/img/new_slider/robot-style-car-with-joystick.jpg" alt="A remote-controlled robot car" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">Robotics in Action</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
-          <a class="hx-gallery-item glightbox" href="assets/img/new_slider/school-kids.jpg" data-glightbox="title: School Workshop">
-            <img src="assets/img/new_slider/school-kids.jpg" alt="Students at a school workshop" loading="lazy" decoding="async">
-            <span class="hx-gallery-item__caption">School Workshop</span>
-            <span class="hx-gallery-item__icon"><i class="bi bi-arrows-angle-expand"></i></span>
-          </a>
-
+        <div class="row gy-4 hx-api-grid" id="hx-projects-completed">
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
+          <div class="col-lg-4 col-md-6"><div class="ujuzi-skeleton" aria-hidden="true"></div></div>
         </div>
 
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="hx-cta">
       <div class="hx-inner">
         <div class="hx-cta-band" data-aos="fade-up">
@@ -221,20 +168,18 @@
           </svg>
 
           <div class="hx-cta-copy">
-            <h2>Want to be part of the next photo?</h2>
-            <p>Explore our bootcamps, workshops and events to find the right program for you.</p>
+            <h2>Have a project in mind?</h2>
+            <p>Tell us what you&rsquo;re trying to build &mdash; we work with schools, hubs and businesses across Tanzania.</p>
           </div>
 
           <span class="hx-cta-group">
-            <a href="courses.html" class="hx-btn-primary">Explore Programs</a>
-            <a href="courses.html" class="hx-round-btn" aria-label="Explore Programs"><i class="bi bi-arrow-up-right"></i></a>
+            <a href="contact.html" class="hx-btn-primary">Get in Touch</a>
+            <a href="contact.html" class="hx-round-btn" aria-label="Get in Touch"><i class="bi bi-arrow-up-right"></i></a>
           </span>
 
         </div>
       </div>
     </section>
-    <!-- /CTA Section -->
-
 </main>
 
   <footer id="footer" class="footer hx-footer">
@@ -316,12 +261,12 @@
     </div>
 
   </footer>
-
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
 
 
   <!-- Vendor JS Files -->
@@ -336,8 +281,10 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/ux.js"></script>
   <script src="assets/js/inner-pages.js"></script>
-  <script src="assets/js/gallery-integration.js"></script>
+  <script src="assets/js/projects-integration.js"></script>
   <script src="assets/js/premium.js"></script>
+  
+  
 
 </body>
 
