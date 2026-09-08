@@ -321,6 +321,10 @@ body.inner-page .hx-header .hx-actions {
   display: flex;
   align-items: center;
   gap: 10px;
+  /* Matches home.css: on desktop the nav list and this block are plain flex
+     siblings with no gap of their own, so the Shop pill's orange fill sat
+     almost flush against the search icon beside it. */
+  margin-left: 24px;
 }
 
 body.inner-page .hx-header .hx-contact {

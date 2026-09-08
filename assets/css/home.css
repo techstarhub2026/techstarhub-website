@@ -193,6 +193,11 @@ body.home-2026 .hx-header .hx-actions {
   display: flex;
   align-items: center;
   gap: 10px;
+  /* On desktop the nav list and this block are plain flex siblings with no
+     gap of their own, so the Shop pill's orange fill sat almost flush
+     against the search icon beside it — the two read as one crowded
+     cluster instead of two separate controls. */
+  margin-left: 24px;
 }
 
 /* Was a solid white circle, invisible on this bar's own now-white surface.
