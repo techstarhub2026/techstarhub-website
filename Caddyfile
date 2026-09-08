@@ -1,0 +1,33 @@
+# Static file server for the TechStar Hub website.
+:{$PORT:80}
+
+root * /app
+encode gzip zstd
+
+# Serve /about as well as /about.html
+try_files {path} {path}.html {path}/index.html
+
+# Without an explicit policy here, every browser falls back to its own
+# heuristic caching for every file this server sends — including the pages
+# themselves and the scripts that fetch admin content (site-content.js,
+# news-integration.js, etc.). A heuristic cache can legitimately hold onto
+# an old copy of one of those scripts well past what a user expects a
+# "hard refresh" to clear, especially on mobile browsers, which is exactly
+# what makes an admin's saved change look like it never took effect.
+#
+# HTML and JS/CSS must always be revalidated — `no-cache` still lets the
+# browser keep a copy, but forces a conditional request (ETag) on every
+# load, so a change on the server is picked up the moment it's live rather
+# than whenever a cached copy happens to expire. Only files whose names
+# genuinely never change without changing the file itself (fonts, vendor
+# libraries) get a long cache.
+@html path *.html
+header @html Cache-Control "no-cache"
+
+@script path *.js *.css
+header @script Cache-Control "no-cache"
+
+@immutable path /assets/vendor/* /assets/fonts/*
+header @immutable Cache-Control "public, max-age=31536000, immutable"
+
+file_server
