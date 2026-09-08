@@ -46,43 +46,10 @@
   }
 
   /**
-   * Header search — opens a site-scoped web search, so it works on a static host
+   * Header search now lives in its own file, site-search.js, loaded on
+   * every page rather than gated behind this file's home-2026-only guard —
+   * see that file for the implementation.
    */
-  const searchToggle = document.querySelector('#hx-search-toggle');
-  const searchPanel = document.querySelector('#hx-search-panel');
-  const searchInput = document.querySelector('#hx-search-input');
-  const searchQuery = document.querySelector('#hx-search-q');
-
-  if (searchToggle && searchPanel) {
-    searchToggle.addEventListener('click', () => {
-      const open = searchPanel.classList.toggle('is-open');
-      searchToggle.setAttribute('aria-expanded', String(open));
-      if (open && searchInput) searchInput.focus();
-    });
-
-    searchPanel.addEventListener('submit', event => {
-      const terms = searchInput ? searchInput.value.trim() : '';
-      if (!terms) {
-        event.preventDefault();
-        return;
-      }
-      if (searchQuery) searchQuery.value = 'site:' + window.location.hostname + ' ' + terms;
-    });
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && searchPanel.classList.contains('is-open')) {
-        searchPanel.classList.remove('is-open');
-        searchToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    document.addEventListener('click', event => {
-      if (!searchPanel.classList.contains('is-open')) return;
-      if (searchPanel.contains(event.target) || searchToggle.contains(event.target)) return;
-      searchPanel.classList.remove('is-open');
-      searchToggle.setAttribute('aria-expanded', 'false');
-    });
-  }
 
   /**
    * Subtle pointer-tilt on cards — a light premium touch, skipped on touch

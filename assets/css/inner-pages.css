@@ -223,6 +223,88 @@ body.inner-page .hx-header .hx-search:hover {
   color: #ffffff;
 }
 
+/* The dropdown panel the search button opens. Matches home.css's
+   body.home-2026 rules of the same name exactly — the button itself was
+   already styled for inner pages above, but the panel it toggles never was,
+   so the button opened nothing anywhere except the home page. */
+body.inner-page .hx-search-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 12px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 6px 6px 6px 18px;
+  box-shadow: 0 18px 40px rgba(7, 18, 54, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-10px) scale(0.96);
+  transform-origin: top right;
+  transition: opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.3s;
+}
+
+body.inner-page .hx-search-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.inner-page .hx-search-panel {
+    transform: none;
+  }
+
+  body.inner-page .hx-search-panel.is-open {
+    transform: none;
+  }
+}
+
+body.inner-page .hx-search-input {
+  border: 0;
+  outline: none;
+  min-width: 240px;
+  font-size: 14px;
+  color: var(--nv-navy);
+  background: transparent;
+}
+
+body.inner-page .hx-search-submit {
+  border: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--nv-orange);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.inner-page .hx-search-submit:hover {
+  background: var(--nv-navy);
+}
+
+@media (max-width: 1199px) {
+  body.inner-page .hx-search-panel {
+    right: 16px;
+    left: 16px;
+  }
+
+  body.inner-page .hx-search-input {
+    min-width: 0;
+    flex: 1;
+  }
+}
+
 body.inner-page .hx-header .hx-brand-logo {
   position: relative;
   z-index: 1;

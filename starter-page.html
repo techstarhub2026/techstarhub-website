@@ -95,8 +95,15 @@
         </nav>
 
         <div class="hx-actions">
+          <button type="button" class="hx-search" id="hx-search-toggle" aria-label="Search this site" aria-expanded="false"><i class="bi bi-search"></i></button>
           <a class="hx-contact" href="contact.html">Contact Us</a>
         </div>
+
+        <form class="hx-search-panel" id="hx-search-panel" action="https://www.google.com/search" method="get" target="_blank" rel="noopener">
+          <input type="hidden" name="q" id="hx-search-q">
+          <input type="search" class="hx-search-input" id="hx-search-input" placeholder="Search TechStar Innovation Hub..." aria-label="Search terms">
+          <button type="submit" class="hx-search-submit"><i class="bi bi-arrow-right"></i></button>
+        </form>
 
       </div>
     </header>
@@ -265,6 +272,7 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/ux.js"></script>
+  <script src="assets/js/site-search.js"></script>
   <script src="assets/js/inner-pages.js"></script>
   <script src="assets/js/premium.js"></script>
 
