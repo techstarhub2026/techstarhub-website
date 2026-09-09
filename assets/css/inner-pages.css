@@ -187,6 +187,18 @@ body.inner-page .header.hx-header {
   box-shadow: 0 10px 30px rgba(7, 18, 54, 0.08);
 }
 
+/* Same fix as home.css: a `backdrop-filter` makes this header the containing
+   block for its `position: fixed` descendants, which was clipping the
+   full-screen mobile nav overlay down to this header's own 68px height —
+   only the first menu item was ever visible. The header sits fully behind
+   the opaque nav overlay once it's open, so removing the blur here for that
+   moment is invisible and lets `.navmenu` size itself against the real
+   viewport again. */
+body.inner-page.mobile-nav-active .header.hx-header {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 body.inner-page .hx-header .hx-brand {
   position: relative;
   display: flex;

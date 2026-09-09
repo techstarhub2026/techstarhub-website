@@ -1012,40 +1012,23 @@ body.inner-page #counts .stats-item p {
 
 /* ── 11. the journey band ──────────────────────────────────────────────── */
 /*
-   The signature scroll moment. A 100vh sticky stage holds still while a column
-   of very large words travels through it; a white gradient over the stage eats
-   the top and bottom of the column so words materialise mid-air and dissolve
-   again. The words are the learner's own path, which means the flashiest
-   element on the page is also the one that explains the product.
+   Previously a 100vh sticky stage that held still while a tall column of
+   words scrolled through it — roughly a full viewport of scroll distance
+   per word, five words deep. That read as a wall of near-empty space
+   between this section and its neighbours rather than as a deliberate
+   effect. This is the same five-step story (Explore → Learn → Build →
+   Compete → Lead) as one compact row that fits its own height on the page,
+   revealed with an ordinary staggered fade-up as it scrolls into view.
 */
 .px-journey {
   position: relative;
   background: var(--px-paper);
-  padding-top: 8px;
-}
-
-.px-journey__stage {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  overflow: clip;
-  pointer-events: none;
-  perspective: 1000px;
+  padding-block: clamp(56px, 7vw, 96px);
 }
 
 .px-journey__label {
-  position: absolute;
-  top: clamp(38px, 8vh, 92px);
-  left: 50%;
-  transform: translateX(-50%);
   text-align: center;
-  z-index: 3;
+  margin-bottom: clamp(32px, 4vw, 52px);
 }
 
 .px-journey__label .hx-pill { color: var(--px-orange); }
@@ -1054,95 +1037,63 @@ body.inner-page #counts .stats-item p {
   margin: 16px 0 0;
   font-family: var(--heading-font);
   font-weight: 800;
-  font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
   letter-spacing: -0.032em;
   color: var(--px-ink);
 }
 
-.px-journey__veil {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  /* The clear band in the middle has to be wide enough to hold a whole word
-     plus its label at full strength, or every word reads as half-erased. The
-     opaque ends are what make a word appear from nothing rather than sliding
-     in from an edge. */
-  background: linear-gradient(
-    180deg,
-    var(--px-paper) 13%,
-    rgba(255, 255, 255, 0.86) 27%,
-    rgba(255, 255, 255, 0) 43%,
-    rgba(255, 255, 255, 0) 57%,
-    rgba(255, 255, 255, 0.86) 73%,
-    var(--px-paper) 87%
-  );
-}
-
 .px-journey__reel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  /* Pulled up so the first word is already mid-stage when the band's top edge
-     reaches the top of the screen, and padded below so the last one still has
-     runway to travel through the centre before the stage unpins.
-
-     The bottom padding is deliberately short of a half viewport. A full 50vh
-     brings the final word to the exact centre but leaves half a screen of
-     blank paper trailing the band; 30vh stops it a little below centre, still
-     well inside the clear part of the veil, and returns 180px of dead space
-     to the page. */
-  margin-top: -48vh;
-  padding-bottom: 30vh;
-  overflow: clip;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(16px, 2vw, 28px);
 }
 
 .px-journey__word {
   display: block;
-  width: 100%;
   text-align: center;
+  padding: clamp(20px, 2.4vw, 32px) clamp(10px, 1.4vw, 18px);
+  border-radius: var(--px-r-lg, 20px);
+  background: var(--px-sand, #fbf3ea);
   font-family: var(--heading-font);
   font-weight: 800;
-  font-size: clamp(3rem, 12.5vw, 10.5rem);
-  line-height: 1.06;
-  letter-spacing: -0.055em;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--px-orange);
 }
 
-/* Every other word is drawn as an outline. Solid-then-hollow gives the column
-   rhythm and stops a wall of orange from shouting. */
+/* Every other word is drawn as an outline on a filled tile instead of a solid
+   fill, so neighbours in the row still read as alternating rather than as one
+   flat strip of five identical tiles. */
 .px-journey__word:nth-child(even) {
   color: transparent;
-  -webkit-text-stroke: 2.5px var(--px-orange);
+  -webkit-text-stroke: 1.6px var(--px-orange);
+  background: var(--px-orange);
+  background: color-mix(in srgb, var(--px-orange), transparent 92%);
 }
 
 .px-journey__word small {
   display: block;
-  margin-top: 2px;
-  font-size: clamp(0.62rem, 1vw, 0.78rem);
-  font-weight: 800;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--px-ink-40);
+  margin-top: 8px;
+  font-size: clamp(0.66rem, 1vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--px-ink-55);
   -webkit-text-stroke: 0;
 }
 
-@media (max-width: 991.98px) {
-  /* Sticky plus a tall reel is a lot of scrolling on a phone for a decorative
-     idea, so below the breakpoint the band collapses to an ordinary stack. */
-  .px-journey__stage {
-    position: static;
-    height: auto;
-    padding: 46px 0 26px;
+@media (max-width: 767.98px) {
+  .px-journey__reel {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .px-journey__label { position: static; transform: none; }
-  .px-journey__veil { display: none; }
-  .px-journey__reel { margin-top: 0; padding-bottom: 0; gap: 4px; }
-  /* The stroke is a fixed width but the type is fluid, so at phone sizes the
-     outline words were closing up into solid blobs. */
-  .px-journey__word:nth-child(even) { -webkit-text-stroke-width: 1.2px; }
+}
+
+@media (max-width: 480px) {
+  .px-journey__reel {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── 12. pointer ───────────────────────────────────────────────────────── */
@@ -1395,15 +1346,20 @@ body.inner-page .px-manifesto {
 .px-manifesto__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(36px, 5vw, 84px);
+  gap: clamp(24px, 3vw, 40px);
   margin-top: clamp(34px, 3.6vw, 56px);
 }
 
-/* A rule between the two rather than a box around each. The pair is one
-   statement in two halves, and boxing them would break it into two claims. */
-.px-manifesto__panel + .px-manifesto__panel {
-  border-left: 1px solid rgba(11, 27, 84, 0.18);
-  padding-left: clamp(36px, 5vw, 84px);
+/* Each panel is its own card — a soft light fill, its own rounded border and
+   padding on all sides — rather than one continuous band split by a single
+   rule. Two distinct cards read immediately as "Mission" and "Vision" as two
+   separate things; a shared background with only a divider between them read
+   as one block of text that happened to have a line down the middle. */
+.px-manifesto__panel {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--px-r-lg, 20px);
+  padding: clamp(28px, 3.2vw, 44px);
 }
 
 /* The numeral is ornament: outlined in white, sitting behind its heading and
@@ -1462,15 +1418,6 @@ body.inner-page .px-manifesto {
 
 @media (max-width: 767.98px) {
   .px-manifesto__grid { grid-template-columns: 1fr; }
-
-  /* Stacked, the divider has to turn with the layout or it hangs off the side
-     of the first panel. */
-  .px-manifesto__panel + .px-manifesto__panel {
-    border-left: 0;
-    padding-left: 0;
-    border-top: 1px solid rgba(11, 27, 84, 0.18);
-    padding-top: clamp(30px, 6vw, 44px);
-  }
 }
 
 /* ── 18. services editorial grid ───────────────────────────────────────── */
@@ -1525,11 +1472,17 @@ body.home-2026 .hx-services.hx-svc-band > .hx-inner {
   margin-inline: auto;
 }
 
-/* ── the staggered grid ── */
+/* ── the services grid ──
+   Originally a staggered 12-column "magazine" layout with alternating 7/5
+   spans, vertical offsets and three cycling photo aspect ratios. On a
+   desktop viewport that made every card a different size and put them at
+   different heights, which read as broken rather than intentional — so this
+   is now a plain uniform 3-up grid: one card size, one photo ratio, three per
+   row, same as an ordinary card wall. */
 .hx-editorial {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: clamp(28px, 3.4vw, 52px) clamp(20px, 2.2vw, 32px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 3.4vw, 44px) clamp(20px, 2.2vw, 32px);
   align-items: start;
 }
 
@@ -1576,12 +1529,14 @@ body.home-2026 .hx-services.hx-svc-band > .hx-inner {
   transform: scale(1.06);
 }
 
-/* Three aspect ratios across six items, cycled so that neighbouring cards in
-   a row are never the same shape — that mismatch, more than the vertical
-   offsets alone, is what stops the grid reading as a card wall. */
-.ar-32 { aspect-ratio: 3 / 2; }
-.ar-34 { aspect-ratio: 3 / 4; }
-.ar-43 { aspect-ratio: 4 / 3; }
+/* One shared photo ratio for every card now that the grid is a uniform 3-up
+   wall rather than a staggered layout — mixing ratios only made sense when
+   neighbouring cards were different sizes on purpose. */
+.ar-32,
+.ar-34,
+.ar-43 {
+  aspect-ratio: 4 / 3;
+}
 
 /* ── the body copy ── */
 .hx-ed-item__body {
@@ -1639,13 +1594,19 @@ body.home-2026 .hx-services.hx-svc-band > .hx-inner {
   font-weight: 700;
 }
 
-/* ── column spans + vertical offsets that create the magazine rhythm ── */
-.hx-ed-a { grid-column: span 7; }
-.hx-ed-b { grid-column: span 5; margin-top: clamp(0px, 6vw, 90px); }
-.hx-ed-c { grid-column: span 5; }
-.hx-ed-d { grid-column: span 7; margin-top: clamp(0px, 4vw, 60px); }
-.hx-ed-e { grid-column: span 7; }
-.hx-ed-f { grid-column: span 5; margin-top: clamp(0px, 5vw, 70px); }
+/* ── uniform sizing ──
+   All six cards are the same grid cell now, with no vertical offset, so a
+   1440px-wide viewport shows two even rows of three identically sized
+   cards instead of the old asymmetric stagger. */
+.hx-ed-a,
+.hx-ed-b,
+.hx-ed-c,
+.hx-ed-d,
+.hx-ed-e,
+.hx-ed-f {
+  grid-column: span 1;
+  margin-top: 0;
+}
 
 /* ── the closing CTA ── */
 /*
@@ -1665,30 +1626,28 @@ body.home-2026 .hx-services .hx-svc-cta.hx-btn-primary {
   flex: 0 0 auto;
 }
 
-/* ── responsive ── */
+/* ── responsive ──
+   Three columns on desktop, two on tablet, one (a plain vertical stack) on
+   phones — the grid's own column count changes at each breakpoint, so every
+   card just stays "span 1" throughout. */
 @media (max-width: 991px) {
-  /* Two even columns: the 7/5 asymmetry needs more width than this to read
-     as deliberate, and the vertical offsets are dropped with it so the pairs
-     sit level rather than looking like a layout bug. */
-  .hx-ed-a,
-  .hx-ed-b,
-  .hx-ed-c,
-  .hx-ed-d,
-  .hx-ed-e,
-  .hx-ed-f {
-    grid-column: span 6;
-    margin-top: 0;
+  .hx-editorial {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 575.98px) {
+  .hx-editorial {
+    grid-template-columns: 1fr;
+  }
+
   .hx-ed-a,
   .hx-ed-b,
   .hx-ed-c,
   .hx-ed-d,
   .hx-ed-e,
   .hx-ed-f {
-    grid-column: span 12;
+    grid-column: span 1;
   }
   /* One shared shape once the cards are full width — the varied ratios exist
      to break up a row, and there are no rows left to break. */

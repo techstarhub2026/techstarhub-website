@@ -378,31 +378,32 @@
 
     <!-- Journey Band -->
     <!--
-      The page's signature scroll moment. The stage below is pinned for one
-      viewport height while the column of words travels through it, and a
-      white gradient over the stage dissolves them at the top and bottom
-      edges. It is the flashiest thing on the site and it is also the clearest
-      statement of what a learner actually does here, which is the only reason
-      it earns the space. See premium.css and premium.js for the mechanics; on
-      narrow screens and for prefers-reduced-motion it collapses to a plain
-      stacked list.
+      Five steps, laid out as a single compact row (wrapping to two on
+      tablet, stacking on phone) instead of the previous scroll-pinned word
+      reel — that version held the stage in place for roughly a full
+      viewport height per word, which read as several thousand pixels of
+      near-empty scrolling between this section and the ones around it. This
+      keeps the same five-step story and the alternating solid/outline
+      orange treatment, but reveals it with a simple staggered fade-up
+      (AOS, already used throughout this page) instead of a scroll-jacked
+      pin.
     -->
     <section class="px-journey" id="journey" aria-labelledby="journey-title">
+      <div class="hx-inner">
 
-      <div class="px-journey__stage">
-        <div class="px-journey__label">
+        <div class="px-journey__label" data-aos="fade-up">
           <span class="hx-pill">The Path</span>
           <h2 id="journey-title">Five steps from curious to capable</h2>
         </div>
-        <div class="px-journey__veil" aria-hidden="true"></div>
-      </div>
 
-      <div class="px-journey__reel">
-        <span class="px-journey__word">Explore<small>Find what you want to build</small></span>
-        <span class="px-journey__word">Learn<small>Bootcamps and self-paced courses</small></span>
-        <span class="px-journey__word">Build<small>Real boards, sensors and kits</small></span>
-        <span class="px-journey__word">Compete<small>Hackathons and challenges</small></span>
-        <span class="px-journey__word">Lead<small>Mentor the next cohort</small></span>
+        <div class="px-journey__reel">
+          <span class="px-journey__word" data-aos="fade-up" data-aos-delay="0">Explore<small>Find what you want to build</small></span>
+          <span class="px-journey__word" data-aos="fade-up" data-aos-delay="80">Learn<small>Bootcamps and self-paced courses</small></span>
+          <span class="px-journey__word" data-aos="fade-up" data-aos-delay="160">Build<small>Real boards, sensors and kits</small></span>
+          <span class="px-journey__word" data-aos="fade-up" data-aos-delay="240">Compete<small>Hackathons and challenges</small></span>
+          <span class="px-journey__word" data-aos="fade-up" data-aos-delay="320">Lead<small>Mentor the next cohort</small></span>
+        </div>
+
       </div>
 
     </section>

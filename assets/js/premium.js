@@ -21,7 +21,6 @@
  *   5. magnets        — pointer attraction on the round buttons
  *   6. spotlights     — pointer-tracked warmth across cards
  *   7. marquee        — the partner logo band
- *   8. journey        — depth on the sticky word reel
  *   9. cursor         — the trailing pointer ring
  *  10. curtain        — the load-in sheet
  *  11. heroSlides     — re-arm the hero reveals on every carousel change
@@ -497,50 +496,6 @@
     });
   }
 
-  /* ── 8. journey depth ───────────────────────────────────────────────── */
-  /**
-   * The sticky word reel works on scroll position alone, but flat words
-   * sliding past look like a list. Scaling and fading each word by its
-   * distance from the centre of the stage gives the column depth, so words
-   * appear to travel toward the viewer and away again.
-   *
-   * Only the words currently on screen are measured, and the work happens in a
-   * single rAF per scroll event.
-   */
-  function journey() {
-    var reel = document.querySelector('.px-journey__reel');
-    if (!reel || reduced) return;
-    if (window.matchMedia('(max-width: 991.98px)').matches) return;
-
-    var words = Array.prototype.slice.call(reel.querySelectorAll('.px-journey__word'));
-    if (!words.length) return;
-
-    var ticking = false;
-
-    function frame() {
-      var mid = window.innerHeight / 2;
-      words.forEach(function (word) {
-        var r = word.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
-        // 0 at the centre of the stage, 1 at either edge.
-        var d = Math.min(1, Math.abs((r.top + r.height / 2) - mid) / mid);
-        // Scale carries the depth. Opacity is left mostly to the veil
-        // gradient over the stage; fading here as well double-dips and leaves
-        // words looking washed out well before they reach the edge.
-        var scale = 1 - d * 0.24;
-        word.style.transform = 'scale(' + scale.toFixed(3) + ')';
-        word.style.opacity = (1 - d * 0.25).toFixed(3);
-      });
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(frame); }
-    }, { passive: true });
-    window.addEventListener('resize', frame, { passive: true });
-    frame();
-  }
-
   /* ── 9. the pointer ─────────────────────────────────────────────────── */
   /**
    * A dot locked to the pointer and a ring that lags behind it. The lag is
@@ -693,7 +648,6 @@
     magnets();
     spotlights();
     marquee();
-    journey();
     cursor();
     heroSlides();
   }

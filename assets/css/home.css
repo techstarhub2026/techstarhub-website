@@ -168,6 +168,21 @@ body.home-2026 .header.hx-header {
   z-index: 1000;
 }
 
+/* A `backdrop-filter` (like `transform`) makes its element the containing
+   block for any `position: fixed` descendant — including `.navmenu` once
+   `.mobile-nav-active` switches it to `position: fixed; inset: 0`. Instead
+   of resolving against the viewport, that `inset: 0` was resolving against
+   this 68px-tall header, so the full-screen mobile menu was clipped down to
+   a sliver with only its first item visible. The header is fully hidden
+   behind the opaque mobile nav overlay the instant it opens (see main.css's
+   `.mobile-nav-active .navmenu` background), so dropping the blur here for
+   that moment is invisible — and it lets `.navmenu` escape to the real
+   viewport again. */
+body.home-2026.mobile-nav-active .header.hx-header {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 body.home-2026 .hx-header .hx-brand {
   position: relative;
   display: flex;
