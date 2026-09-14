@@ -2640,3 +2640,20 @@ body.inner-page .hx-event-empty[hidden] {
   background: rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
+
+/* ── AOS failsafe ────────────────────────────────────────────────────────
+   Every [data-aos] element is invisible until AOS initialises, and the
+   directional variants also start translated up to 100px away — which is
+   how the "What We Offer" copy ended up stranded off the left edge of a
+   phone screen. If AOS never runs (its script blocked, a JS error earlier
+   on the page, a browser that failed to parse it), that content is not
+   merely un-animated, it is permanently unreachable.
+
+   AOS sets `aos-init` on every element it takes ownership of, so anything
+   still lacking that class is content AOS never reached: show it, plainly
+   and unmoved. Once AOS does initialise, the class lands and its own rules
+   take over, so this costs the animation nothing. */
+[data-aos]:not(.aos-init) {
+  opacity: 1 !important;
+  transform: none !important;
+}

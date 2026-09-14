@@ -360,17 +360,36 @@
     // asked for reduced motion would get no AOS.init() at all now that this
     // is the only call, and every [data-aos] element would stay at its
     // pre-reveal opacity: 0 forever.
+    //
+    // Init runs as soon as the DOM is parsed rather than on `load`. Every
+    // [data-aos] element starts at opacity 0 — and `fade-right` also starts
+    // translated 100px off to the side — so for as long as AOS has not
+    // initialised, that content is invisible or sitting outside the
+    // viewport. Waiting for `load` meant waiting for every image on the page
+    // to finish downloading first, which on a phone over a slow connection
+    // left the "What We Offer" copy stranded off the left edge and the rest
+    // of the page blank for seconds. A refresh on `load` still picks up the
+    // final positions once images have settled and changed the layout.
+    function startAos() {
+      if (!window.AOS || typeof window.AOS.init !== 'function') return;
+      window.AOS.init({
+        duration: reduced ? 0 : 620,
+        easing: 'ease-out-cubic',
+        offset: 90,
+        once: true,
+        mirror: false,
+        disable: reduced,
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', startAos);
+    } else {
+      startAos();
+    }
+
     window.addEventListener('load', function () {
-      if (window.AOS && typeof window.AOS.init === 'function') {
-        window.AOS.init({
-          duration: reduced ? 0 : 620,
-          easing: 'ease-out-cubic',
-          offset: 90,
-          once: true,
-          mirror: false,
-          disable: reduced,
-        });
-      }
+      if (window.AOS && typeof window.AOS.refresh === 'function') window.AOS.refresh();
     });
   }
 
