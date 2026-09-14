@@ -1695,35 +1695,6 @@ body.home-2026 .hx-services .hx-svc-cta.hx-btn-primary {
   overflow: clip;
 }
 
-/* The seam: a thin orange line fading out toward both edges, sitting just
-   inside the top of the band rather than as a hard border between it and
-   whatever section precedes it. */
-.footer.hx-footer::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    var(--px-orange) 22%,
-    var(--px-orange) 78%,
-    transparent 100%);
-}
-
-/* A soft radial of the brand orange low in the corner — the one place on a
-   dark footer that can carry a glow without it reading as a stray light
-   leak, because there is no photograph or card underneath it to clash
-   with. Barely-there: this is texture, not a feature. */
-.footer.hx-footer::after {
-  content: "";
-  position: absolute;
-  inset: auto auto -30% -10%;
-  width: 46%;
-  aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(247, 146, 30, 0.16) 0%, transparent 70%);
-  pointer-events: none;
-}
-
 .hx-footer-top {
   position: relative;
   z-index: 1;
