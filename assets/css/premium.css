@@ -2607,3 +2607,36 @@ body.inner-page .hx-event-empty[hidden] {
   body.inner-page .hx-event-status--live::before { animation: none; }
   body.inner-page .hx-showcase-row.is-past .hx-showcase-media img { transition: none; }
 }
+
+/* ── UjuziPlus header button ─────────────────────────────────────────────
+   The sister learning platform, reachable from every page's action row.
+   Defined here rather than in home.css or inner-pages.css because both
+   page types load this file last, and the button appears on both.
+
+   Sized as the same 40px circle as the search control beside it so the
+   row keeps one height. The full logo stacks its wordmark beneath the
+   head mark, which is far too tall for a bar control, so the button
+   carries the mark on its own. */
+.hx-header .hx-ujuzi-btn {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 150ms ease-out, transform 150ms ease-out;
+}
+
+.hx-header .hx-ujuzi-btn img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.hx-header .hx-ujuzi-btn:hover {
+  background: rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}

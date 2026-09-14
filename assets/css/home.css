@@ -253,33 +253,6 @@ body.home-2026 .hx-header .hx-contact:hover {
   transform: translateY(-2px);
 }
 
-/* UjuziPlus, the sister learning platform — the logo carries its own
-   wordmark, so the button is the logo alone with no label beside it. */
-body.home-2026 .hx-header .hx-ujuzi-btn,
-body.inner-page .hx-header .hx-ujuzi-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.05);
-  transition: background-color 150ms ease-out, transform 150ms ease-out;
-}
-
-/* The artwork stacks the head mark above the wordmark, so it is far taller
-   than a bar control; sizing it by width keeps the wordmark readable and
-   lets the button set its own height. */
-body.home-2026 .hx-header .hx-ujuzi-btn img,
-body.inner-page .hx-header .hx-ujuzi-btn img {
-  width: 76px;
-  height: auto;
-  display: block;
-}
-
-body.home-2026 .hx-header .hx-ujuzi-btn:hover,
-body.inner-page .hx-header .hx-ujuzi-btn:hover {
-  background: rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-}
 
 @media (min-width: 1200px) {
   /*
