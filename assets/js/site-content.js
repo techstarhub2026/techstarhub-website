@@ -312,18 +312,51 @@
   }
 
   // ── impact counters ────────────────────────────────────────────────
-  function renderStats(stats) {
-    var row = document.querySelector('#counts .row');
-    if (!row || !stats.length) return;
+  /**
+   * The same four numbers appear on the home page and on About, in two
+   * different layouts: a plain Bootstrap row here, an icon grid there. Only
+   * the home page was ever wired to the admin, so About kept whatever had
+   * been typed into its markup — the two pages showed different figures for
+   * the same statistic, and neither matched what an administrator had set.
+   *
+   * Both are rendered from the one source now. About's grid keeps its icons,
+   * matched to each statistic by position, since the admin does not store
+   * one.
+   */
+  var STAT_ICONS = ['bi-mortarboard', 'bi-building', 'bi-lightbulb', 'bi-cpu'];
 
-    row.innerHTML = stats.map(function (s) {
-      return '<div class="col-lg-3 col-md-6">'
-        + '<div class="stats-item text-center w-100 h-100">'
-        + '<span data-purecounter-start="0" data-purecounter-end="' + Number(s.value)
-        + '" data-purecounter-duration="1" class="purecounter"></span>'
-        + '<p>' + esc(s.label) + (s.suffix ? esc(s.suffix) : '') + '</p>'
-        + '</div></div>';
-    }).join('');
+  function counterSpan(value) {
+    return '<span data-purecounter-start="0" data-purecounter-end="' + Number(value)
+      + '" data-purecounter-duration="1" class="purecounter"></span>';
+  }
+
+  function renderStats(stats) {
+    if (!stats.length) return;
+
+    var row = document.querySelector('#counts .row');
+    var grid = document.querySelector('#counts .hx-stat-grid');
+
+    if (row) {
+      row.innerHTML = stats.map(function (s) {
+        return '<div class="col-lg-3 col-md-6">'
+          + '<div class="stats-item text-center w-100 h-100">'
+          + counterSpan(s.value)
+          + '<p>' + esc(s.label) + (s.suffix ? esc(s.suffix) : '') + '</p>'
+          + '</div></div>';
+      }).join('');
+    }
+
+    if (grid) {
+      grid.innerHTML = stats.map(function (s, i) {
+        return '<div class="hx-stat">'
+          + '<span class="hx-stat-icon"><i class="bi ' + (STAT_ICONS[i] || 'bi-star') + '"></i></span>'
+          + '<div>' + counterSpan(s.value)
+          + '<p>' + esc(s.label) + (s.suffix ? esc(s.suffix) : '') + '</p>'
+          + '</div></div>';
+      }).join('');
+    }
+
+    if (!row && !grid) return;
 
     // PureCounter latched onto the elements we just discarded.
     if (typeof window.PureCounter === 'function') new window.PureCounter();
