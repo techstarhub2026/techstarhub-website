@@ -2172,22 +2172,20 @@ body.inner-page .hx-showcase-row:nth-child(even) .hx-showcase-media {
   order: 2;
 }
 
+/* The photographs are 3:2, and forcing them into a 4:3 frame with
+   object-fit: cover cropped a strip off the top and bottom of every one.
+   The frame takes the picture's own proportions instead, so what was shot
+   is what is shown. */
 body.inner-page .hx-showcase-media {
   border-radius: var(--px-r-lg);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
   box-shadow: var(--px-sh-2);
 }
 
 body.inner-page .hx-showcase-media img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--px-t-3) var(--px-ease);
-}
-
-body.inner-page .hx-showcase-row:hover .hx-showcase-media img {
-  transform: scale(1.045);
+  height: auto;
 }
 
 body.inner-page .hx-showcase-body {
@@ -2545,17 +2543,10 @@ body.inner-page .hx-event-status--past {
   color: var(--px-ink-55);
 }
 
-/* A finished event's photograph steps back so the upcoming ones read first
-   in a mixed list. Restored on hover — it is still real content, not a
-   disabled control. */
-body.inner-page .hx-showcase-row.is-past .hx-showcase-media img {
-  filter: saturate(0.55);
-  transition: filter var(--px-t-2) var(--px-ease), transform var(--px-t-3) var(--px-ease);
-}
-
-body.inner-page .hx-showcase-row.is-past:hover .hx-showcase-media img {
-  filter: saturate(1);
-}
+/* A finished event used to have its photograph desaturated to 55% so the
+   upcoming ones read first. It made every past event's picture look washed
+   out and poorly reproduced — the photographs are shown as taken now, and
+   the "Past" badge is what marks them as finished. */
 
 /* ── the filter bar ── */
 body.inner-page .hx-event-filters {
@@ -2619,7 +2610,6 @@ body.inner-page .hx-event-empty[hidden] {
 
 @media (prefers-reduced-motion: reduce) {
   body.inner-page .hx-event-status--live::before { animation: none; }
-  body.inner-page .hx-showcase-row.is-past .hx-showcase-media img { transition: none; }
 }
 
 /* ── UjuziPlus header button ─────────────────────────────────────────────
