@@ -278,11 +278,27 @@ body.home-2026 .hx-header .hx-contact:hover {
   }
 
   /* After the hover rule, so a hovered active link stays solid rather than
-     being overridden by the lighter hover tint. */
+     being overridden by the lighter hover tint.
+
+     The pill used to be near-black, which belongs to no part of the brand
+     and turned whichever nav item matched the current page into a dark slab
+     — a dropdown entry like "Board" read as disabled rather than current.
+     The brand orange marks the current page instead. */
   body.home-2026 .hx-header .navmenu .active,
   body.home-2026 .hx-header .navmenu .active:focus {
     color: #ffffff;
-    background: #1a1a1a;
+    background: var(--nv-orange);
+  }
+
+  /* main.css colours every dropdown link through a more specific selector,
+     so the white above never reached one — an active entry ended up dark
+     grey text on the orange pill. Matched at the same depth here. */
+  body.home-2026 .hx-header .navmenu .dropdown ul a.active,
+  body.home-2026 .hx-header .navmenu .dropdown ul a.active:focus,
+  body.home-2026 .hx-header .navmenu .dropdown ul a.active:hover,
+  body.home-2026 .hx-header .navmenu .dropdown ul li:hover > a.active {
+    color: #ffffff;
+    background: var(--nv-orange);
   }
 
   body.home-2026 .hx-header .navmenu > ul > li > a::after {

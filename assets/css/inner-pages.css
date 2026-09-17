@@ -385,10 +385,25 @@ body.inner-page .navmenu .nav-contact {
     background: rgba(0, 0, 0, 0.06);
   }
 
+  /* The pill used to be near-black, which belongs to no part of the brand
+     and turned whichever nav item matched the current page into a dark slab
+     — a dropdown entry like "Board" read as disabled rather than current.
+     The brand orange marks the current page instead. */
   body.inner-page .hx-header .navmenu .active,
   body.inner-page .hx-header .navmenu .active:focus {
     color: #ffffff;
-    background: #1a1a1a;
+    background: var(--nv-orange);
+  }
+
+  /* main.css colours every dropdown link through a more specific selector,
+     so the white above never reached one — an active entry ended up dark
+     grey text on the orange pill. Matched at the same depth here. */
+  body.inner-page .hx-header .navmenu .dropdown ul a.active,
+  body.inner-page .hx-header .navmenu .dropdown ul a.active:focus,
+  body.inner-page .hx-header .navmenu .dropdown ul a.active:hover,
+  body.inner-page .hx-header .navmenu .dropdown ul li:hover > a.active {
+    color: #ffffff;
+    background: var(--nv-orange);
   }
 
   body.inner-page .hx-header .navmenu > ul > li > a::after {
