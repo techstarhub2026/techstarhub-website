@@ -1545,11 +1545,15 @@ body.home-2026 .hx-services.hx-svc-band > .hx-inner {
   gap: 9px;
 }
 
+/* The category sat hard against the right edge, pushed there by
+   space-between, leaving a wide gap mid-line — "Coding & AI" and "Training"
+   read as two separate things rather than one label. They sit together now,
+   wrapping only if the pair runs out of room. */
 .hx-ed-item__head {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 4px 10px;
 }
 
 .hx-ed-item__title {
@@ -1582,11 +1586,21 @@ body.home-2026 .hx-services.hx-svc-band > .hx-inner {
   white-space: nowrap;
 }
 
+/* Start and Path used to run together as one paragraph, so they wrapped into
+   each other and the two halves of the story were hard to tell apart. Each
+   gets its own line. */
 .hx-ed-item__path {
   font-size: 0.97rem;
   line-height: 1.62;
   color: var(--px-ink-55);
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hx-ed-item__line {
+  display: block;
 }
 
 .hx-ed-item__path b {
