@@ -1,24 +1,24 @@
 /**
- * Page headers — the title band at the top of each inner page.
+ * Page headers — the per-page title, standfirst and photograph.
  *
- * Each page's heading and standfirst used to live in its own markup, so
- * changing one meant editing HTML. They are records now; this replaces what
- * the page ships with once the admin answers, and leaves the markup exactly
- * as it is when it does not — a CMS outage must never blank a page's title.
+ * Each page's heading lived in its own markup, so changing one meant editing
+ * HTML. They are records now. What the reader sees at the top of a page is
+ * just a breadcrumb: the tall photographic band that used to sit there put
+ * 600px of decoration above content, and repeated a heading each page's own
+ * first section already carries.
  *
- * The page says which record it wants through `data-page-key` on the band.
- * A photograph on the record is placed *after* the page's first content
- * section rather than behind the title: these bands used to be 600px of
- * full-bleed photography that pushed everything a reader came for below the
- * fold, which is exactly what this replaces.
+ * So a record's title and standfirst are written into that first section's
+ * heading, and its photograph is placed inside the content — not above it.
+ * The page's own markup is the fallback throughout: a CMS outage must never
+ * blank a page.
  */
 (function () {
   var API = 'https://store-production-1570.up.railway.app/api/v1';
 
-  var band = document.querySelector('.hx-page-hero[data-page-key]');
-  if (!band) return;
+  var intro = document.querySelector('.hx-page-intro[data-page-key]');
+  if (!intro) return;
 
-  var key = band.getAttribute('data-page-key');
+  var key = intro.getAttribute('data-page-key');
 
   function esc(v) {
     return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
@@ -26,33 +26,42 @@
     });
   }
 
+  /** The heading block of the page's first real section. */
+  function firstHead() {
+    var main = document.querySelector('main.main');
+    return main ? main.querySelector('.hx-section-head') : null;
+  }
+
   function apply(header) {
     if (!header) return;
 
-    if (header.title) {
-      var h1 = band.querySelector('h1');
-      // The rule is a decorative bar inside the heading; keep it.
-      if (h1) h1.innerHTML = esc(header.title) + ' <span class="hx-rule"></span>';
+    var head = firstHead();
+
+    if (head && header.title) {
+      var h2 = head.querySelector('h2');
+      // Only replace a heading the page has not already personalised with
+      // markup of its own — an <h2> carrying spans is a designed thing.
+      if (h2 && h2.children.length === 0) h2.textContent = header.title;
     }
 
-    if (header.standfirst) {
-      var p = band.querySelector('.hx-inner > p');
+    if (head && header.standfirst) {
+      var p = head.querySelector('p');
       if (p) p.textContent = header.standfirst;
+      else {
+        var added = document.createElement('p');
+        added.textContent = header.standfirst;
+        head.appendChild(added);
+      }
     }
 
     if (header.image) {
-      var main = document.querySelector('main.main');
-      var firstBlock = main && main.querySelector('.hx-block');
-      if (!firstBlock) return;
-
       var figure = document.createElement('figure');
       figure.className = 'hx-page-figure';
-      figure.innerHTML = '<img src="' + esc(header.image) + '" alt="' + esc(header.title || '') + '" loading="lazy" decoding="async">';
+      figure.innerHTML = '<img src="' + esc(header.image) + '" alt="' +
+        esc(header.title || '') + '" loading="lazy" decoding="async">';
 
-      var inner = firstBlock.querySelector('.hx-inner');
-      var head = inner && inner.querySelector('.hx-section-head');
+      // After the section heading, so the page still opens with words.
       if (head && head.parentNode) head.parentNode.insertBefore(figure, head.nextSibling);
-      else if (inner) inner.insertBefore(figure, inner.firstChild);
     }
   }
 

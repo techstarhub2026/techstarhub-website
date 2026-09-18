@@ -77,64 +77,13 @@ body.inner-page p,
 body.home-2026 li,
 body.inner-page li {
   text-wrap: pretty;
-}
-
-/*--------------------------------------------------------------
-# 3. Display type — the hero
-#
-# The headline is the one place the page gets to be loud. It was
-# topping out around 65px in a 620px column, which reads as a
-# large paragraph rather than a statement.
---------------------------------------------------------------*/
-body.home-2026 .hx-hero .hx-hero-copy,
-body.inner-page .hx-page-hero .hx-page-hero-body {
-  max-width: 760px;
-}
-
-body.home-2026 .hx-hero h2,
-body.inner-page .hx-page-hero h1 {
-  font-family: var(--nv-display);
-  font-size: var(--t-display);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: var(--tr-display);
-  margin-bottom: 24px;
-  gap: 14px 22px;
-}
-
-/* The accent rule reads as part of the headline, so it should grow
-   with it rather than staying a fixed 90px hairline next to 74px
-   type. */
-body.home-2026 .hx-hero h2 .hx-rule,
-body.inner-page .hx-page-hero h1 .hx-rule {
-  width: clamp(56px, 7vw, 108px);
-  height: 4px;
-  border-radius: 2px;
-  background: linear-gradient(90deg,
-    var(--nv-orange),
-    color-mix(in srgb, var(--nv-orange), #ffffff 45%));
-}
-
-body.home-2026 .hx-hero p,
-body.inner-page .hx-page-hero p {
-  line-height: 1.7;
-  max-width: 56ch;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-/* The home hero carries one sentence, so it can take the full lead size.
+}/* The home hero carries one sentence, so it can take the full lead size.
    Inner-page heroes carry a whole opening paragraph — About runs seven
    lines — and at 20px that becomes the loudest thing on the page. */
 body.home-2026 .hx-hero p {
   font-size: var(--t-lead);
   margin-bottom: 36px;
-}
-
-body.inner-page .hx-page-hero p {
-  font-size: clamp(1.02rem, 0.98rem + 0.3vw, 1.15rem);
-}
-
-/*--------------------------------------------------------------
+}/*--------------------------------------------------------------
 # 4. Section headings
 #
 # Eyebrow, headline, lead — at a fixed ratio, on every section of

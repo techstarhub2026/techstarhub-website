@@ -517,94 +517,57 @@ body.inner-page.mobile-nav-active .mobile-nav-toggle {
    navy header now, and the page's real content starts near the top of the
    screen. Pages that have a photograph worth showing place it within their
    own content instead. */
-body.inner-page .hx-page-hero {
-  position: relative;
-  /* The header used to overlay this transparently; now that it's opaque and
-     fixed, the page hero has to start below it instead of underneath it. */
-  margin-top: 76px;
-  border-radius: var(--nv-radius-lg);
-  overflow: hidden;
-  background: linear-gradient(100deg, var(--nv-navy-deep) 0%, var(--nv-navy) 62%, var(--nv-navy-soft) 100%);
-  display: flex;
-  align-items: flex-end;
+/* The page band is a breadcrumb strip now, not a header.
+
+   It used to be a 460px photograph under 150px of padding carrying a title
+   and standfirst — over 600px of decoration before a reader reached anything
+   the page is about, repeating a heading each page's own first section
+   already provides. What is left is the breadcrumb, at the height a
+   breadcrumb deserves; the title and standfirst stay on the element as data
+   attributes so the admin can still edit them, and any photograph the record
+   carries is placed within the page's content instead. */
+body.inner-page .hx-page-intro {
+  margin-top: calc(76px + 20px);
+  padding: 0 0 4px 0;
 }
 
-body.inner-page .hx-page-hero-body {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  padding: 40px 0 36px 0;
-}
-
-body.inner-page .hx-page-hero .hx-crumbs ol {
+body.inner-page .hx-page-intro .hx-crumbs ol {
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  margin: 0 0 18px 0;
+  margin: 0;
   padding: 0;
   font-family: var(--nav-font);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: color-mix(in srgb, var(--nv-navy), transparent 45%);
 }
 
-body.inner-page .hx-page-hero .hx-crumbs a {
-  color: rgba(255, 255, 255, 0.6);
+body.inner-page .hx-page-intro .hx-crumbs a {
+  color: color-mix(in srgb, var(--nv-navy), transparent 45%);
   transition: color 0.3s var(--nv-ease);
 }
 
-body.inner-page .hx-page-hero .hx-crumbs a:hover {
+body.inner-page .hx-page-intro .hx-crumbs a:hover {
   color: var(--nv-orange);
 }
 
-body.inner-page .hx-page-hero .hx-crumbs li + li::before {
-  content: "/";
-  padding: 0 10px;
-  color: rgba(255, 255, 255, 0.35);
+body.inner-page .hx-page-intro .hx-crumbs li + li::before {
+  content: '/';
+  margin: 0 10px;
+  opacity: 0.5;
 }
 
-body.inner-page .hx-page-hero .hx-crumbs .current {
+body.inner-page .hx-page-intro .hx-crumbs .current {
   color: var(--nv-orange);
 }
 
-body.inner-page .hx-page-hero h1 {
-  color: #ffffff;
-  font-weight: 700;
-  font-size: clamp(2.1rem, 4vw, 3.4rem);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  margin: 0 0 18px 0;
-  max-width: 900px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 18px;
-}
-
-body.inner-page .hx-page-hero p {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 16px;
-  line-height: 1.8;
-  max-width: 620px;
-  margin: 0;
-}
-
-/* Hero copy rises in on load, matching the homepage's cadence. */
-body.inner-page .hx-page-hero .hx-crumbs {
-  animation: hx-rise 0.8s var(--nv-ease) 0.05s both;
-}
-
-body.inner-page .hx-page-hero h1 {
-  animation: hx-rise 0.8s var(--nv-ease) 0.18s both;
-}
-
-body.inner-page .hx-page-hero p {
-  animation: hx-rise 0.8s var(--nv-ease) 0.32s both;
-}
-
-@keyframes hx-rise {
+/* The first content block no longer needs to clear a 600px hero. */
+body.inner-page .hx-block:first-child {
+  padding-top: 32px;
+}@keyframes hx-rise {
   from {
     opacity: 0;
     transform: translateY(22px);
@@ -1463,12 +1426,7 @@ body.inner-page button:focus-visible {
   body.inner-page .hx-split {
     grid-template-columns: 1fr;
     gap: 28px;
-  }
-
-  body.inner-page .hx-page-hero-body {
-    padding: 140px 0 54px 0;
-  }
-}
+  }}
 
 @media (max-width: 991px) {
   body.inner-page .hx-block {
@@ -1530,25 +1488,7 @@ body.inner-page button:focus-visible {
   body.inner-page .hx-event-grid,
   body.inner-page .hx-price-grid {
     grid-template-columns: 1fr;
-  }
-
-  body.inner-page .hx-page-hero {
-    min-height: 400px;
-  }
-
-  body.inner-page .hx-page-hero-body {
-    padding: 128px 0 46px 0;
-  }
-
-  body.inner-page .hx-page-hero h1 {
-    gap: 12px;
-  }
-
-  body.inner-page .hx-page-hero .hx-rule {
-    width: 56px;
-  }
-
-  body.inner-page .hx-stats .hx-stat-grid {
+  }body.inner-page .hx-stats .hx-stat-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1576,14 +1516,7 @@ body.inner-page button:focus-visible {
 /*--------------------------------------------------------------
 # Reduced motion
 --------------------------------------------------------------*/
-@media (prefers-reduced-motion: reduce) {
-  body.inner-page .hx-page-hero .hx-crumbs,
-  body.inner-page .hx-page-hero h1,
-  body.inner-page .hx-page-hero p {
-    animation: none;
-  }
-
-  body.inner-page .hx-feature:hover,
+@media (prefers-reduced-motion: reduce) {body.inner-page .hx-feature:hover,
   body.inner-page .hx-event:hover,
   body.inner-page .hx-member:hover,
   body.inner-page .hx-price:hover,
@@ -1737,92 +1670,34 @@ body.inner-page .ujuzi-empty p {
 @media (max-width: 767px) {
   body.inner-page .hx-catalogue { padding-top: 40px; }
   body.inner-page .hx-catalogue-head .ujuzi-filters { justify-content: flex-start; }
-}
-
-/*--------------------------------------------------------------
-# Courses page: the intro banner sits below the opening row of
-# courses, so .hx-catalogue, not .hx-page-hero, is the first thing
-# under the header here.
-#
-# The header itself no longer needs a page-specific override — back
-# when it was position:static and painted its own navy fill (this
-# was the one page whose header didn't float over a hero image), that
-# made sense. Now that the header is a single fixed, frosted bar
-# everywhere on the site, this page inheriting the standard
-# body.inner-page treatment is exactly the point: leaving the old
-# override in place pinned this one page to position:static with a
-# solid navy fill, so the (still-dark) inherited link text landed on
-# a background it was never designed for — the bug this comment
-# replaces the cause of.
---------------------------------------------------------------*/
-
-/* Without an overlapping hero the shell needs its own bottom gap. */
-body.courses-page .hx-shell {
-  margin-bottom: var(--nv-gutter);
-}
-
-/* The catalogue is the first content block, and the header is now a
-   fixed bar rather than something that used to sit in normal flow
-   here — this needs to clear it (matching .hx-page-hero's own 76px
-   elsewhere) on top of the breathing room the section already had. */
-body.courses-page .hx-catalogue {
-  padding-top: 110px;
-}
-
-/* The relocated intro banner is a mid-page block now, not a page cap. */
-body.courses-page .hx-page-hero {
-  min-height: 380px;
-  margin: 18px 0 0 0;
-}
-
-body.courses-page .hx-catalogue-rest {
+}body.courses-page .hx-catalogue-rest {
   padding-top: 44px;
 }
 
 @media (max-width: 767px) {
-  body.courses-page .hx-catalogue { padding-top: 24px; }
-  body.courses-page .hx-page-hero { min-height: 320px; }
-}
+  body.courses-page .hx-catalogue { padding-top: 24px; }}
 
 /* projects.html follows the exact same layout as courses.html — a live grid
    as the first content block, the intro banner relocated mid-page — so it
    needs the same header-clearance treatment. */
 body.projects-page .hx-catalogue {
   padding-top: 110px;
-}
-
-body.projects-page .hx-page-hero {
-  min-height: 380px;
-  margin: 18px 0 0 0;
-}
-
-body.projects-page .hx-catalogue-rest {
+}body.projects-page .hx-catalogue-rest {
   padding-top: 44px;
 }
 
 @media (max-width: 767px) {
-  body.projects-page .hx-catalogue { padding-top: 24px; }
-  body.projects-page .hx-page-hero { min-height: 320px; }
-}
+  body.projects-page .hx-catalogue { padding-top: 24px; }}
 
 /* news.html follows the same layout as courses.html/projects.html. */
 body.news-page .hx-catalogue {
   padding-top: 110px;
-}
-
-body.news-page .hx-page-hero {
-  min-height: 380px;
-  margin: 18px 0 0 0;
-}
-
-body.news-page .hx-catalogue-rest {
+}body.news-page .hx-catalogue-rest {
   padding-top: 44px;
 }
 
 @media (max-width: 767px) {
-  body.news-page .hx-catalogue { padding-top: 24px; }
-  body.news-page .hx-page-hero { min-height: 320px; }
-}
+  body.news-page .hx-catalogue { padding-top: 24px; }}
 
 /* A page header's photograph, placed within the page's content rather than
    behind its title — see assets/js/page-header.js for why. */

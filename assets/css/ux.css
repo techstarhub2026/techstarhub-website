@@ -336,24 +336,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern" 1, "liga" 1;
-}
-
-/*--------------------------------------------------------------
-# Display type
-# Large text needs *less* tracking, not the same as body copy —
-# leaving headings at default spacing is the single most common
-# reason a page reads as untouched. Raleway 800 is self-hosted,
-# so this is a real weight, never a synthesised one.
---------------------------------------------------------------*/
-body.home-2026 .hx-hero h2,
-body.inner-page .hx-page-hero h1 {
-  font-weight: 800;
-  font-size: clamp(2.3rem, 4.6vw, 4.1rem);
-  line-height: 1.05;
-  letter-spacing: -0.033em;
-}
-
-/* Section headings carried no negative tracking at all. */
+}/* Section headings carried no negative tracking at all. */
 body.home-2026 .hx-section-head h2,
 body.inner-page .hx-section-head h2,
 body.inner-page .hx-catalogue-title h2 {
@@ -375,17 +358,7 @@ body .course-item h3,
 body .hx-cta-band h2 {
   letter-spacing: -0.018em;
   text-wrap: balance;
-}
-
-/* Lead paragraphs: a comfortable measure and no orphaned last word. */
-body.home-2026 .hx-section-head p,
-body.inner-page .hx-section-head p,
-body.inner-page .hx-page-hero p {
-  text-wrap: pretty;
-  line-height: 1.75;
-}
-
-/* The eyebrow pills read better slightly tighter and bolder. */
+}/* The eyebrow pills read better slightly tighter and bolder. */
 body .hx-pill {
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -490,34 +463,7 @@ body .hx-shop-card,
 body .stats-item {
   cursor: default;
 }
-body a, body button, body [role="button"] { cursor: pointer; }
-
-/*--------------------------------------------------------------
-# Hero depth
-# A soft vignette pushes the corners back so the headline sits
-# forward, without darkening the photograph overall.
---------------------------------------------------------------*/
-body.home-2026 .hx-hero::after,
-body.inner-page .hx-page-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  /* Neutral ink, matching the hero's other scrims in home.css — a navy
-     vignette tinted the photo's corners cold on top of everything the main
-     scrim was already doing. */
-  background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgba(12, 12, 13, 0.34) 100%);
-}
-
-/* The copy must stay above the vignette. */
-body.home-2026 .hx-hero .hx-hero-body,
-body.inner-page .hx-page-hero .hx-page-hero-body {
-  position: relative;
-  z-index: 2;
-}
-
-/*--------------------------------------------------------------
+body a, body button, body [role="button"] { cursor: pointer; }/*--------------------------------------------------------------
 # UjuziPlus course card
 #
 # The same card UjuziPlus renders for its own catalogue, brought
