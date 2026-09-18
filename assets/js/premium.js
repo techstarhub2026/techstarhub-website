@@ -28,6 +28,11 @@
 (function () {
   'use strict';
 
+  /* Cleared as soon as this file runs. The stylesheet keeps every reveal
+     visible while it is present, so a page whose script never loads shows
+     its content plainly rather than a column of blank sections. */
+  document.documentElement.classList.remove('px-no-js');
+
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -44,12 +49,47 @@
       }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 })
     : null;
 
-  /** Marks an element to reveal when it scrolls into view. */
+  /** True when any part of the element is at or above the fold. */
+  function alreadySeen(el) {
+    var r = el.getBoundingClientRect();
+    var h = window.innerHeight || document.documentElement.clientHeight;
+    return r.top < h && r.bottom > 0;
+  }
+
+  /**
+   * Marks an element to reveal when it scrolls into view.
+   *
+   * An IntersectionObserver reports *changes* in intersection, so an element
+   * already on screen when first observed — or one a reader has scrolled
+   * clean past before this file ran, which happens on a reload that restores
+   * scroll position, on an anchor jump, and on any scroll fast enough to
+   * cross a section between frames — may never produce an entry. Since
+   * [data-px-rise] holds its element at opacity 0 until `.is-in` arrives,
+   * that left whole sections permanently blank. Anything already within the
+   * fold is revealed at once rather than waiting for a crossing that has
+   * already happened.
+   */
   function watch(el) {
     if (!el || el.hasAttribute('data-px-watched')) return;
     el.setAttribute('data-px-watched', '');
     if (!io) { el.classList.add('is-in'); return; }
+    if (alreadySeen(el)) { el.classList.add('is-in'); return; }
     io.observe(el);
+  }
+
+  /**
+   * Last resort: reveals anything still hidden once the page has settled.
+   *
+   * A reveal can still be missed — an element laid out after it was observed
+   * because a late image changed the page height beneath it, or a callback
+   * that never ran because the tab was in the background for the whole
+   * scroll. Content that is merely un-animated is a far smaller problem than
+   * content that is invisible, so anything still waiting is simply shown.
+   */
+  function revealStragglers() {
+    each(document.querySelectorAll('[data-px-watched]:not(.is-in)'), function (el) {
+      if (alreadySeen(el)) el.classList.add('is-in');
+    });
   }
 
   function each(list, fn) { Array.prototype.forEach.call(list, fn); }
@@ -695,4 +735,14 @@
       }, 60);
     }).observe(document.body, { childList: true, subtree: true });
   }
+
+  /* The straggler sweep, on the two moments a miss becomes visible: once the
+     page has finished loading and settled its layout, and on the first
+     scroll — a reader scrolling is the clearest signal that anything already
+     behind them should have been revealed by now. */
+  window.addEventListener('load', function () { window.setTimeout(revealStragglers, 300); });
+  window.addEventListener('scroll', function onFirstScroll() {
+    window.removeEventListener('scroll', onFirstScroll);
+    revealStragglers();
+  }, { passive: true });
 })();

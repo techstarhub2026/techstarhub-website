@@ -2661,3 +2661,23 @@ body.inner-page .hx-event-empty[hidden] {
   opacity: 1 !important;
   transform: none !important;
 }
+
+/* ── reveal failsafe ─────────────────────────────────────────────────────
+   [data-px-rise] and [data-px-curtain] hold their element at opacity 0 until
+   premium.js adds `.is-in`. That is correct while the script is running, but
+   it means a section is invisible — not merely un-animated — if the script
+   never gets there: blocked, failed to parse, or an observer callback that
+   never fired.
+
+   premium.js sets these attributes itself, and only after it has loaded and
+   run, so an element carrying one is proof the script is alive. The `no-js`
+   class below is the other half: premium.js removes it on startup, so if the
+   script never runs the class stays and everything is shown regardless. */
+html.px-no-js [data-px-rise],
+html.px-no-js [data-px-curtain] > img,
+html.px-no-js [data-px-curtain] > picture > img,
+html.px-no-js .px-wi {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+}
