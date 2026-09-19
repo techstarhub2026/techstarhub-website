@@ -61,6 +61,18 @@
           titleBox.appendChild(sf);
         }
       }
+
+      // The record's photograph sits behind the head. It is applied only once
+      // the image has actually loaded: a head that styles itself for a picture
+      // that never arrives is a pale box with a scrim over nothing.
+      if (header.image) {
+        var probe = new Image();
+        probe.onload = function () {
+          pageHead.style.backgroundImage = 'url("' + header.image + '")';
+          pageHead.classList.add('hx-page-head--image');
+        };
+        probe.src = header.image;
+      }
     }
 
     var head = firstHead();
