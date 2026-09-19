@@ -1355,10 +1355,13 @@ body.inner-page .px-manifesto {
    rule. Two distinct cards read immediately as "Mission" and "Vision" as two
    separate things; a shared background with only a divider between them read
    as one block of text that happened to have a line down the middle. */
+/* The brand orange flat, rather than the translucent white that let the
+   section's gradient through and left each panel a slightly different shade
+   from its neighbour. */
 .px-manifesto__panel {
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--px-orange, #f7921e);
   border: 1px solid #fff;
-  border-radius: 0;
+  border-radius: var(--px-r-lg, 20px);
   padding: clamp(28px, 3.2vw, 44px);
 }
 
