@@ -62,6 +62,16 @@
         }
       }
 
+      // A colour the record carries backs the head on its own, and tints any
+      // photograph set behind it. Only a hex value is honoured — this ends up
+      // in a style attribute, so anything else is ignored rather than written.
+      var tinted = false;
+      if (header.bgColor && /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(header.bgColor)) {
+        pageHead.style.backgroundColor = header.bgColor;
+        pageHead.classList.add('hx-page-head--tinted');
+        tinted = true;
+      }
+
       // The record's photograph sits behind the head. It is applied only once
       // the image has actually loaded: a head that styles itself for a picture
       // that never arrives is a pale box with a scrim over nothing.
@@ -72,6 +82,10 @@
           pageHead.classList.add('hx-page-head--image');
         };
         probe.src = header.image;
+      } else if (tinted) {
+        // No photograph, so the head takes the colour as its whole background
+        // and needs the padding and rounding the image variant carries.
+        pageHead.classList.add('hx-page-head--image');
       }
     }
 
