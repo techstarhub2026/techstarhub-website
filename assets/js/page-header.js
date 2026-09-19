@@ -43,6 +43,26 @@
   function apply(header) {
     if (!header) return;
 
+    // The compact page head that replaced the photographic band. Its title is
+    // the record's, so the admin still names the page; the markup's own title
+    // stands until the API answers, and survives it failing.
+    var pageHead = document.querySelector('.hx-page-head');
+    if (pageHead) {
+      if (header.title) {
+        var h1 = pageHead.querySelector('.hx-page-head__title h1');
+        if (h1) h1.textContent = header.title;
+      }
+      if (header.standfirst) {
+        var titleBox = pageHead.querySelector('.hx-page-head__title');
+        if (titleBox && !titleBox.querySelector('.hx-page-head__standfirst')) {
+          var sf = document.createElement('p');
+          sf.className = 'hx-page-head__standfirst';
+          sf.textContent = header.standfirst;
+          titleBox.appendChild(sf);
+        }
+      }
+    }
+
     var head = firstHead();
 
     if (head && header.title) {

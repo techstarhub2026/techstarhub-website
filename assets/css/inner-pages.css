@@ -538,6 +538,62 @@ body.inner-page .hx-page-intro--bare {
   padding-bottom: 0;
 }
 
+/* ── Page head ──
+   What replaced the 610px photographic band: the page's name, a count of
+   what is on it, and the breadcrumb, in about 90px. Left-aligned and sized
+   like the catalogue head the courses page already used, so a page announces
+   itself without standing between the reader and its content. */
+body.inner-page .hx-page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 30px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--nv-navy), transparent 90%);
+}
+
+body.inner-page .hx-page-head__title h1 {
+  margin: 0;
+  color: var(--nv-navy);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  line-height: 1.2;
+}
+
+body.inner-page .hx-page-head__standfirst {
+  margin: 8px 0 0;
+  max-width: 62ch;
+  color: color-mix(in srgb, var(--nv-navy), transparent 35%);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* The count sits opposite the title, so the head carries information rather
+   than only repeating the page's name. */
+body.inner-page .hx-page-head__count {
+  margin: 0;
+  color: color-mix(in srgb, var(--nv-navy), transparent 45%);
+  font-family: var(--nav-font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+body.inner-page .hx-page-head__count:empty {
+  display: none;
+}
+
+@media (max-width: 575px) {
+  body.inner-page .hx-page-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 body.inner-page .hx-page-intro .hx-crumbs ol {
   display: flex;
   flex-wrap: wrap;

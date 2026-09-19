@@ -115,9 +115,17 @@
 
     <!-- Page intro — breadcrumb only; the title lives in the
          page's own first section, which already carries one. -->
-    <div class="hx-page-intro hx-page-intro--bare" data-page-key="gallery"
+    <div class="hx-page-intro" data-page-key="gallery"
          data-page-title="Gallery"
          data-page-standfirst="Moments from our bootcamps, workshops and events across Tanzania.">
+      <div class="hx-inner">
+        <nav class="hx-crumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Gallery</li>
+          </ol>
+        </nav>
+      </div>
     </div>
   </div>
   <!-- /Hero Shell -->
@@ -126,6 +134,13 @@
 
     <section class="hx-block" id="gallery">
       <div class="hx-inner">
+
+        <div class="hx-page-head">
+          <div class="hx-page-head__title">
+            <h1>Gallery</h1>
+          </div>
+          <p class="hx-page-head__count" data-page-count="gallery"></p>
+        </div>
 
         <!--
           Static fallback grid. gallery-integration.js replaces this whole
@@ -349,6 +364,7 @@
   <script src="assets/js/site-search.js"></script>
   <script src="assets/js/inner-pages.js"></script>
   <script src="assets/js/page-header.js"></script>
+  <script src="assets/js/page-count.js"></script>
   <script src="assets/js/gallery-integration.js"></script>
   <script src="assets/js/premium.js"></script>
 

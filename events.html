@@ -115,9 +115,17 @@
 
     <!-- Page intro — breadcrumb only; the title lives in the
          page's own first section, which already carries one. -->
-    <div class="hx-page-intro hx-page-intro--bare" data-page-key="events"
+    <div class="hx-page-intro" data-page-key="events"
          data-page-title="Events"
          data-page-standfirst="Hackathons, workshops and school visits happening across Tanzania — see what's next below.">
+      <div class="hx-inner">
+        <nav class="hx-crumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Events</li>
+          </ol>
+        </nav>
+      </div>
     </div>
   </div>
   <!-- /Hero Shell -->
@@ -126,6 +134,13 @@
     <!-- Events Section -->
         <section id="events" class="hx-block">
       <div class="hx-inner">
+
+        <div class="hx-page-head">
+          <div class="hx-page-head__title">
+            <h1>Events</h1>
+          </div>
+          <p class="hx-page-head__count" data-page-count="events"></p>
+        </div>
 
         <div class="hx-showcase">
 
@@ -330,6 +345,7 @@
   <script src="assets/js/site-search.js"></script>
   <script src="assets/js/inner-pages.js"></script>
   <script src="assets/js/page-header.js"></script>
+  <script src="assets/js/page-count.js"></script>
   <!-- events-status.js defines window.hxRefreshEventStatus and runs once over
        the static rows; events-integration.js calls it again if the admin API
        replaces them, so status must be defined first. -->
