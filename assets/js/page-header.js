@@ -26,7 +26,15 @@
     });
   }
 
-  /** The heading block of the page's first real section. */
+  /**
+   * The heading block of the page's first real section.
+   *
+   * Several pages have none: their section head only restated the page's own
+   * title above the content, so it was removed along with the photographic
+   * band. Those pages open straight into their content and a record's title
+   * and standfirst have nowhere to go, which is intended — everything below
+   * tolerates a missing head rather than creating one.
+   */
   function firstHead() {
     var main = document.querySelector('main.main');
     return main ? main.querySelector('.hx-section-head') : null;
