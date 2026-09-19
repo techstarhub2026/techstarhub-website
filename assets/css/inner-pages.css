@@ -607,6 +607,10 @@ body.inner-page .hx-page-head--image {
   background-size: cover;
 }
 
+/* The scrim covers the words and then gets out of the way. Veiling the whole
+   band at the opacity the text needs left the photograph — and any colour
+   behind it — as a pale wash, which is what it was carrying the picture for
+   in the first place. */
 body.inner-page .hx-page-head--image::before {
   content: '';
   position: absolute;
@@ -614,9 +618,10 @@ body.inner-page .hx-page-head--image::before {
   z-index: -1;
   background: linear-gradient(
     100deg,
-    rgb(255 255 255 / 0.94) 0%,
-    rgb(255 255 255 / 0.88) 55%,
-    rgb(255 255 255 / 0.74) 100%
+    rgb(255 255 255 / 0.92) 0%,
+    rgb(255 255 255 / 0.88) 38%,
+    rgb(255 255 255 / 0.35) 62%,
+    rgb(255 255 255 / 0.05) 100%
   );
 }
 
@@ -630,17 +635,22 @@ body.inner-page .hx-page-head--image .hx-page-head__count {
   color: color-mix(in srgb, var(--nv-navy), transparent 20%);
 }
 
-/* A colour the admin set. Where it backs the head alone the scrim would only
-   wash it out, so it is dropped; where a photograph sits behind, the colour
-   shows through as a tint. The text stays navy on a light scrim either way,
-   which is why the scrim is what carries legibility rather than the colour. */
-body.inner-page .hx-page-head--tinted:not(.hx-page-head--image)::before,
+/* A colour the admin set has to be visible, or setting it means nothing. The
+   head's own background carries it, and where a photograph sits on top the
+   picture is blended into the colour rather than laid over it — so the colour
+   reads across the whole band instead of only where the picture is light. */
+body.inner-page .hx-page-head--tinted {
+  background-blend-mode: multiply;
+}
+
+/* Over a colour, the scrim only needs to lift the words off it. */
 body.inner-page .hx-page-head--tinted::before {
   background: linear-gradient(
     100deg,
-    rgb(255 255 255 / 0.92) 0%,
-    rgb(255 255 255 / 0.84) 55%,
-    rgb(255 255 255 / 0.7) 100%
+    rgb(255 255 255 / 0.88) 0%,
+    rgb(255 255 255 / 0.8) 38%,
+    rgb(255 255 255 / 0.3) 62%,
+    rgb(255 255 255 / 0.04) 100%
   );
 }
 
@@ -648,7 +658,12 @@ body.inner-page .hx-page-head--tinted::before {
   /* Narrow enough that the text crosses the whole image, so the scrim has to
      cover all of it rather than lightening one side. */
   body.inner-page .hx-page-head--image::before {
-    background: rgb(255 255 255 / 0.9);
+    background: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.88) 0%,
+      rgb(255 255 255 / 0.82) 70%,
+      rgb(255 255 255 / 0.55) 100%
+    );
   }
 }
 
