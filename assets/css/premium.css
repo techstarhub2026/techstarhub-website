@@ -1291,20 +1291,14 @@ body.home-2026 .px-rail-label {
      page than on the about page for no reason anyone could see; the band's own
      breathing room comes from `.px-manifesto__inner` and nowhere else. */
   padding: 0;
-  /* Square, and running the full width of the window.
-
-     Everything on the site sits inside `.hx-shell`, which is inset from the
-     viewport by `--nv-gutter` on both sides. Cancelling exactly that much with
-     a negative margin puts the band's edges precisely on the window edges —
-     the usual `width: 100vw` trick would overshoot by the width of the
-     scrollbar and give the whole page a horizontal scroll. */
+  /* No band, so no full-bleed either: the negative margins existed to push a
+     coloured surface out to the window edges, and without one they would only
+     hang the panels wider than every other section on the page. */
   border-radius: 0;
-  margin-left: calc(-1 * var(--nv-gutter, 12px));
-  margin-right: calc(-1 * var(--nv-gutter, 12px));
-  /* Warmed at the top left and deepened at the bottom right, so a band this
-     large reads as a lit surface rather than a flat fill. Every stop keeps
-     enough luminance for the navy type to clear AA. */
-  background: linear-gradient(135deg, #ffa63d 0%, var(--px-orange) 44%, #ef8410 100%);
+  /* The orange belongs to the two panels. Running it across the full width as
+     well left them the same colour as what they sat on, so the cards had
+     nothing to stand against. */
+  background: transparent;
   color: var(--px-ink);
 }
 
@@ -1320,11 +1314,7 @@ body.inner-page .px-manifesto {
 /* A very soft light source behind the top-left corner. Costs one gradient and
    stops the band from reading as a solid rectangle of colour. */
 .px-manifesto::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(120% 90% at 8% 0%, rgba(255, 255, 255, 0.32), transparent 58%);
+  content: none;
 }
 
 .px-manifesto__inner {
@@ -1332,14 +1322,15 @@ body.inner-page .px-manifesto {
   z-index: 1;
   max-width: 1320px;
   margin: 0 auto;
-  /* Vertical breathing room is the band's own; the inline padding is copied
-     from `.hx-inner` verbatim — 1320px wide with 24px either side.
+  /* The inline padding is copied from `.hx-inner` verbatim — 1320px wide with
+     24px either side — so these panels line up with the sections above and
+     below them.
 
-     Both boxes are centred on the window, so once the max-width is reached
-     they resolve to the same content edge and the band's copy sits on exactly
-     the same left margin as the sections above and below it, even though the
-     colour behind it now runs the full width. */
-  padding-block: clamp(52px, 6vw, 96px);
+     The vertical padding used to be the band's breathing room, holding the
+     copy off a coloured edge. With the band gone that edge is the page, and
+     the panels carry their own padding, so what is left is ordinary spacing
+     between sections. */
+  padding-block: clamp(8px, 1.5vw, 20px);
   padding-inline: 24px;
 }
 
@@ -1355,14 +1346,16 @@ body.inner-page .px-manifesto {
    rule. Two distinct cards read immediately as "Mission" and "Vision" as two
    separate things; a shared background with only a divider between them read
    as one block of text that happened to have a line down the middle. */
-/* The brand orange flat, rather than the translucent white that let the
-   section's gradient through and left each panel a slightly different shade
-   from its neighbour. */
+/* The panels carry the orange now that the band behind them is gone. Lit from
+   the top left the way the band was, so each reads as a surface rather than a
+   flat fill; the white border went with the band, since on a white page it
+   only cut the panel off from its own edge. */
 .px-manifesto__panel {
-  background: var(--px-orange, #f7921e);
-  border: 1px solid #fff;
+  background: linear-gradient(135deg, #ffa63d 0%, var(--px-orange, #f7921e) 52%, #ef8410 100%);
+  border: 0;
   border-radius: var(--px-r-lg, 20px);
   padding: clamp(28px, 3.2vw, 44px);
+  box-shadow: 0 16px 38px rgba(239, 132, 16, 0.24);
 }
 
 /* The numeral is ornament: outlined in white, sitting behind its heading and
