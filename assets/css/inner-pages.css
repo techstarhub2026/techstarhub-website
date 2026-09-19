@@ -1699,8 +1699,8 @@ body.news-page .hx-catalogue {
 @media (max-width: 767px) {
   body.news-page .hx-catalogue { padding-top: 24px; }}
 
-/* A page header's photograph, placed within the page's content rather than
-   behind its title — see assets/js/page-header.js for why. */
+/* A page header's photograph, shown only where a page offers a slot for one
+   ([data-page-figure]) — never at the top. See assets/js/page-header.js. */
 body.inner-page .hx-page-figure {
   margin: 0 0 40px 0;
   border-radius: var(--nv-radius);

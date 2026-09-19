@@ -54,15 +54,22 @@
       }
     }
 
-    if (header.image) {
-      var figure = document.createElement('figure');
-      figure.className = 'hx-page-figure';
-      figure.innerHTML = '<img src="' + esc(header.image) + '" alt="' +
-        esc(header.title || '') + '" loading="lazy" decoding="async">';
+    if (!header.image) return;
 
-      // After the section heading, so the page still opens with words.
-      if (head && head.parentNode) head.parentNode.insertBefore(figure, head.nextSibling);
-    }
+    var figure = document.createElement('figure');
+    figure.className = 'hx-page-figure';
+    figure.innerHTML = '<img src="' + esc(header.image) + '" alt="' +
+      esc(header.title || '') + '" loading="lazy" decoding="async">';
+
+    // Placing it after the first heading was still the top of the page: on
+    // most pages that heading opens the document, so the photograph landed
+    // exactly where the band used to be and read as the same thing.
+    //
+    // A page says where its photograph belongs by carrying a slot. Without
+    // one it gets no photograph at all, which is the outcome to prefer —
+    // these pages are meant to open with their own content.
+    var slot = document.querySelector('[data-page-figure]');
+    if (slot) slot.appendChild(figure);
   }
 
   fetch(API + '/site/page-headers')
