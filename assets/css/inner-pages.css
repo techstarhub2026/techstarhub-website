@@ -531,6 +531,13 @@ body.inner-page .hx-page-intro {
   padding: 0 0 4px 0;
 }
 
+/* Pages that dropped their breadcrumb keep this element — it carries the
+   data attributes the admin reads — so it must take up no room itself. The
+   top margin stays: it is what clears the fixed navbar. */
+body.inner-page .hx-page-intro--bare {
+  padding-bottom: 0;
+}
+
 body.inner-page .hx-page-intro .hx-crumbs ol {
   display: flex;
   flex-wrap: wrap;
