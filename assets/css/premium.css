@@ -1355,7 +1355,6 @@ body.inner-page .px-manifesto {
   border: 0;
   border-radius: var(--px-r-lg, 20px);
   padding: clamp(28px, 3.2vw, 44px);
-  box-shadow: 0 16px 38px rgba(239, 132, 16, 0.24);
 }
 
 /* The numeral is ornament: outlined in white, sitting behind its heading and
