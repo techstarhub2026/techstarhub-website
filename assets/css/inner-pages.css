@@ -1827,12 +1827,11 @@ body.inner-page .ujuzi-empty p {
 @media (max-width: 767px) {
   body.courses-page .hx-catalogue { padding-top: 24px; }}
 
-/* projects.html follows the exact same layout as courses.html — a live grid
-   as the first content block, the intro banner relocated mid-page — so it
-   needs the same header-clearance treatment. */
-body.projects-page .hx-catalogue {
-  padding-top: 110px;
-}body.projects-page .hx-catalogue-rest {
+/* The 110px of clearance these pages carried was for a catalogue that opened
+   the document, before the breadcrumb and page head existed. `.hx-page-intro`
+   now holds the navbar off, so the extra padding only pushed the content down
+   while the head itself rode up underneath the navbar. */
+body.projects-page .hx-catalogue-rest {
   padding-top: 44px;
 }
 
@@ -1840,9 +1839,7 @@ body.projects-page .hx-catalogue {
   body.projects-page .hx-catalogue { padding-top: 24px; }}
 
 /* news.html follows the same layout as courses.html/projects.html. */
-body.news-page .hx-catalogue {
-  padding-top: 110px;
-}body.news-page .hx-catalogue-rest {
+body.news-page .hx-catalogue-rest {
   padding-top: 44px;
 }
 
