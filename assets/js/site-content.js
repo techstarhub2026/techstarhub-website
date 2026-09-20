@@ -9,7 +9,7 @@
  * outage must never blank the front page.
  */
 (function () {
-  var API = 'https://store-production-1570.up.railway.app/api/v1';
+  var API = 'https://store.techstarhub.or.tz/api/v1';
 
   function esc(v) {
     return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {

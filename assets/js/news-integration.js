@@ -12,8 +12,8 @@
  * than leaving the page blank.
  */
 (function () {
-  var API = 'https://store-production-1570.up.railway.app/api/v1';
-  var BLOG = 'https://store-production-1570.up.railway.app/blog/';
+  var API = 'https://store.techstarhub.or.tz/api/v1';
+  var BLOG = 'https://store.techstarhub.or.tz/blog/';
 
   var grid = document.getElementById('hx-news-grid');
   var gridRest = document.getElementById('hx-news-grid-rest');

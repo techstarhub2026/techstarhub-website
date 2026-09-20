@@ -13,7 +13,7 @@
  * blank a page.
  */
 (function () {
-  var API = 'https://store-production-1570.up.railway.app/api/v1';
+  var API = 'https://store.techstarhub.or.tz/api/v1';
 
   var intro = document.querySelector('.hx-page-intro[data-page-key]');
   if (!intro) return;

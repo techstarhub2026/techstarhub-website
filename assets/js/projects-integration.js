@@ -17,7 +17,7 @@
  * message rather than blanking the page.
  */
 (function () {
-  var API = 'https://store-production-1570.up.railway.app/api/v1';
+  var API = 'https://store.techstarhub.or.tz/api/v1';
 
   var ongoingGrid = document.getElementById('hx-projects-ongoing');
   var completedGrid = document.getElementById('hx-projects-completed');

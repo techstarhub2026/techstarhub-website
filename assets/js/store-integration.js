@@ -10,8 +10,8 @@
  * Update the two constants below when the store moves to its real domain.
  */
 (function () {
-  var STORE_WEB_URL = 'https://store-production-1570.up.railway.app';
-  var STORE_API_URL = 'https://store-production-1570.up.railway.app/api/v1';
+  var STORE_WEB_URL = 'https://store.techstarhub.or.tz';
+  var STORE_API_URL = 'https://store.techstarhub.or.tz/api/v1';
   var LIMIT = 12;
 
   var track = document.getElementById('hx-shop-grid');

@@ -15,7 +15,7 @@
  * window.
  */
 (function () {
-  var API = 'https://ujuziplus-production-99b7.up.railway.app/api/public/courses';
+  var API = 'https://www.ujuziplus.co.tz/api/public/courses';
 
   var grid = document.getElementById('ujuzi-courses-grid');
   // The catalogue is split either side of the page intro, so the opening row

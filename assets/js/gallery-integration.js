@@ -17,7 +17,7 @@
  * comment is the model this was written to match.
  */
 (function () {
-  var API = 'https://store-production-1570.up.railway.app/api/v1';
+  var API = 'https://store.techstarhub.or.tz/api/v1';
 
   var grid = document.getElementById('gallery-grid');
   if (!grid) return;

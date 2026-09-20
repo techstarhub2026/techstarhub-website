@@ -15,7 +15,7 @@
  * team rather than an empty section.
  */
 (function () {
-  var STORE_API_URL = 'https://store-production-1570.up.railway.app/api/v1';
+  var STORE_API_URL = 'https://store.techstarhub.or.tz/api/v1';
 
   var grids = document.querySelectorAll('[data-team-group]');
   if (!grids.length) return;

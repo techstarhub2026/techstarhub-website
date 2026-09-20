@@ -15,10 +15,16 @@
   if (!el) return;
 
   var COUNTS = {
-    gallery: { selector: '.hx-gallery-item', one: 'photograph', many: 'photographs' },
-    board:   { selector: '.hx-member',       one: 'board member', many: 'board members' },
-    staff:   { selector: '.hx-member',       one: 'team member', many: 'team members' },
-    events:  { selector: '.hx-showcase-row', one: 'event', many: 'events' }
+    gallery:  { selector: '.hx-gallery-item', one: 'photograph', many: 'photographs' },
+    board:    { selector: '.hx-member',       one: 'board member', many: 'board members' },
+    staff:    { selector: '.hx-member',       one: 'team member', many: 'team members' },
+    events:   { selector: '.hx-showcase-row', one: 'event', many: 'events' },
+    // These three render their cards from the admin, so the count is of
+    // .uj-card__body — one per card, where .uj-card itself carries extra
+    // modifier classes that vary between pages.
+    news:     { selector: '.uj-card__body',   one: 'story', many: 'stories' },
+    courses:  { selector: '.uj-card__body',   one: 'course', many: 'courses' },
+    projects: { selector: '.hx-project',      one: 'project', many: 'projects' }
   };
 
   var spec = COUNTS[el.getAttribute('data-page-count')];
